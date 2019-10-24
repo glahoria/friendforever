@@ -33,16 +33,12 @@
             <td><?= h($user->password) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Forgot Password Token') ?></th>
-            <td><?= h($user->forgot_password_token) ?></td>
+            <th scope="row"><?= __('Phone') ?></th>
+            <td><?= h($user->phone) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($user->id) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Registration Steps Done') ?></th>
-            <td><?= $this->Number->format($user->registration_steps_done) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Created') ?></th>

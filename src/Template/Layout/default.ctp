@@ -34,7 +34,11 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->fetch('script') ?>
 </head>
 <body>
+<<<<<<< HEAD
     <?= $this->element('top_nevigation'); ?>
+=======
+    <?= $this->element('top_navbar') ?>
+>>>>>>> 28b63d9f2a94fa5084e4e315f0e3e4f6737329d0
     <?= $this->Flash->render() ?>
     <div class="container clearfix">
         <?= $this->fetch('content') ?>

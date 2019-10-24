@@ -12,6 +12,10 @@
 </nav>
 <div class="users index large-9 medium-8 columns content">
     <h3><?= __('Users') ?></h3>
+    <?= $this->Form->create("",['type'=>'get']) ?>
+        <?= $this->Form->control('key',['default'=>$key = $this->request->query('key')]); ?>
+        <button>serach</button>
+    <?= $this->Form->end() ?>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
@@ -20,8 +24,7 @@
                 <th scope="col"><?= $this->Paginator->sort('last_name') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('email') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('password') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('forgot_password_token') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('registration_steps_done') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('phone') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('active') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
@@ -36,8 +39,7 @@
                 <td><?= h($user->last_name) ?></td>
                 <td><?= h($user->email) ?></td>
                 <td><?= h($user->password) ?></td>
-                <td><?= h($user->forgot_password_token) ?></td>
-                <td><?= $this->Number->format($user->registration_steps_done) ?></td>
+                <td><?= h($user->phone) ?></td>
                 <td><?= h($user->active) ?></td>
                 <td><?= h($user->created) ?></td>
                 <td><?= h($user->modified) ?></td>

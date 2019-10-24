@@ -75,15 +75,10 @@ class UsersTable extends Table
             ->notEmptyString('password');
 
         $validator
-            ->scalar('forgot_password_token')
-            ->maxLength('forgot_password_token', 255)
-            ->requirePresence('forgot_password_token', 'create')
-            ->notEmptyString('forgot_password_token');
-
-        $validator
-            ->integer('registration_steps_done')
-            ->requirePresence('registration_steps_done', 'create')
-            ->notEmptyString('registration_steps_done');
+            ->scalar('phone')
+            ->maxLength('phone', 255)
+            ->requirePresence('phone', 'create')
+            ->notEmptyString('phone');
 
         $validator
             ->boolean('active')
