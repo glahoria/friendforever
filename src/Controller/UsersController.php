@@ -19,6 +19,13 @@ class UsersController extends AppController
      */
     public function index()
     {
+        $key   = $this->request->query('key');
+
+        if (!empty($key)) {
+            $this->paginate = [ 
+                'conditions'=> ['first_name LIKE' =>'%'.$key.'%']
+            ];
+        }
         $users = $this->paginate($this->Users);
 
         $this->set(compact('users'));

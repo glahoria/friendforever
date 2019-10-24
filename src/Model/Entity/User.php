@@ -11,8 +11,7 @@ use Cake\ORM\Entity;
  * @property string $last_name
  * @property string $email
  * @property string $password
- * @property string $forgot_password_token
- * @property int $registration_steps_done
+ * @property string $phone
  * @property bool $active
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
@@ -33,8 +32,7 @@ class User extends Entity
         'last_name' => true,
         'email' => true,
         'password' => true,
-        'forgot_password_token' => true,
-        'registration_steps_done' => true,
+        'phone' => true,
         'active' => true,
         'created' => true,
         'modified' => true
