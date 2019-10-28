@@ -26,20 +26,18 @@ $cakeDescription = 'friends-forever';
     </title>
     <?= $this->Html->meta('icon') ?>
 
-    <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('style.css') ?>
-    <?= $this->Html->css("bootstrap.min.css") ?>
+    <?= $this->Html->css([
+    'base',
+    'style',
+    'bootstrap.min'
+    ]); ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 </head>
 <body>
-<<<<<<< HEAD
-    <?= $this->element('top_nevigation'); ?>
-=======
     <?= $this->element('top_navbar') ?>
->>>>>>> 28b63d9f2a94fa5084e4e315f0e3e4f6737329d0
     <?= $this->Flash->render() ?>
     <div class="container clearfix">
         <?= $this->fetch('content') ?>

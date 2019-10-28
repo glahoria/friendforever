@@ -6,12 +6,12 @@
         </ul>
         <div class="top-bar-section">
             <ul class="right">
-                <li>
-                    <?php if($first_name) { ?>
-                        <?= $this->Html->link('Logout',['controller'=>'users','action'=>'logout']) ?>
-                    <?php } ?>
-                   
-                </li>
+				<?php if(empty($authUser)) { ?>
+					<li class="<?= $this->request->getParam('action') == "login" ? "active" : ""; ?>"> <?= $this->Html->link('Login',['controller'=>'users','action'=>'login']) ?></li>
+					<li class="<?= $this->request->getParam('action') == "add" ? "active" : ""; ?>"> <?= $this->Html->link('Register',['controller'=>'users','action'=>'add']) ?></li>
+                <?php } else { ?>
+					<li> <?= $this->Html->link('Logout',['controller'=>'users','action'=>'logout']) ?></li>
+                <?php } ?>
                 <li><a target="_blank" href="https://api.cakephp.org/3.0/">API</a></li>
             </ul>
         </div>

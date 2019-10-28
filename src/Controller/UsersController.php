@@ -12,6 +12,12 @@ use App\Controller\AppController;
  */
 class UsersController extends AppController
 {
+	
+	public function initialize() {
+        parent::initialize();
+        $this->Auth->allow(['contact', 'add']);
+    }
+	
     /**
      * Index method
      *
@@ -38,9 +44,12 @@ class UsersController extends AppController
         $this->set(compact('users'));
     }
     public function login() {
+		
+		if($this->Auth->user()){
+			return $this->redirect($this->Auth->redirectUrl());
+		 }
 
-         //$data = $this->request->getData();
-         //pr($data); 
+
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
             if ($user) {
@@ -77,6 +86,9 @@ class UsersController extends AppController
      */
     public function add()
     {
+		if($this->Auth->user()){
+			return $this->redirect($this->Auth->redirectUrl());
+		 }
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
@@ -89,6 +101,10 @@ class UsersController extends AppController
         }
         $this->set(compact('user'));
     }
+    
+    public function contact(){
+		
+	}
     
     /**
      * Edit method
