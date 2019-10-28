@@ -23,14 +23,37 @@ class UsersController extends AppController
 
         if (!empty($key)) {
             $this->paginate = [ 
-                'conditions'=> ['first_name LIKE' =>'%'.$key.'%']
+                'conditions'=> [
+                    'OR' => [
+                        'first_name LIKE' =>'%'.$key.'%',
+                        'last_name LIKE' =>'%'.$key.'%',
+                        'email LIKE' =>'%'.$key.'%',
+                        'phone LIKE' =>'%'.$key.'%'
+                    ]
+                ]
             ];
         }
         $users = $this->paginate($this->Users);
 
         $this->set(compact('users'));
     }
+    public function login() {
 
+         //$data = $this->request->getData();
+         //pr($data); 
+        if ($this->request->is('post')) {
+            $user = $this->Auth->identify();
+            if ($user) {
+                $this->Auth->setUser($user);
+                return $this->redirect($this->Auth->redirectUrl());
+            }
+            $this->Flash->error(__('Your username or password was incorrect.'));
+        }
+    }
+    public function logout() {
+        $this->Flash->success(__('Thanku'));
+        $this->redirect($this->Auth->logout());
+    }
     /**
      * View method
      *
@@ -60,13 +83,13 @@ class UsersController extends AppController
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'login']);
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
         $this->set(compact('user'));
     }
-
+    
     /**
      * Edit method
      *

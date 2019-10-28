@@ -6,7 +6,12 @@
         </ul>
         <div class="top-bar-section">
             <ul class="right">
-                <li><a target="_blank" href="https://book.cakephp.org/3.0/">Documentation</a></li>
+                <li>
+                    <?php if($first_name) { ?>
+                        <?= $this->Html->link('Logout',['controller'=>'users','action'=>'logout']) ?>
+                    <?php } ?>
+                   
+                </li>
                 <li><a target="_blank" href="https://api.cakephp.org/3.0/">API</a></li>
             </ul>
         </div>

@@ -4,19 +4,17 @@
  * @var \App\Model\Entity\User[]|\Cake\Collection\CollectionInterface $users
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="users index large-9 medium-8 columns content">
-    <h3><?= __('Users') ?></h3>
+
+<div class="users index large-12 medium-12 columns content">
+    <h3><?php echo $first_name; ?> </h3>
+    
     <?= $this->Form->create("",['type'=>'get']) ?>
         <?= $this->Form->control('key',['default'=>$key = $this->request->query('key')]); ?>
         <button>serach</button>
     <?= $this->Form->end() ?>
-    <table cellpadding="0" cellspacing="0">
+    <div class="row ">
+        <div class="col-md-12 col-lg-12">
+    <table cellpadding="0" cellspacing="0"  class="table table-striped table-hover table-bordered mt-2">
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
@@ -52,6 +50,8 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+    </div>
+    </div>
     <div class="paginator">
         <ul class="pagination">
             <?= $this->Paginator->first('<< ' . __('first')) ?>
