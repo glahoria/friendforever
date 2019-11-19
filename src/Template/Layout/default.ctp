@@ -70,6 +70,7 @@ $cakeDescription = 'friends-forever';
 <body>
     <?= $this->element('inner_navigation') ?>
     <?= $this->Flash->render() ?>
+    <?= $this->element('inner_sidebar') ?>
     <div class="row clearfix">
         <div class="col-md-12">
         <?= $this->fetch('content') ?>
