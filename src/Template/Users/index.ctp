@@ -5,15 +5,16 @@
  */
 ?>
 
-<div class="users index large-12 medium-12 columns content">
-    <h3><?php echo $first_name; ?> </h3>
-    
-    <?= $this->Form->create("",['type'=>'get']) ?>
-        <?= $this->Form->control('key',['default'=>$key = $this->request->query('key')]); ?>
-        <button>serach</button>
-    <?= $this->Form->end() ?>
-    <div class="row ">
-        <div class="col-md-12 col-lg-12">
+
+    <div class="col-md-11 col-lg-11 m-auto ">
+    <div class="col-md-5 col-lg-5 float-right mt-5">
+
+        <?= $this->Form->create("",['type'=>'get']) ?>
+            <?= $this->Form->control('key',['default'=>$key = $this->request->query('key')]); ?>
+            
+        <?= $this->Form->end() ?>
+    </div>
+        
     <table cellpadding="0" cellspacing="0"  class="table table-striped table-hover table-bordered mt-2">
         <thead>
             <tr>
@@ -50,8 +51,6 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-    </div>
-    </div>
     <div class="paginator">
         <ul class="pagination">
             <?= $this->Paginator->first('<< ' . __('first')) ?>

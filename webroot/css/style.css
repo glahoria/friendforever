@@ -20,7 +20,7 @@ a {
 }
 
 header {
-    background-color: #D33C44;
+    /*background-color: #D33C44;*/
     color: #ffffff;
     font-size: 30px;
     height: 84px;
@@ -38,9 +38,14 @@ legend {
 }
 
 .row {
-    max-width: 80rem;
+    max-width: 100%;
 }
-
+.login{
+    margin: 12% 35%;
+}
+.rounded{
+     margin: 12% 25%;
+}
 .actions.columns {
     margin-top:1rem;
     border-left: 5px solid #15848F;
@@ -92,7 +97,7 @@ ul.pagination li a {
 }
 
 ul.pagination li.active a {
-    background-color: #DCE47E;
+    background-color: #249EEB;
     color: #FFF;
     font-weight: bold;
     cursor: default;
@@ -319,16 +324,16 @@ pre {
 }
 
 .top-bar.expanded .title-area {
-    background: #01545b;
+    background: #1399EF;
 }
 
 .top-bar.expanded, .top-bar,.top-bar-section ul li,.top-bar-section li:not(.has-form) a:not(.button) {
-    background: #116d76;
+    background: #1399EF;
 }
 
 .top-bar-section li:not(.has-form) a:not(.button):hover {
     background-color: #308e97;
-    background: #308e97;
+    background: #249EEB;
 }
 
 .side-nav li.heading {

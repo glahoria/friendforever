@@ -60,8 +60,10 @@ class UsersController extends AppController
         }
     }
     public function logout() {
-        $this->Flash->success(__('Thanku'));
         $this->redirect($this->Auth->logout());
+    }
+    public function dashboard() {
+        
     }
     /**
      * View method
