@@ -20,7 +20,7 @@ a {
 }
 
 header {
-    /*background-color: #D33C44;*/
+    background-color: #D33C44;
     color: #ffffff;
     font-size: 30px;
     height: 84px;
@@ -328,7 +328,7 @@ pre {
 }
 
 .top-bar.expanded, .top-bar,.top-bar-section ul li,.top-bar-section li:not(.has-form) a:not(.button) {
-    background: #1399EF;
+    background: #3c8dbc;
 }
 
 .top-bar-section li:not(.has-form) a:not(.button):hover {

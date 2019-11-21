@@ -1,5 +1,5 @@
 
-<div class="col-md-4 col-lg-3  bg-light login">
+<div class="col-md-7 col-lg-6  bg-light login">
         <?= $this->Form->create('user') ?>
             <fieldset>
                 <h1 class="text-center"><?= __('Login') ?></h1>

@@ -29,38 +29,9 @@ $cakeDescription = 'friends-forever';
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <?= $this->Html->css([
-    'ionicons.min',
-    'AdminLTE.min',
-    '_all-skins.min',
-    'morris',
-    'jquery-jvectormap',
-    'bootstrap-datepicker.min',
-    'daterangepicker',
-    'bootstrap3-wysihtml5.min',
-    'bootstrap3-wysihtml5.min',
-    'bootstrap.min',
+    'style',
     'base',
-    'style'
-    ]); ?>
-    <?= $this->Html->script([
-    'jquery.min.js',
-    'jquery-ui.min.js',
-    'bootstrap.min.js',
-    'raphael.min.js',
-    'morris.min.js',
-    'jquery.sparkline.min.js',
-    'jquery-jvectormap-1.2.2.min.js',
-    'jquery-jvectormap-world-mill-en.js',
-    'jquery.knob.min.js',
-    'moment.min.js',
-    'daterangepicker.js',
-    'bootstrap-datepicker.min.js',
-    'bootstrap3-wysihtml5.all.min.js',
-    'jquery.slimscroll.min.js',
-    'fastclick.js',
-    'adminlte.min.js',
-    'dashboard.js',
-    'demo.js'
+    
     
     ]); ?>
     <?= $this->fetch('meta') ?>
@@ -68,9 +39,8 @@ $cakeDescription = 'friends-forever';
     <?= $this->fetch('script') ?>
 </head>
 <body>
-    <?= $this->element('inner_navigation') ?>
+    <?= $this->element('top_navbar') ?>
     <?= $this->Flash->render() ?>
-    <?= $this->element('inner_sidebar') ?>
     <div class="row clearfix">
         <div class="col-md-12">
         <?= $this->fetch('content') ?>
