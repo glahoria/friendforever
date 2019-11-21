@@ -10,7 +10,7 @@
     <div class="col-md-5 col-lg-5 float-right mt-5">
 
         <?= $this->Form->create("",['type'=>'get']) ?>
-            <?= $this->Form->control('key',['default'=>$key = $this->request->query('key')]); ?>
+            <?= $this->Form->control('key',['default'=>$key = $this->request->query('key'), 'class'=>'form-control']); ?>
             
         <?= $this->Form->end() ?>
     </div>

@@ -7,6 +7,9 @@ use Cake\Error\ExceptionRenderer;
 use Cake\Log\Engine\FileLog;
 use Cake\Mailer\Transport\MailTransport;
 
+define('SITE_URL', 'http://localhost/friendsforever/');
+define('SITE_TITLE', 'Friends Forever');
+
 return [
     /**
      * Debug Level:

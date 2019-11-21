@@ -57,24 +57,41 @@ $cakeDescription = 'friends-forever';
     'plugins/jquery/jquery.slimscroll.min.js',
     'plugins/fastclick/fastclick.js',
     'plugins/adminlte/adminlte.min.js',
-    'plugins/dashboard/dashboard.js',
-    'plugins/demo/demo.js'
     
     ]); ?>
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 </head>
-<body>
+<body class="hold-transition skin-blue sidebar-mini">
+    	<div class="wrapper">
+			    <?= $this->Flash->render() ?>
     <?= $this->element('inner_navigation') ?>
-    <?= $this->Flash->render() ?>
     <?= $this->element('inner_sidebar') ?>
-    <div class="row clearfix">
-        <div class="col-md-12">
+	  <!-- Left side column. contains the logo and sidebar -->
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Dashboard
+        <small>Control panel</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+      </ol>
+    </section>	
         <?= $this->fetch('content') ?>
+        </div>
+   <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <b>Version</b> 2.4.18
     </div>
-    </div>
-    <footer>
-    </footer>
+    <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE</a>.</strong> All rights
+    reserved.
+  </footer>
+   <div class="control-sidebar-bg"></div>
+</div>
 </body>
 </html>

@@ -59,6 +59,7 @@ class AppController extends Controller
         
         if($this->Auth->user()){
 			$this->set('authUser', $this->Auth->user());
+			$this->viewBuilder()->setLayout('inner_layout');
 		}
 
         /*
