@@ -29,7 +29,7 @@ $cakeDescription = 'friends-forever';
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <?= $this->Html->css([
-    'plugins/ionicons/ionicons.min',
+    //'plugins/ionicons/ionicons.min',
     'plugins/admin/AdminLTE.min',
     'plugins/all-skins/_all-skins.min',
     'plugins/morris/morris',
@@ -38,6 +38,8 @@ $cakeDescription = 'friends-forever';
     'plugins/daterangepicker/daterangepicker',
     //'plugins/bootstrap/bootstrap3-wysihtml5.min',
     'plugins/bootstrap/bootstrap.min',
+    
+    
     
     ]); ?>
     <?= $this->Html->script([
@@ -64,34 +66,30 @@ $cakeDescription = 'friends-forever';
     <?= $this->fetch('script') ?>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-    	<div class="wrapper">
-			    <?= $this->Flash->render() ?>
+<div class="wrapper">
+	<?= $this->Flash->render() ?>
     <?= $this->element('inner_navigation') ?>
     <?= $this->element('inner_sidebar') ?>
-	  <!-- Left side column. contains the logo and sidebar -->
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Dashboard
-        <small>Control panel</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
-      </ol>
-    </section>	
+    <div class="content-wrapper">
+        <section class="content-header">
+          <h1>
+            Dashboard
+            <small>Control panel</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Dashboard</li>
+          </ol>
+        </section>	
         <?= $this->fetch('content') ?>
-        </div>
-   <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.18
     </div>
-    <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE</a>.</strong> All rights
-    reserved.
-  </footer>
-   <div class="control-sidebar-bg"></div>
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>Version</b> 2.4.18
+        </div>
+        <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">Friends Forever</a>.</strong> All rights reserved.
+    </footer>
+    <div class="control-sidebar-bg"></div>
 </div>
 </body>
 </html>

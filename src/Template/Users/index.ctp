@@ -10,12 +10,12 @@
     <div class="col-md-5 col-lg-5 float-right mt-5">
 
         <?= $this->Form->create("",['type'=>'get']) ?>
-            <?= $this->Form->control('key',['default'=>$key = $this->request->query('key'), 'class'=>'form-control']); ?>
+            <?= $this->Form->control('key',['default'=>$key = $this->request->query('key'), 'class'=>'form-control ']); ?>
             
         <?= $this->Form->end() ?>
     </div>
         
-    <table cellpadding="0" cellspacing="0"  class="table table-striped table-hover table-bordered mt-2">
+    <table cellpadding="0" cellspacing="0"  class="table table-striped table-hover table-bordered mt-3">
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>

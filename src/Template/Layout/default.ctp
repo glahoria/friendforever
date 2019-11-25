@@ -33,19 +33,20 @@ $cakeDescription = 'friends-forever';
     'base',
     
     
+
+    
+    
     ]); ?>
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 </head>
 <body>
-    <?= $this->element('top_navbar') ?>
     <?= $this->Flash->render() ?>
-    <div class="row clearfix">
-        <div class="col-md-12">
+    <?= $this->element('top_navbar') ?>
+    <div class="row">
         <?= $this->fetch('content') ?>
-    </div>
-    </div>
+    </div>    
     <footer>
     </footer>
 </body>

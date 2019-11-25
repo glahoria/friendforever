@@ -64,7 +64,7 @@ class UsersController extends AppController
         $this->redirect($this->Auth->logout());
     }
     public function dashboard() {
-            $this->viewBuilder()->setlayout('inner_layout'); 
+            
           
     }
     /**
