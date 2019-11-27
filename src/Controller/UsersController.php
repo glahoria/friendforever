@@ -64,8 +64,12 @@ class UsersController extends AppController
         $this->redirect($this->Auth->logout());
     }
     public function dashboard() {
-            
-          
+    }
+    public function profile() {
+
+    }
+    public function changepassword() {
+
     }
     /**
      * View method
