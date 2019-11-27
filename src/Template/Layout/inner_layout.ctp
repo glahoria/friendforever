@@ -25,12 +25,12 @@ $cakeDescription = 'friends-forever';
         <?= $this->fetch('title') ?>
     </title>
     <?= $this->Html->meta('icon') ?>
-  <!-- Google Font -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <?= $this->Html->css([
     //'plugins/ionicons/ionicons.min',
     'plugins/admin/AdminLTE.min',
+    'plugins/admin/style',
     'plugins/all-skins/_all-skins.min',
     'plugins/morris/morris',
     'plugins/jquery-jvectormap/jquery-jvectormap',
@@ -71,16 +71,6 @@ $cakeDescription = 'friends-forever';
     <?= $this->element('inner_navigation') ?>
     <?= $this->element('inner_sidebar') ?>
     <div class="content-wrapper">
-        <section class="content-header">
-          <h1>
-            Dashboard
-            <small>Control panel</small>
-          </h1>
-          <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Dashboard</li>
-          </ol>
-        </section>	
         <?= $this->fetch('content') ?>
     </div>
     <footer class="main-footer">

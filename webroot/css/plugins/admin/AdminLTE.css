@@ -25,6 +25,9 @@ body {
   overflow-y: auto;
 }
 /* Layout */
+.user-profile{
+  
+}
 .wrapper {
   height: 100%;
   position: relative;
@@ -52,6 +55,7 @@ body {
 /*
  * Content Wrapper - contains the main content
  */
+ 
 .content-wrapper,
 .main-footer {
   -webkit-transition: -webkit-transform 0.3s ease-in-out, margin 0.3s ease-in-out;

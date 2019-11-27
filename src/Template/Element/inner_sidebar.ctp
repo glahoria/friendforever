@@ -5,7 +5,7 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="<?= SITE_URL; ?>img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p><?= $authUser['first_name']." ".$authUser['last_name']; ?></p>
@@ -17,18 +17,22 @@
         <li class="header">MAIN NAVIGATION</li>
         <li class="active">
           <a href="<?= $this->Url->build(['controller'=>'Users', 'action'=>'dashboard']); ?>">
-            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+            <i class="fa fa-dashboard"></i> <span>Dashboard</span>  
           </a>
         </li>
         <li class="active">
           <a href="<?= $this->Url->build(['controller'=>'Users', 'action'=>'index']); ?>">
             <i class="fa fa-users"></i> <span>Users</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+          </a>
+        </li>
+        <li class="active">
+          <a href="<?= $this->Url->build(['controller'=>'Users', 'action'=>'profile']); ?>">
+            <i class="fa fa-user"></i> <span>Profile</span>
+          </a>
+        </li>
+        <li class="active">
+          <a href="#">
+            <i class="fa fa-users"></i> <span>Friends</span>
           </a>
         </li>
       </ul>

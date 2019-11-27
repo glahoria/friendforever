@@ -58,30 +58,26 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <img src="<?= SITE_URL; ?>img/user2-160x160.jpg" class="user-image" alt="User Image">
               <span class="hidden-xs"><?= $authUser['first_name']." ".$authUser['last_name']; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="<?= SITE_URL; ?>img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
                   <?= $authUser['first_name']." ".$authUser['last_name']; ?>
-                  <small>Member since Nov. 2012</small>
                 </p>
               </li>
               <!-- Menu Body -->
               <li class="user-body">
                 <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
+                  <div class="col-xs-4 pull-left">
                     <a href="#">Friends</a>
+                  </div>
+                  <div class="col-xs-7 pull-right">
+                    <a href="<?= $this->Url->build(['controller'=>'Users','action'=>'change_password']);?> ">Change Password</a>
                   </div>
                 </div>
                 <!-- /.row -->
@@ -89,7 +85,7 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href=""><button class="btn btn-default btn-flat">Profile</button></a>
+                  <a href="<?= $this->Url->build(['controller'=>'Users', 'action'=>'profile']); ?>"><button class="btn btn-default btn-flat">Profile</button></a>
                 </div>
                 <div class="pull-right">
                   <a href="<?= $this->Url->build(['controller'=>'Users', 'action'=>'logout']); ?>"><button class="btn btn-default btn-flat">Logout</button></a>
