@@ -12,45 +12,21 @@
           </div>
         </div>
   </div>
-  <?= $this->Form->create('user') ?>
+  <?= $this->Form->create($user, ['id'=>'profileForm']) ?>
         <div class="box-body col-md-6">
           <div class="form-group">
-            <?= $this->Form->control(
-              'First Name',
-            [ 
-              'class' => 'form-control',
-              'placeholder' => 'First Name',
-              'name' => 'first_name'
-            ]) ?>
+            <?= $this->Form->control('first_name',['class' => 'form-control','placeholder' => 'First Name']) ?>
           </div>
           <div class="form-group">
-            <?= $this->Form->control(
-              'email',
-            [ 
-              'class' => 'form-control',
-              'placeholder' => 'Email',
-              'name' => 'email'
-            ]) ?>
+            <?= $this->Form->control('email',[ 'class' => 'form-control','placeholder' => 'Email']) ?>
           </div>
           </div>
         <div class="box-body col-md-6">
           <div class="form-group">
-              <?= $this->Form->control(
-                'Last Name',
-              [ 
-                'class' => 'form-control',
-                'placeholder' => 'Last Name',
-                'name' => 'last_name'
-              ]) ?>
+              <?= $this->Form->control('last_name', [ 'class' => 'form-control', 'placeholder' => 'Last Name']) ?>
           </div>
           <div class="form-group">
-            <?= $this->Form->control(
-              'Phone',
-            [ 
-              'class' => 'form-control',
-              'placeholder' => 'Phone',
-              'name' => 'Phone'
-            ]) ?>
+            <?= $this->Form->control('phone',['class' => 'form-control','placeholder' => 'Phone']) ?>
           </div>   
         </div>
         <div class="box-footer">
@@ -60,3 +36,15 @@
   <?= $this->Form->end() ?>
 </div>
 </section>
+<script>
+    $(function () {
+        $('#profileForm').validate({
+            rules:{
+
+            },
+            messages:{
+
+            }
+        });
+    });
+</script>

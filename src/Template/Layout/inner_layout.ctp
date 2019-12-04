@@ -67,7 +67,9 @@ $cakeDescription = 'friends-forever';
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-	<?= $this->Flash->render() ?>
+
+	    <?= $this->Flash->render() ?>
+
     <?= $this->element('inner_navigation') ?>
     <?= $this->element('inner_sidebar') ?>
     <div class="content-wrapper">

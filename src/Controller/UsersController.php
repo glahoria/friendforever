@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -10,32 +11,30 @@ use App\Controller\AppController;
  *
  * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class UsersController extends AppController
-{
-	
-	public function initialize() {
+class UsersController extends AppController {
+
+    public function initialize() {
         parent::initialize();
         $this->Auth->allow(['contact', 'add']);
-        
+
     }
-	
+
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null
      */
-    public function index()
-    {
-        $key   = $this->request->query('key');
+    public function index() {
+        $key = $this->request->getQuery('key');
 
         if (!empty($key)) {
-            $this->paginate = [ 
-                'conditions'=> [
+            $this->paginate = [
+                'conditions' => [
                     'OR' => [
-                        'first_name LIKE' =>'%'.$key.'%',
-                        'last_name LIKE' =>'%'.$key.'%',
-                        'email LIKE' =>'%'.$key.'%',
-                        'phone LIKE' =>'%'.$key.'%'
+                        'first_name LIKE' => '%' . $key . '%',
+                        'last_name LIKE'  => '%' . $key . '%',
+                        'email LIKE'      => '%' . $key . '%',
+                        'phone LIKE'      => '%' . $key . '%'
                     ]
                 ]
             ];
@@ -44,11 +43,12 @@ class UsersController extends AppController
 
         $this->set(compact('users'));
     }
+
     public function login() {
-		
-		if($this->Auth->user()){
-			return $this->redirect($this->Auth->redirectUrl());
-		 }
+
+        if ($this->Auth->user()) {
+            return $this->redirect($this->Auth->redirectUrl());
+        }
 
 
         if ($this->request->is('post')) {
@@ -60,17 +60,32 @@ class UsersController extends AppController
             $this->Flash->error(__('Your username or password was incorrect.'));
         }
     }
+
     public function logout() {
         $this->redirect($this->Auth->logout());
     }
+
     public function dashboard() {
     }
-    public function profile() {
 
+    public function profile() {
+        $user = $this->Users->get($this->Auth->user('id'));
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Your profile has been updated.'));
+
+                return $this->redirect(['action' => 'profile']);
+            }
+            $this->Flash->error(__('Your profile could not be saved. Please, try again.'));
+        }
+        $this->set(compact('user'));
     }
+
     public function changepassword() {
 
     }
+
     /**
      * View method
      *
@@ -78,8 +93,7 @@ class UsersController extends AppController
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $user = $this->Users->get($id, [
             'contain' => []
         ]);
@@ -92,11 +106,10 @@ class UsersController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
-		if($this->Auth->user()){
-			return $this->redirect($this->Auth->redirectUrl());
-		 }
+    public function add() {
+        if ($this->Auth->user()) {
+            return $this->redirect($this->Auth->redirectUrl());
+        }
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
@@ -109,11 +122,11 @@ class UsersController extends AppController
         }
         $this->set(compact('user'));
     }
-    
-    public function contact(){
-		
-	}
-    
+
+    public function contact() {
+
+    }
+
     /**
      * Edit method
      *
@@ -121,8 +134,7 @@ class UsersController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $user = $this->Users->get($id, [
             'contain' => []
         ]);
@@ -145,8 +157,7 @@ class UsersController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
         if ($this->Users->delete($user)) {
