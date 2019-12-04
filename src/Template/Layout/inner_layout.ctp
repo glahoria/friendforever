@@ -27,6 +27,9 @@ $cakeDescription = 'friends-forever';
     <?= $this->Html->meta('icon') ?>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
     <?= $this->Html->css([
     //'plugins/ionicons/ionicons.min',
     'plugins/admin/AdminLTE.min',
@@ -43,7 +46,7 @@ $cakeDescription = 'friends-forever';
     
     ]); ?>
     <?= $this->Html->script([
-    'plugins/jquery/jquery.min.js',
+    //'plugins/jquery/jquery.min.js',
     'plugins/jquery/jquery-ui.min.js',
     'plugins/bootstrap/bootstrap.min.js',
     'plugins/raphael/raphael.min.js',
@@ -59,6 +62,7 @@ $cakeDescription = 'friends-forever';
     'plugins/jquery/jquery.slimscroll.min.js',
     'plugins/fastclick/fastclick.js',
     'plugins/adminlte/adminlte.min.js',
+    'plugins/dashboard/dashboard.js',
     
     ]); ?>
     <?= $this->fetch('meta') ?>

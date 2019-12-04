@@ -66,10 +66,23 @@ class UsersController extends AppController
     public function dashboard() {
     }
     public function profile() {
+         $id = $this->request->session()->read('Auth.User.id');
+         $user = $this->Users->get($id, []);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Your Profile Update Succefully'));
+                $this->redirect(['action' => 'profile']);
+            } else {
+                $this->Flash->error(__('Your Profile Can not be Update Try again.'));
+            }
+        }
 
+        $this->set(compact('user'));
+        $this->set('_serialize', ['user']);
     }
-    public function changepassword() {
-
+    function changepassword() {
+         
     }
     /**
      * View method

@@ -1,4 +1,3 @@
-
 <section class="content ">
 <div class="box box-warning">
   <div class="box-header with-border">
@@ -38,4 +37,3 @@
   <?= $this->Form->end() ?>
 </div>
 </section>
-
