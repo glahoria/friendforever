@@ -26,4 +26,15 @@
   color: white;
 }       
 .error{color:red !important; font-size: 15px;}
-       
+.view-button{
+  background: #60A616;
+  color: white;
+}
+.edit-button{
+  background: #F48F19;
+  color: white;
+}
+.btn-delete{
+  background: #C43112;
+  color: white;
+}       

@@ -12,13 +12,24 @@
           </div>
         </div>
   </div>
-  <?= $this->Form->create($user, ['id'=>'profileForm']) ?>
+
+  <?= $this->Form->create($user,['id'=>'registrationForm']) ?>
         <div class="box-body col-md-6">
           <div class="form-group">
-            <?= $this->Form->control('first_name',['class' => 'form-control','placeholder' => 'First Name']) ?>
+            <?= $this->Form->control(
+              'first_name',
+            [ 
+              'class' => 'form-control',
+              'placeholder' => 'First Name',
+            ]) ?>
           </div>
           <div class="form-group">
-            <?= $this->Form->control('email',[ 'class' => 'form-control','placeholder' => 'Email']) ?>
+            <?= $this->Form->control(
+              'email',
+            [ 
+              'class' => 'form-control',
+              'placeholder' => 'Email',
+            ]) ?>
           </div>
           </div>
         <div class="box-body col-md-6">
@@ -27,7 +38,7 @@
           </div>
           <div class="form-group">
             <?= $this->Form->control('phone',['class' => 'form-control','placeholder' => 'Phone']) ?>
-          </div>   
+          </div>
         </div>
         <div class="box-footer">
           <?= $this->Form->button(__('Save'),['class'=>'btn  pull-right mt-3 profile-button' ]) ?>
@@ -46,5 +57,41 @@
 
             }
         });
-    });
+
+            $('#registrationForm').validate({
+                rules:{
+                    first_name:{
+                        required:true,
+                        minlength:3       
+                    },
+                    last_name:{
+                        required:true,
+                        minlength:3       
+                    },
+                    email:{
+                        required:true,
+                        email:true       
+                    },
+                    phone:{
+                        required:true,
+                        maxlength:15
+                    }
+                },
+                messages:{
+                    first_name:{
+                        required:"please enter first name.",       
+                    },
+                    last_name:{
+                        required:"please enter last name.",       
+                    },
+                    email:{
+                        required:"please enter valid email.",      
+                    },
+                    phone:{
+                        required:"please select i agree.",
+                    },
+                },  
+            });            
+        });
+
 </script>

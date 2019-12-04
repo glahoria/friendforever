@@ -73,6 +73,7 @@ class UsersController extends AppController {
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
+				$this->Auth->setUser($user);
                 $this->Flash->success(__('Your profile has been updated.'));
 
                 return $this->redirect(['action' => 'profile']);
@@ -82,8 +83,22 @@ class UsersController extends AppController {
         $this->set(compact('user'));
     }
 
-    public function changepassword() {
+    public function changePassword() {
+         $id = $this->request->session()->read('Auth.User.id');
+         $user = $this->Users->get($id, []);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+			pr($this->request->getData());die;
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Your Password has been update succefully'));
+                $this->redirect(['action' => 'changePassword']);
+            } else {
+                $this->Flash->error(__('Password could not be changes, Plaes try again.'));
+            }
+        }
 
+        $this->set(compact('user'));
+        $this->set('_serialize', ['user']);
     }
 
     /**
