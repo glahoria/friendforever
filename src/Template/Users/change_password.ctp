@@ -1,4 +1,13 @@
-
+<style>
+  .form-control{
+    background-color:#ECECEC;
+    border-radius:1px;
+    border:1px solid #2E6A07;
+  }
+  .btn{
+    border-radius:1px;
+  }
+</style>
 <section class="content ">
 <div class="box box-warning">
   <div class="box-header with-border">

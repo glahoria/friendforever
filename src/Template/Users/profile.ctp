@@ -1,3 +1,13 @@
+<style>
+  .form-control{
+    background-color:#ECECEC;
+    border-radius:1px;
+    border:1px solid #2E6A07;
+  }
+  .btn{
+    border-radius:1px;
+  }
+</style>
 <section class="content">
 <div class="box box-warning">
   <div class="box-header with-border">
@@ -16,20 +26,10 @@
   <?= $this->Form->create($user,['id'=>'registrationForm']) ?>
         <div class="box-body col-md-6">
           <div class="form-group">
-            <?= $this->Form->control(
-              'first_name',
-            [ 
-              'class' => 'form-control',
-              'placeholder' => 'First Name',
-            ]) ?>
+              <?= $this->Form->control('first_name', [ 'class' => 'form-control', 'placeholder' => 'First Name']) ?>
           </div>
           <div class="form-group">
-            <?= $this->Form->control(
-              'email',
-            [ 
-              'class' => 'form-control',
-              'placeholder' => 'Email',
-            ]) ?>
+              <?= $this->Form->control('email', [ 'class' => 'form-control', 'placeholder' => 'Email']) ?>
           </div>
           </div>
         <div class="box-body col-md-6">
@@ -49,24 +49,13 @@
 </section>
 <script>
     $(function () {
-        $('#profileForm').validate({
-            rules:{
-
-            },
-            messages:{
-
-            }
-        });
-
-            $('#registrationForm').validate({
+        $('#registrationForm').validate({
                 rules:{
                     first_name:{
-                        required:true,
-                        minlength:3       
+                        required:true,       
                     },
                     last_name:{
-                        required:true,
-                        minlength:3       
+                        required:true,      
                     },
                     email:{
                         required:true,
@@ -74,7 +63,6 @@
                     },
                     phone:{
                         required:true,
-                        maxlength:15
                     }
                 },
                 messages:{
@@ -88,7 +76,7 @@
                         required:"please enter valid email.",      
                     },
                     phone:{
-                        required:"please select i agree.",
+                        required:"please select Phone.",
                     },
                 },  
             });            

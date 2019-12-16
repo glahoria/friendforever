@@ -26,11 +26,6 @@
           </a>
         </li>
         <li class="active">
-          <a href="<?= $this->Url->build(['controller'=>'Users', 'action'=>'profile']); ?>">
-            <i class="fa fa-user"></i> <span>Profile</span>
-          </a>
-        </li>
-        <li class="active">
           <a href="#">
             <i class="fa fa-users"></i> <span>Friends</span>
           </a>

@@ -4,6 +4,15 @@
  * @var \App\Model\Entity\User[]|\Cake\Collection\CollectionInterface $users
  */
 ?>
+<style>
+  .form-control{
+    border-radius:1px;
+    margin-bottom: 15px;
+  }
+  .btn{
+    border-radius:1px;
+  }
+</style>
 <section class="content">
 <div class="box box-warning">
   <div class="box-header with-border">

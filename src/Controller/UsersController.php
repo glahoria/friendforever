@@ -15,7 +15,7 @@ class UsersController extends AppController {
 
     public function initialize() {
         parent::initialize();
-        $this->Auth->allow(['contact', 'add']);
+        $this->Auth->allow(['contact', 'add', 'passwordEmail']);
 
     }
 
@@ -60,7 +60,8 @@ class UsersController extends AppController {
             $this->Flash->error(__('Your username or password was incorrect.'));
         }
     }
-
+    public function passwordEmail() {
+    }
     public function logout() {
         $this->redirect($this->Auth->logout());
     }
@@ -82,24 +83,30 @@ class UsersController extends AppController {
         }
         $this->set(compact('user'));
     }
-
-    public function changePassword() {
+      public function changePassword() {
          $id = $this->request->session()->read('Auth.User.id');
          $user = $this->Users->get($id, []);
         if ($this->request->is(['patch', 'post', 'put'])) {
-			pr($this->request->getData());die;
-            $user = $this->Users->patchEntity($user, $this->request->data);
+            //pr($this->request->getData());die;
+            //$object = new DefaultPasswordHasher;
+            //$changePassword = $object->check($this->request->data['current_password'], $password);
+            //if($this->Auth->user('password') == $changePassword)
+        //{
+        $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('Your Password has been update succefully'));
                 $this->redirect(['action' => 'changePassword']);
-            } else {
+           } else {
                 $this->Flash->error(__('Password could not be changes, Plaes try again.'));
-            }
+             }                          
+        //}
+            
         }
 
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
     }
+
 
     /**
      * View method
