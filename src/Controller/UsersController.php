@@ -16,7 +16,6 @@ class UsersController extends AppController {
     public function initialize() {
         parent::initialize();
         $this->Auth->allow(['contact', 'add', 'passwordEmail']);
-
     }
 
     /**
@@ -28,16 +27,7 @@ class UsersController extends AppController {
         $key = $this->request->getQuery('key');
 
         if (!empty($key)) {
-            $this->paginate = [
-                'conditions' => [
-                    'OR' => [
-                        'first_name LIKE' => '%' . $key . '%',
-                        'last_name LIKE'  => '%' . $key . '%',
-                        'email LIKE'      => '%' . $key . '%',
-                        'phone LIKE'      => '%' . $key . '%'
-                    ]
-                ]
-            ];
+            $this->paginate = ['conditions' => ['OR' => ['first_name LIKE' => '%' . $key . '%', 'last_name LIKE' => '%' . $key . '%', 'email LIKE' => '%' . $key . '%', 'phone LIKE' => '%' . $key . '%']]];
         }
         $users = $this->paginate($this->Users);
 
@@ -60,8 +50,60 @@ class UsersController extends AppController {
             $this->Flash->error(__('Your username or password was incorrect.'));
         }
     }
+
     public function passwordEmail() {
+        if ($this->request->is('post')) {
+            $email = $this->request->getData('email');
+            $user = $this->Users->find('all')->where(['email'=>$email])->first();
+            if(empty($user)){
+                $this->Flash->error(__('User does not exits.'));
+                return $this->redirect(['action'=>'passwordEmail']);
+            } else {
+                $token = uniqid();
+                $user->forgot_password_token = $token;
+
+                if($this->Users->save($user)){
+
+                    $options = [
+                        'template' => 'forgot_password',
+                        'to' => 'thindgurjeet366@gmail.com',
+                        'subject' => _('Forgot Password to ' . SITE_TITLE),
+                        'viewVars' => [
+                            'name' => $user->first_name,
+                            'url' => SITE_URL.'reset-password/'.$token
+                        ]
+                    ];
+
+                    $this->loadComponent('EmailManager');
+                    $this->EmailManager->sendEmail($options);
+                    //send Email
+                    $this->Flash->success(__('Send a link forgot password on your email.'));
+                }
+
+            }
+
+        }
+        $this->set(compact('user'));
     }
+
+    public function resetPassword($token = null) {
+        if ($token != null) {
+            $user = $this->Users->find('all')->where(['forgot_password_token'=>$token])->first();
+            if(empty($user)){
+                $this->Flash->error(__('Invalid Token.'));
+                return $this->redirect(['action'=>'login']);
+            } else {
+
+                $this->set('token', $token);
+            }
+
+        } else {
+            $this->Flash->error(__('Invalid Token.'));
+            return $this->redirect(['action'=>'login']);
+        }
+        $this->set(compact('user'));
+    }
+
     public function logout() {
         $this->redirect($this->Auth->logout());
     }
@@ -74,7 +116,7 @@ class UsersController extends AppController {
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
-				$this->Auth->setUser($user);
+                $this->Auth->setUser($user);
                 $this->Flash->success(__('Your profile has been updated.'));
 
                 return $this->redirect(['action' => 'profile']);
@@ -83,24 +125,25 @@ class UsersController extends AppController {
         }
         $this->set(compact('user'));
     }
-      public function changePassword() {
-         $id = $this->request->session()->read('Auth.User.id');
-         $user = $this->Users->get($id, []);
+
+    public function changePassword() {
+        $id = $this->request->session()->read('Auth.User.id');
+        $user = $this->Users->get($id, []);
         if ($this->request->is(['patch', 'post', 'put'])) {
             //pr($this->request->getData());die;
             //$object = new DefaultPasswordHasher;
             //$changePassword = $object->check($this->request->data['current_password'], $password);
             //if($this->Auth->user('password') == $changePassword)
-        //{
-        $user = $this->Users->patchEntity($user, $this->request->data);
+            //{
+            $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('Your Password has been update succefully'));
                 $this->redirect(['action' => 'changePassword']);
-           } else {
+            } else {
                 $this->Flash->error(__('Password could not be changes, Plaes try again.'));
-             }                          
-        //}
-            
+            }
+            //}
+
         }
 
         $this->set(compact('user'));
@@ -116,9 +159,7 @@ class UsersController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null) {
-        $user = $this->Users->get($id, [
-            'contain' => []
-        ]);
+        $user = $this->Users->get($id, ['contain' => []]);
 
         $this->set('user', $user);
     }
@@ -157,9 +198,7 @@ class UsersController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null) {
-        $user = $this->Users->get($id, [
-            'contain' => []
-        ]);
+        $user = $this->Users->get($id, ['contain' => []]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {

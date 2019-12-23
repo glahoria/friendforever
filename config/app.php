@@ -9,6 +9,7 @@ use Cake\Mailer\Transport\MailTransport;
 
 define('SITE_URL', 'http://localhost/friendsforever/');
 define('SITE_TITLE', 'Friends Forever');
+define('FROM_EMAIL', 'slahoria34@gmail.com');
 
 return [
     /**
