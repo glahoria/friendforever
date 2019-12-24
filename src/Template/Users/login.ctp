@@ -6,7 +6,7 @@
                 <?= $this->Form->control('email') ?>
                 <?= $this->Form->control('password') ?>
                 <?= $this->Form->button(__('Login'),['class'=>'btn btn-primary form-control mt-3']) ?>
-                <?= $this->Html->link('Forgot password',['controller'=>'users','action'=>'password_email']) ?>
+                <?= $this->Html->link('Forgot password',['controller'=>'users','action'=>'forgot_password']) ?>
             </fieldset>
 
         <?= $this->Form->end() ?>

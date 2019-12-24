@@ -15,7 +15,7 @@ class UsersController extends AppController {
 
     public function initialize() {
         parent::initialize();
-        $this->Auth->allow(['contact', 'add', 'passwordEmail']);
+        $this->Auth->allow(['contact', 'add', 'forgotPassword', 'resetPassword']);
     }
 
     /**
@@ -50,14 +50,13 @@ class UsersController extends AppController {
             $this->Flash->error(__('Your username or password was incorrect.'));
         }
     }
-
-    public function passwordEmail() {
+    public function forgotPassword() {
         if ($this->request->is('post')) {
             $email = $this->request->getData('email');
             $user = $this->Users->find('all')->where(['email'=>$email])->first();
             if(empty($user)){
                 $this->Flash->error(__('User does not exits.'));
-                return $this->redirect(['action'=>'passwordEmail']);
+                return $this->redirect(['action'=>'forgot_password']);
             } else {
                 $token = uniqid();
                 $user->forgot_password_token = $token;
@@ -73,7 +72,7 @@ class UsersController extends AppController {
                             'url' => SITE_URL.'reset-password/'.$token
                         ]
                     ];
-
+                    // pr($options); die;
                     $this->loadComponent('EmailManager');
                     $this->EmailManager->sendEmail($options);
                     //send Email
