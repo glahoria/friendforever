@@ -69,7 +69,7 @@ class UsersController extends AppController {
                         'subject' => _('Forgot Password to ' . SITE_TITLE),
                         'viewVars' => [
                             'name' => $user->first_name,
-                            'url' => SITE_URL.'reset-password/'.$token
+                            'url' => SITE_URL.'users/reset-password/'.$token
                         ]
                     ];
                     // pr($options); die;
@@ -86,21 +86,47 @@ class UsersController extends AppController {
     }
 
     public function resetPassword($token = null) {
-        if ($token != null) {
-            $user = $this->Users->find('all')->where(['forgot_password_token'=>$token])->first();
-            if(empty($user)){
-                $this->Flash->error(__('Invalid Token.'));
-                return $this->redirect(['action'=>'login']);
-            } else {
+		if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->findByForgotPasswordToken($this->request->data['forgot_password_token'])->first();
+				if ($user) {
+					/*
+					 * Restrict user to edit only while listed fields
+					 */
+					$editableFields = ['password', 'verify_password', 'forgot_password_token'];
+					foreach ($this->request->getData() as $field => $val) {
+						if (!in_array($field, $editableFields)) {
+							unset($this->request->getData()[$field]);
+						}
+					}
+					$user['forgot_password_token'] = "";
+					$user = $this->Users->patchEntity($user, $this->request->getData());
+					if ($this->Users->save($user)) {
+						$this->Flash->success(__('Your password has been updated.'));
+						return $this->redirect(['action'=>'login']);
+					} else {
+						$this->Flash->error(__('Something went wrong. Please, try again.'));
+						
+						return $this->redirect(['action'=>'resetPassword', $this->request->data['forgot_password_token']]);
+					}
+				}
+            } 
+				if ($token != null) {
+					$user = $this->Users->find('all')->where(['forgot_password_token'=>$token])->first();
+					if(empty($user)){
+						$this->Flash->error(__('Invalid Token.'));
+						return $this->redirect(['action'=>'login']);
+					} else {
 
-                $this->set('token', $token);
-            }
+						$this->set('token', $token);
+					}
 
-        } else {
-            $this->Flash->error(__('Invalid Token.'));
-            return $this->redirect(['action'=>'login']);
-        }
-        $this->set(compact('user'));
+				} else {
+					$this->Flash->error(__('Invalid Token.'));
+					return $this->redirect(['action'=>'login']);
+				}
+				$this->set(compact('user'));
+
+        
     }
 
     public function logout() {

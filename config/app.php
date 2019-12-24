@@ -209,7 +209,7 @@ return [
      */
     'EmailTransport' => [
         'default' => [
-            'className' => MailTransport::class,
+            'className' => 'Smtp',
             /*
              * The following keys are used in SMTP transports:
              */

@@ -4,6 +4,8 @@
         <h3 class="text-center" style="font-weight: bold; color: orange; font-size: 30px;">Reset Password</h3>
     <?php
         echo $this->Form->input('password', ['required' => true, 'autofocus' => true]); ?>
+         <?php
+        echo $this->Form->input('forgot_password_token', ['type'=>'hidden', 'required' => true, 'value' => $token]); ?>
     <?php 
         echo $this->Form->input('confirm_password', ['type' => 'password', 'required' => true]);
     ?>
