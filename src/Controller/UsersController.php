@@ -134,7 +134,8 @@ class UsersController extends AppController {
 
     public function dashboard() {
     }
-
+    public function wall() {
+    }
     public function profile() {
         $user = $this->Users->get($this->Auth->user('id'));
         if ($this->request->is(['patch', 'post', 'put'])) {
