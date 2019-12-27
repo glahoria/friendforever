@@ -1,0 +1,3 @@
+sudo bin/cake bake migration Createposts user_id:integer content:text post_type:string no_of_comments:integer no_of_likes:integer status:boolean created modified
+sudo bin/cake bake migration Createcomments parent_id:integer post_id:integer user_id:integer comment:text created modified 
+sudo bin/cake bake migration Createlikes  post_id:integer user_id:integer like:boolean created modified  
