@@ -44,7 +44,7 @@ $cakeDescription = 'friends-forever';
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 </head>
-<body>
+<body style="background: #C0D0D6;">
     <?= $this->Flash->render() ?>
     <?= $this->element('top_navbar') ?>
     <div class="row">

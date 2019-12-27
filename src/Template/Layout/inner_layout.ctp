@@ -76,7 +76,7 @@ $cakeDescription = 'friends-forever';
 
     <?= $this->element('inner_navigation') ?>
     <?= $this->element('inner_sidebar') ?>
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="background: #C0D0D6;">
         <?= $this->fetch('content') ?>
     </div>
     <footer class="main-footer">

@@ -1,6 +1,6 @@
 <div class=" login col-md-4 col-lg-4 m-auto">
     <?php echo $this->Form->create('user', ['id'=>'resetPassword']) ?>
-    <fieldset style="background-color: white;">
+    <fieldset style="background-color: white;box-shadow: 0 10px 15px rgba(0,0,0,0.3);">
         <h3 class="text-center" style="font-weight: bold; color: orange; font-size: 30px;">Reset Password</h3>
     <?php
         echo $this->Form->input('password', ['required' => true, 'autofocus' => true]); ?>

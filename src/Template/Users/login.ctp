@@ -1,7 +1,7 @@
 
 <div class="login col-md-4 col-lg-4 m-auto">
         <?= $this->Form->create('user') ?>
-            <fieldset>
+            <fieldset style="background-color: white;box-shadow: 0 10px 15px rgba(0,0,0,0.3);">
                 <h1 class="text-center "><?= __('Login') ?></h1>
                 <?= $this->Form->control('email') ?>
                 <?= $this->Form->control('password') ?>

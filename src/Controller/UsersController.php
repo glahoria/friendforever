@@ -56,7 +56,7 @@ class UsersController extends AppController {
             $user = $this->Users->find('all')->where(['email'=>$email])->first();
             if(empty($user)){
                 $this->Flash->error(__('User does not exits.'));
-                return $this->redirect(['action'=>'forgot_password']);
+                return $this->redirect(['action'=>'forgotPassword']);
             } else {
                 $token = uniqid();
                 $user->forgot_password_token = $token;
@@ -69,14 +69,14 @@ class UsersController extends AppController {
                         'subject' => _('Forgot Password to ' . SITE_TITLE),
                         'viewVars' => [
                             'name' => $user->first_name,
-                            'url' => SITE_URL.'users/reset-password/'.$token
+                            'url' => SITE_URL.'users/reset-Password/'.$token
                         ]
                     ];
                     // pr($options); die;
                     $this->loadComponent('EmailManager');
                     $this->EmailManager->sendEmail($options);
                     //send Email
-                    $this->Flash->success(__('Send a link forgot password on your email.'));
+                    $this->Flash->success(__('Send a forgot password link  on your email.'));
                 }
 
             }
@@ -84,7 +84,6 @@ class UsersController extends AppController {
         }
         $this->set(compact('user'));
     }
-
     public function resetPassword($token = null) {
 		if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->findByForgotPasswordToken($this->request->data['forgot_password_token'])->first();
@@ -163,7 +162,7 @@ class UsersController extends AppController {
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('Your Password has been update succefully'));
-                $this->redirect(['action' => 'changePassword']);
+                return $this->redirect(['action' => 'profile']);
             } else {
                 $this->Flash->error(__('Password could not be changes, Plaes try again.'));
             }
