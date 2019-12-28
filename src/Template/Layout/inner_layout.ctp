@@ -39,7 +39,7 @@ $cakeDescription = 'friends-forever';
     'plugins/jquery-jvectormap/jquery-jvectormap',
     'plugins/bootstrap/bootstrap-datepicker.min',
     'plugins/daterangepicker/daterangepicker',
-    //'plugins/bootstrap/bootstrap3-wysihtml5.min',
+    'plugins/bootstrap/bootstrap3-wysihtml5.min',
     'plugins/bootstrap/bootstrap.min',
     
     

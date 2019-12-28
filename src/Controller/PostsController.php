@@ -63,6 +63,9 @@ class PostsController extends AppController
         $users = $this->Posts->Users->find('list', ['limit' => 200]);
         $this->set(compact('post', 'users'));
     }
+    public function wall()
+    {
+    }
 
     /**
      * Edit method
