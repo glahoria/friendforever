@@ -23,7 +23,7 @@
             <?= $this->Form->create('user') ?>
                 <div>
                 	<textarea class="textarea" placeholder="Message"
-                            style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                            style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;border-radius:5px;"></textarea>
                 </div>
                 <div class="box-footer clearfix">
                     <button type="button" class="pull-right btn post-button" id="uploadPost">Post<i class="fa fa-arrow-circle-right"></i></button>

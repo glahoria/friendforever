@@ -65,6 +65,19 @@ class PostsController extends AppController
     }
     public function wall()
     {
+        $post = $this->Posts->newEntity();
+        if ($this->request->is('post')) {
+            $post = $this->Posts->patchEntity($post, $this->request->getData());
+            //pr($post); die;
+            if ($this->Posts->save($post)) {
+                $this->Flash->success(__('The post has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The post could not be saved. Please, try again.'));
+        }
+        $users = $this->Posts->Users->find('list', ['limit' => 200]);
+        $this->set(compact('post', 'users'));
     }
 
     /**

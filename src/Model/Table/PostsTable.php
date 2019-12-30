@@ -66,10 +66,10 @@ class PostsTable extends Table
             ->integer('id')
             ->allowEmptyString('id', null, 'create');
 
-        $validator
-            ->scalar('content')
-            ->requirePresence('content', 'create')
-            ->notEmptyString('content');
+        // $validator
+        //     ->scalar('content')
+        //     ->requirePresence('content', 'create')
+        //     ->notEmptyString('content');
 
         $validator
             ->scalar('post_type')
