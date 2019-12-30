@@ -21,7 +21,7 @@
     <fieldset>
         <legend><?= __('Add Post') ?></legend>
         <?php
-            echo $this->Form->control('user_id', ['options' => $users,'type'=>'hidden']);
+            echo $this->Form->control('user_id', ['options' => $users]);
             echo $this->Form->textarea('content');
             echo $this->Form->control('post_type');
             echo $this->Form->control('no_of_comments');

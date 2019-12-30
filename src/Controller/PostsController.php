@@ -69,7 +69,8 @@ class PostsController extends AppController
         if ($this->request->is('post')) {
             $post = $this->Posts->patchEntity($post, $this->request->getData());
             //pr($post); die;
-            if ($this->Posts->save($post)) {
+            $post->user_id = $this->Auth->user('id');
+           if ($this->Posts->save($post)) {
                 $this->Flash->success(__('The post has been saved.'));
 
                 return $this->redirect(['action' => 'index']);

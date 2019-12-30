@@ -71,26 +71,13 @@ class PostsTable extends Table
         //     ->requirePresence('content', 'create')
         //     ->notEmptyString('content');
 
-        $validator
-            ->scalar('post_type')
-            ->maxLength('post_type', 255)
-            ->requirePresence('post_type', 'create')
-            ->notEmptyString('post_type');
+//        $validator
+//            ->scalar('post_type')
+//            ->maxLength('post_type', 255)
+//            ->requirePresence('post_type', 'create')
+//            ->notEmptyString('post_type');
 
-        $validator
-            ->integer('no_of_comments')
-            ->requirePresence('no_of_comments', 'create')
-            ->notEmptyString('no_of_comments');
 
-        $validator
-            ->integer('no_of_likes')
-            ->requirePresence('no_of_likes', 'create')
-            ->notEmptyString('no_of_likes');
-
-        $validator
-            ->boolean('status')
-            ->requirePresence('status', 'create')
-            ->notEmptyString('status');
 
         return $validator;
     }
