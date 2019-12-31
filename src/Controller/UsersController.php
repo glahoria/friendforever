@@ -55,7 +55,7 @@ class UsersController extends AppController {
             $email = $this->request->getData('email');
             $user = $this->Users->find('all')->where(['email'=>$email])->first();
             if(empty($user)){
-                $this->Flash->error(__('User does not exits.'));
+                $this->Flash->error(__('Please enter valid email.'));
                 return $this->redirect(['action'=>'forgotPassword']);
             } else {
                 $token = uniqid();
