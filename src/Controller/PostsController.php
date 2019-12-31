@@ -17,15 +17,20 @@ class PostsController extends AppController
      *
      * @return \Cake\Http\Response|null
      */
+      // public  $name = 'post';
+      // public  $components = array('RequestHandler'); 
     public function index()
-    {
-        $this->paginate = [
-            'contain' => ['Users']
-        ];
-        $posts = $this->paginate($this->Posts);
+     {
+         $this->paginate = [
+             'contain' => ['Users']
+         ];
+         $posts = $this->paginate($this->Posts);
 
-        $this->set(compact('posts'));
-    }
+         $this->set(compact('posts'));
+     }
+     //  public function wall(){
+     //    $this->layout='post';
+     // }
 
     /**
      * View method
@@ -49,37 +54,53 @@ class PostsController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
     public function add()
-    {
-        $post = $this->Posts->newEntity();
-        if ($this->request->is('post')) {
-            $post = $this->Posts->patchEntity($post, $this->request->getData());
-            if ($this->Posts->save($post)) {
-                $this->Flash->success(__('The post has been saved.'));
+     {
+         $post = $this->Posts->newEntity();
+         if ($this->request->is('post')) {
+             $post = $this->Posts->patchEntity($post, $this->request->getData());
+             if ($this->Posts->save($post)) {
+                 $this->Flash->success(__('The post has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The post could not be saved. Please, try again.'));
-        }
-        $users = $this->Posts->Users->find('list', ['limit' => 200]);
-        $this->set(compact('post', 'users'));
-    }
+                 return $this->redirect(['action' => 'index']);
+             }
+             $this->Flash->error(__('The post could not be saved. Please, try again.'));
+         }
+         $users = $this->Posts->Users->find('list', ['limit' => 200]);
+         $this->set(compact('post', 'users'));
+     }
+   //  public function wall()
+   //   {
+   //        $this->autoRender=false;
+   // if($this->RequestHandler->isAjax()){
+   //    Configure::write('debug', 0);
+   // }
+   //   if(!empty($this->data)){
+   //      if($this->Posts->save($this->data)){  
+   //    echo 'Record has been added';
+   //      }else{
+   //        echo 'Error while adding record';
+   //      }
+   //   }
+   //       $users = $this->Posts->Users->find('list', ['limit' => 200]);
+   //       $this->set(compact('post', 'users'));
+   //   }
     public function wall()
-    {
-        $post = $this->Posts->newEntity();
-        if ($this->request->is('post')) {
-            $post = $this->Posts->patchEntity($post, $this->request->getData());
-            //pr($post); die;
-            $post->user_id = $this->Auth->user('id');
-           if ($this->Posts->save($post)) {
-                $this->Flash->success(__('The post has been saved.'));
+      {
+         $post = $this->Posts->newEntity();
+         if ($this->request->is('post')) {
+             $post = $this->Posts->patchEntity($post, $this->request->getData());
+             //pr($post); die;
+             $post->user_id = $this->Auth->user('id');
+            if ($this->Posts->save($post)) {
+                 $this->Flash->success(__('The post has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The post could not be saved. Please, try again.'));
-        }
-        $users = $this->Posts->Users->find('list', ['limit' => 200]);
-        $this->set(compact('post', 'users'));
-    }
+                 return $this->redirect(['action' => 'wall']);
+             }
+             $this->Flash->error(__('The post could not be saved. Please, try again.'));
+         }
+         $users = $this->Posts->Users->find('list', ['limit' => 200]);
+         $this->set(compact('post', 'users'));
+     }
 
     /**
      * Edit method
