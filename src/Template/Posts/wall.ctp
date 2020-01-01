@@ -26,16 +26,24 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#savePost').submit(function(){
-            var formData = $(this).serialize();
-            var formUrl = $(this).attr('action');
-            // var post = $('#content').val();
+            var postData = $(this).serialize();
+            var Url = $(this).attr('action');
+            var post = $('#content').val();
+            if(post==''){
+               
+            }else{
             $.ajax({
                 type: 'POST',
-                url: formUrl,
-                data: formData,
+                url: Url,
+                data: postData,
+
             }); 
-            return false;
+            }
+            this.reset();
+             return false;
+           
         });
+
     });
 </script>
 
