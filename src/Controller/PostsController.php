@@ -68,22 +68,22 @@ class PostsController extends AppController
          $users = $this->Posts->Users->find('list', ['limit' => 200]);
          $this->set(compact('post', 'users'));
      }
-   //  public function wall()
-   //   {
-   //        $this->autoRender=false;
-   // if($this->RequestHandler->isAjax()){
-   //    Configure::write('debug', 0);
-   // }
-   //   if(!empty($this->data)){
-   //      if($this->Posts->save($this->data)){  
-   //    echo 'Record has been added';
-   //      }else{
-   //        echo 'Error while adding record';
-   //      }
-   //   }
-   //       $users = $this->Posts->Users->find('list', ['limit' => 200]);
-   //       $this->set(compact('post', 'users'));
-   //   }
+    // public function wall()
+    //   {
+    //        $this->autoRender=false;
+    // if($this->RequestHandler->isAjax()){
+    //    Configure::write('debug', 0);
+    // }
+    //   if(!empty($this->data)){
+    //      if($this->Posts->save($this->data)){  
+    //    echo 'Record has been added';
+    //      }else{
+    //        echo 'Error while adding record';
+    //      }
+    //   }
+    //       $users = $this->Posts->Users->find('list', ['limit' => 200]);
+    //       $this->set(compact('post', 'users'));
+    //   }
     public function wall()
       {
          $post = $this->Posts->newEntity();

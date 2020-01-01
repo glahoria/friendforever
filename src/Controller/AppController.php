@@ -67,6 +67,20 @@ class AppController extends Controller
          * see https://book.cakephp.org/3.0/en/controllers/components/security.html
          */
         //$this->loadComponent('Security');
+
     }
+    // public function beforeFilter(Event $event)
+    // {
+    //     if ($this->RequestHandler->accepts('html')) {
+    //         // Execute code only if client accepts an HTML (text/html)
+    //         // response.
+    //     } elseif ($this->RequestHandler->accepts('xml')) {
+    //         // Execute XML-only code
+    //     }
+    //     if ($this->RequestHandler->accepts(['xml', 'rss', 'atom'])) {
+    //         // Executes if the client accepts any of the above: XML, RSS
+    //         // or Atom.
+    //     }
+    // }
     
 }

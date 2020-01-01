@@ -11,7 +11,7 @@
             <h3 class="box-title">Create Post</h3>
         </div>
         <div class="box-body">
-            <?= $this->Form->create($post,['id'=>'savePost','action'=>'wall']) ?>
+            <?= $this->Form->create('',['id'=>'savePost','action'=>'wall']) ?>
                 <div>
                     <?= $this->Form->textarea('content', ['type' => 'textarea', 'label' => false, 'placeholder'=> 'what is your mind...', 'escape' => false,'class' =>'comment', 'style' => 'width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;border-radius:5px;','id'=>'content']) ?>
                 </div>
@@ -28,16 +28,11 @@
         $('#savePost').submit(function(){
             var formData = $(this).serialize();
             var formUrl = $(this).attr('action');
+            // var post = $('#content').val();
             $.ajax({
                 type: 'POST',
                 url: formUrl,
                 data: formData,
-                success: function(data,textStatus,xhr){
-                        alert(data);
-                },
-                error: function(xhr,textStatus,error){
-                        alert(textStatus);
-                }
             }); 
             return false;
         });
