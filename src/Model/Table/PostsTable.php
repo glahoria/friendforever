@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
@@ -24,16 +25,14 @@ use Cake\Validation\Validator;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class PostsTable extends Table
-{
+class PostsTable extends Table {
     /**
      * Initialize method
      *
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->setTable('posts');
@@ -42,16 +41,9 @@ class PostsTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Users', [
-            'foreignKey' => 'user_id',
-            'joinType' => 'INNER'
-        ]);
-        $this->hasMany('Comments', [
-            'foreignKey' => 'post_id'
-        ]);
-        $this->hasMany('Likes', [
-            'foreignKey' => 'post_id'
-        ]);
+        $this->belongsTo('Users', ['foreignKey' => 'user_id', 'joinType' => 'LEFT']);
+        $this->hasMany('Comments', ['foreignKey' => 'post_id']);
+        $this->hasMany('Likes', ['foreignKey' => 'post_id']);
     }
 
     /**
@@ -60,23 +52,19 @@ class PostsTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
-        $validator
-            ->integer('id')
-            ->allowEmptyString('id', null, 'create');
+    public function validationDefault(Validator $validator) {
+        $validator->integer('id')->allowEmptyString('id', null, 'create');
 
         // $validator
         //     ->scalar('content')
         //     ->requirePresence('content', 'create')
         //     ->notEmptyString('content');
 
-//        $validator
-//            ->scalar('post_type')
-//            ->maxLength('post_type', 255)
-//            ->requirePresence('post_type', 'create')
-//            ->notEmptyString('post_type');
-
+        //        $validator
+        //            ->scalar('post_type')
+        //            ->maxLength('post_type', 255)
+        //            ->requirePresence('post_type', 'create')
+        //            ->notEmptyString('post_type');
 
 
         return $validator;
@@ -89,8 +77,7 @@ class PostsTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
-    {
+    public function buildRules(RulesChecker $rules) {
         $rules->add($rules->existsIn(['user_id'], 'Users'));
 
         return $rules;

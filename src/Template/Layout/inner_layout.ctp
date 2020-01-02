@@ -50,8 +50,8 @@ $cakeDescription = 'friends-forever';
     'plugins/jquery/jquery-ui.min.js',
     'plugins/bootstrap/bootstrap.min.js',
     'plugins/raphael/raphael.min.js',
-    'plugins/morris/morris.min.js',
-    'plugins/jquery/jquery.sparkline.min.js',
+    //'plugins/morris/morris.min.js',
+    //'plugins/jquery/jquery.sparkline.min.js',
     'plugins/jquery/jquery-jvectormap-1.2.2.min.js',
     'plugins/jquery/jquery-jvectormap-world-mill-en.js',
     'plugins/jquery/jquery.knob.min.js',
@@ -62,7 +62,7 @@ $cakeDescription = 'friends-forever';
     'plugins/jquery/jquery.slimscroll.min.js',
     'plugins/fastclick/fastclick.js',
     'plugins/adminlte/adminlte.min.js',
-    'plugins/dashboard/dashboard.js',
+    //'plugins/dashboard/dashboard.js',
     
     ]); ?>
     <?= $this->fetch('meta') ?>
