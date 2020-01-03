@@ -6,14 +6,14 @@
     }
 </style>
 <section class="content">
-    <div class="box box-info">
-        <div class="box-header">
+    <div class="box box-success">
+        <!-- <div class="box-header" style="background: #B8BFC5;color: black">
             <h3 class="box-title">Create Post</h3>
-        </div>
+        </div> -->
         <div class="box-body">
-            <?= $this->Form->create('', ['id' => 'savePost', 'action' => 'wall']) ?>
+            <?= $this->Form->create('', ['id' => 'savePost']) ?>
             <div>
-                <?= $this->Form->textarea('content', ['type' => 'textarea', 'label' => false, 'placeholder' => 'what is your mind...', 'escape' => false, 'class' => 'comment', 'style' => 'width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;border-radius:5px;', 'id' => 'content']) ?>
+                <?= $this->Form->textarea('content', ['type' => 'textarea', 'label' => false, 'placeholder' => 'what is in your mind...', 'escape' => false, 'class' => 'comment', 'style' => 'width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;', 'id' => 'content']) ?>
             </div>
 
             <div class="box-footer clearfix">
@@ -36,7 +36,7 @@
     $(document).ready(function () {
         $('#savePost').submit(function () {
             var postData = $(this).serialize();
-            var post = $('#content').val();
+            var post = $('#content').val(); 
             if (post == '') {
 
             } else {
@@ -47,23 +47,27 @@
                     dataType: "JSON",
                     success: function (resp) {
                         var post = resp.post;
-                        var p = `<div class="col-md-12 p-5 box-footer" style="padding: 50px;">
-                                        <h4 class="color-primary">
+                        var p = `<section class="content">
+                                    <div class="col-md-12 p-5 box-footer" style="padding: 50px;">
+                                        <h4 class="text-primary" style="text-transform:uppercase; font-weight:bold; ">
                                                 <span class="pull-left">
                                                     ${post.user.first_name} ${post.user.last_name}
                                                 </span>
-
+                                                <span class="pull-right" style="color:#939DA5">
+                                                    <i class="fa fa-ellipsis-v"></i>
+                                                </span>
                                         </h4><br /><br />
-                                        <p>${post.content}</p>
+                                        <p class="message">${post.content}</p>
                                         <br/>
                                         <p style="font-size: 16px;">
-                                            <span title="No. of Likes"><i class="fa fa-thumbs-up"></i> (${post.no_of_likes}) </span>
-                                            <span title="No. of Comments"><i class="fa fa-comment"></i> (${post.no_of_comments}) </span>
-                                            <span class="pull-right" style="color: #999999">
+                                            <span title="No. of Likes" style="color:#2C6FAE;"><i class="fa fa-thumbs-o-up"></i> ${post.no_of_likes} </span>
+                                            <span title="No. of Comments" style="color:red;"><i class="fa fa-comment-o"></i> ${post.no_of_comments} </span>
+                                            <small class="text-muted pull-right" style="color: #999999"><i class="fa fa-clock-o"></i>
                                                     ${post.created}
-                                                </span>
+                                                </small>
                                         </p>
-                                    </div>`;
+                                    </div>
+                                </section>`;
 
                         $('#latestPosts').prepend(p);
                     }
@@ -91,24 +95,25 @@
                     $('#postLoader').fadeOut();
                     if (resp.posts.length > 0) {
                         $.each(resp.posts, function (ind, post) {
-                            console.log(post);
-                            var p = `<div class="col-md-12 p-5 box-footer" style="padding: 50px;">
-                                        <h4 class="color-primary">
+                            // console.log(post);
+                            var p = `<section class="content">
+                                        <div class="col-md-12 p-5 box-footer" style="padding: 50px;">
+                                        <h4 class="text-primary" style="text-transform:uppercase; font-weight:bold; ">
                                                 <span class="pull-left">
                                                     ${post.user.first_name} ${post.user.last_name}
                                                 </span>
-
                                         </h4><br /><br />
-                                        <p>${post.content}</p>
+                                        <p >${post.content}</p>
                                         <br/>
-                                        <p style="font-size: 16px;">
-                                            <span title="No. of Likes"><i class="fa fa-thumbs-up"></i> (${post.no_of_likes}) </span>
-                                            <span title="No. of Comments"><i class="fa fa-comment"></i> (${post.no_of_comments}) </span>
-                                            <span class="pull-right" style="color: #999999">
+                                        <p style="font-size: 16px; color:red;">
+                                            <span title="No. of Likes" style="color:#2C6FAE;"><i class="fa fa-thumbs-o-up"></i> ${post.no_of_likes} </span>
+                                            <span title="No. of Comments" style="color:red;"><i class="fa fa-comment-o"></i> ${post.no_of_comments} </span>
+                                            <small class="text-muted pull-right" style="color: #999999"><i class="fa fa-clock-o"></i>
                                                     ${post.created}
-                                                </span>
+                                            </small>
                                         </p>
-                                    </div>`;
+                                        </div>
+                                    </section>`;
 
                             $('#latestPosts').append(p);
 
@@ -118,6 +123,7 @@
 
             });
         }
+        
 
     });
 </script>

@@ -1,3 +1,8 @@
+users table
+sudo bin/cake bake migration CreateUsers first_name:string last_name:string reporting_name:string email:string reporting_email:string password:string forgot_password_token:string image_id:biginteger phone:string address:string city_id:integer state_id:integer zip:string role:string registration_steps_done:integer active:boolean no_of_apartments:biginteger no_of_customers:biginteger created modified
+posts table
 sudo bin/cake bake migration Createposts user_id:integer content:text post_type:string no_of_comments:integer no_of_likes:integer status:boolean created modified
+comments table
 sudo bin/cake bake migration Createcomments parent_id:integer post_id:integer user_id:integer comment:text created modified 
+likes table
 sudo bin/cake bake migration Createlikes  post_id:integer user_id:integer like:boolean created modified  
