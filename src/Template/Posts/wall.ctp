@@ -23,7 +23,8 @@
         </div>
         <div id="latestPosts" class="row">
         </div>
-        <div id="postLoader"><h4 class="text-center" style="padding: 20px;"><i class="fa fa-spin fa-spinner"></i> Loading ...</h4></div>
+        <div id="postLoader"><h4 class="text-center" style="padding: 20px;"><i class="fa fa-spin fa-spinner"></i>
+                Loading ...</h4></div>
         <!--        <div class="row">-->
         <!--            <div class="col-md-12"><button class="btn btn-primary w-100" style="width: 100%;"><i class="fa fa-refresh"></i> Load More</button> </div>-->
         <!--        </div>-->
@@ -36,7 +37,7 @@
     $(document).ready(function () {
         $('#savePost').submit(function () {
             var postData = $(this).serialize();
-            var post = $('#content').val(); 
+            var post = $('#content').val();
             if (post == '') {
 
             } else {
@@ -65,7 +66,12 @@
                                             <small class="text-muted pull-right" style="color: #999999"><i class="fa fa-clock-o"></i>
                                                     ${post.created}
                                                 </small>
-                                        </p>
+                                        </p><br />
+                                        <div>
+                                          <span class="pull-left" style="color:#2C6FAE; font-size: 25px;"> <i class="fa fa-thumbs-o-up"></i></span>
+                                          <span class="pull-left" style="color:#2C6FAE; font-size: 25px;"> <i class="fa fa-thumbs-o-up"></i></span>
+                                        </div>
+
                                     </div>
                                 </section>`;
 
@@ -105,13 +111,16 @@
                                         </h4><br /><br />
                                         <p >${post.content}</p>
                                         <br/>
-                                        <p style="font-size: 16px; color:red;">
-                                            <span title="No. of Likes" style="color:#2C6FAE;"><i class="fa fa-thumbs-o-up"></i> ${post.no_of_likes} </span>
+                                        <p style=" color:red;">
+                                            <span title="No. of Likes" class="like-me" id="like_${post.id}" style="color:#2C6FAE; font-size: 24px; cursor: pointer;" ><i class="fa fa-thumbs-o-up"></i> <span id="like_count_${post.id}">${post.no_of_likes} </span></span>
                                             <span title="No. of Comments" style="color:red;"><i class="fa fa-comment-o"></i> ${post.no_of_comments} </span>
                                             <small class="text-muted pull-right" style="color: #999999"><i class="fa fa-clock-o"></i>
                                                     ${post.created}
                                             </small>
-                                        </p>
+                                        </p><div>
+                                          <span class="pull-left" style="color:#2C6FAE; font-size: 40px;">Like</span>
+                                          <span class="pull-left" style="color:black; font-size: 40px;margin-left: 15px;"> Comment</i></span>
+                                        </div>
                                         </div>
                                     </section>`;
 
@@ -123,7 +132,27 @@
 
             });
         }
-        
+
+        $('#latestPosts').on('click', '.like-me', function (e) {
+            e.preventDefault();
+            var id = $(this).attr('id').split('_')[1];
+            var action = $(this).children('i').hasClass('fa-thumbs-o-up') ? "like" : "unlike";
+            $.ajax({
+                type: 'GET',
+                url: '<?= SITE_URL; ?>posts/like',
+                dataType: "JSON",
+                data: {id: id, action: action},
+                beforeSend: function () {
+                    $('#postLoader').show();
+                },
+                success: function (resp) {
+
+                }
+            });
+
+
+        })
+
 
     });
 </script>
