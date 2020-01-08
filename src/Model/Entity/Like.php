@@ -30,7 +30,7 @@ class Like extends Entity
     protected $_accessible = [
         'post_id' => true,
         'user_id' => true,
-        'like' => true,
+        'like_type' => true,
         'created' => true,
         'modified' => true,
         'post' => true,

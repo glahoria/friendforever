@@ -28,7 +28,13 @@ class PostsController extends AppController {
 
 
     public function getPosts() {
-        $posts = $this->Posts->find()->contain(['Users'])->order(['Posts.created'=>'DESC'])->all();
+        $posts = $this->Posts->find()
+            ->contain([
+                'Users',
+                'Likes'=>function($q){ return $q->where(['Likes.user_id'=>$this->Auth->user('id')]); }
+            ])
+            ->order(['Posts.created'=>'DESC'])
+            ->all();
         echo json_encode(['posts' => $posts]);
         exit;
     }
@@ -70,6 +76,10 @@ class PostsController extends AppController {
     }
 
     public function wall() {
+
+
+
+
         $post = $this->Posts->newEntity();
         $this->set('post',$post);
     }
@@ -128,5 +138,30 @@ class PostsController extends AppController {
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function like(){
+        $this->loadModel('Likes');
+
+        $postLike = $this->Likes->find()
+            ->where([
+                'Likes.post_id'=>$this->getRequest()->getData('post_id'),
+                'Likes.user_id'=>$this->Auth->user('id')
+            ])
+            ->first();
+        if(empty($postLike)){
+            $postLike = $this->Likes->newEntity();
+        }
+
+        $postLike->post_id = $this->getRequest()->getData('post_id');
+        $postLike->user_id = $this->Auth->user('id');
+        $postLike->like_type = $this->getRequest()->getData('action') == 'like' ? true :false;
+
+
+        $this->Likes->save($postLike);
+
+
+        echo json_encode(['current_status'=>$this->getRequest()->getData('action')."d"]);
+        exit;
     }
 }

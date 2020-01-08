@@ -114,7 +114,7 @@
                                         <p class"message" style="text-align:justify;font-family:'Montserrat', sans-serif;color:#686868;">${post.content}</p>
                                         <br/>
                                         <p>
-                                            <span title="No. of Likes" class="like-me" id="like_${post.id}" style="color:#2C6FAE; font-size: 30px; cursor: pointer;" ><i class="fa fa-thumbs-o-up"></i> <span id="like_count_${post.id}" style="font-size: 16px;color:black;">${post.no_of_likes} </span></span>
+                                            <span title="No. of Likes" class="like-me" id="like_${post.id}" style="color:#2C6FAE; font-size: 30px; cursor: pointer;" ><i class="fa fa-thumbs${post.likes.length > 0 ? '' : '-o'}-up"></i> <span id="like_count_${post.id}" style="font-size: 16px;color:black;">${post.no_of_likes} </span></span>
                                             <span title="No. of Comments"  style="color:red;font-size: 30px; cursor: pointer;"><i class="fa fa-comment-o"></i> <span style="font-size: 16px;color:black;"> ${post.no_of_comments} </span> </span>
                                             <small class=" pull-right" style="color: #999999"><i class="fa fa-clock-o"></i>
                                                     ${post.created}
@@ -137,15 +137,26 @@
             var id = $(this).attr('id').split('_')[1];
             var action = $(this).children('i').hasClass('fa-thumbs-o-up') ? "like" : "unlike";
             $.ajax({
-                type: 'GET',
+                type: 'POST',
                 url: '<?= SITE_URL; ?>posts/like',
                 dataType: "JSON",
-                data: {id: id, action: action},
+                data: {post_id: id, action: action},
                 beforeSend: function () {
-                    $('#postLoader').show();
+                    //$('#postLoader').show();
                 },
                 success: function (resp) {
 
+                    var currentCount = parseInt($('#like_count_'+id).html());
+                    if(resp.current_status == "liked"){
+                        $('#like_'+id).children('i').removeClass('fa-thumbs-o-up').addClass('fa-thumbs-up');
+                        currentCount = currentCount +1;
+
+                    } else {
+                        $('#like_'+id).children('i').removeClass('fa-thumbs-up').addClass('fa-thumbs-o-up');
+                        currentCount = currentCount -1;
+                    }
+
+                    $('#like_count_'+id).html(currentCount);
                 }
             });
 

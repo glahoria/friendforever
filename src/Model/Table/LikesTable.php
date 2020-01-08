@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
@@ -23,16 +24,14 @@ use Cake\Validation\Validator;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class LikesTable extends Table
-{
+class LikesTable extends Table {
     /**
      * Initialize method
      *
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->setTable('likes');
@@ -41,14 +40,16 @@ class LikesTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Posts', [
-            'foreignKey' => 'post_id',
-            'joinType' => 'INNER'
+        $this->addBehavior('CounterCache', [
+            'Posts' => [
+                'no_of_likes' => [
+                    'conditions' => ['Likes.like_type' => true]
+                ]
+            ]
         ]);
-        $this->belongsTo('Users', [
-            'foreignKey' => 'user_id',
-            'joinType' => 'INNER'
-        ]);
+
+        $this->belongsTo('Posts', ['foreignKey' => 'post_id', 'joinType' => 'LEFT']);
+        $this->belongsTo('Users', ['foreignKey' => 'user_id', 'joinType' => 'LEFT']);
     }
 
     /**
@@ -57,16 +58,10 @@ class LikesTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
-        $validator
-            ->integer('id')
-            ->allowEmptyString('id', null, 'create');
+    public function validationDefault(Validator $validator) {
+        $validator->integer('id')->allowEmptyString('id', null, 'create');
 
-        $validator
-            ->boolean('like')
-            ->requirePresence('like', 'create')
-            ->notEmptyString('like');
+        $validator->boolean('like')->requirePresence('like', 'create')->notEmptyString('like');
 
         return $validator;
     }
@@ -78,10 +73,7 @@ class LikesTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
-    {
-        $rules->add($rules->existsIn(['post_id'], 'Posts'));
-        $rules->add($rules->existsIn(['user_id'], 'Users'));
+    public function buildRules(RulesChecker $rules) {
 
         return $rules;
     }
