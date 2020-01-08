@@ -138,7 +138,6 @@ ul.pagination .disabled:hover a {
     font-style: italic;
     color: rgba(0, 0, 0, 0.54);
 }
-
 .required > label {
     font-weight: bold;
 }
@@ -329,12 +328,12 @@ pre {
 }
 
 .top-bar.expanded, .top-bar,.top-bar-section ul li,.top-bar-section li:not(.has-form) a:not(.button) {
-    background: #3c8dbc;
+    background: #004ea6;
 }
 
 .top-bar-section li:not(.has-form) a:not(.button):hover {
     background-color: #308e97;
-    background: #249EEB;
+    background: #004ea6;
 }
 
 .side-nav li.heading {
