@@ -18,7 +18,7 @@
         <div class="box-body">
             <?= $this->Form->create('', ['id' => 'savePost']) ?>
             <div>
-                <?= $this->Form->textarea('content', ['type' => 'textarea', 'label' => false, 'placeholder' => 'what is in your mind...', 'escape' => false, 'class' => 'comment', 'style' => 'width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;', 'id' => 'content']) ?>
+                <?= $this->Form->textarea('content', ['type' => 'textarea', 'label' => false, 'placeholder' => 'what is in your mind...', 'escape' => false,  'style' => 'width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;', 'id' => 'content']) ?>
             </div>
 
             <div class="box-footer clearfix">
@@ -29,7 +29,13 @@
         </div>
         <div id="postLoader"><h4 class="text-center" style="padding: 20px; color: #225DDB;"><i class="fa fa-spin fa-spinner"></i>
                 Loading ...</h4></div>
+        <div id="post_comment"></div>
+       <?= $this->Form->create('', ['id' => 'comment_form']) ?>
+            <input type="text" name="comment" id="comment" />
+                <?= $this->Form->button(__('save <i class="fa fa-arrow-circle-right"></i>'), ['class' => 'pull-right btn post-button', 'type' => 'submit', 'id'=>'submit']) ?>
+       <?= $this->Form->end() ?>        
         <section class="content">
+           
         <div id="latestPosts" class="row">
         </div>
         </section>
@@ -47,6 +53,7 @@
         $('#savePost').submit(function () {
             var postData = $(this).serialize();
             var post = $('#content').val();
+            console.log(post);
             if (post == '') {
 
             } else {
@@ -73,7 +80,6 @@
                                                     ${post.created}
                                             </small>
                                         </p>
-
                                     </div>
                                     <div class="post-margin"></div>`;
 
@@ -115,7 +121,7 @@
                                         <br/>
                                         <p>
                                             <span title="No. of Likes" class="like-me" id="like_${post.id}" style="color:#2C6FAE; font-size: 30px; cursor: pointer;" ><i class="fa fa-thumbs${post.likes.length > 0 ? '' : '-o'}-up"></i> <span id="like_count_${post.id}" style="font-size: 16px;color:black;">${post.no_of_likes} </span></span>
-                                            <span title="No. of Comments"  style="color:red;font-size: 30px; cursor: pointer;"><i class="fa fa-comment-o"></i> <span style="font-size: 16px;color:black;"> ${post.no_of_comments} </span> </span>
+                                            <span title="No. of Comments" id="comment_${post.id}"  style="color:red;font-size: 30px; cursor: pointer;"><i class="fa fa-comment-o comment"></i> <span style="font-size: 16px;color:black;" id="comment_count_${post.comment}"> ${post.no_of_comments} </span> </span>
                                             <small class=" pull-right" style="color: #999999"><i class="fa fa-clock-o"></i>
                                                     ${post.created}
                                             </small>
@@ -161,9 +167,46 @@
             });
 
 
-        })
+        });
+        $('#comment_form').on('click','#submit', function(e){
+        e.preventDefault();
+            var commentData = $(this).serialize();
+            var comment = $('#Comment').val();
+            //console.log(comment)
+            if (comment == '') {
 
+            } else {
+                $.ajax({
+                    type: 'POST',
+                    url: '<?= SITE_URL; ?>posts/comment',
+                    data: commentData,
+                    dataType: "JSON",
+                    success: function (resp) {
+                         //console.log(resp);
+                        var comment = resp.comment;
+                        var p =  $('#display_comment').html(resp);
+                        $('#post_comment').prepend(p);
+                    }
+                });
+            }
+        });
+// function get_comment(){
+//   $.ajax({
+//     type:"GET",
+//     url:'<?= SITE_URL; ?>posts/get-comment',
+//     dataType: "JSON",
+//     success:function(resp)
+//    {
+//     $.each(resp.comment, function (ind, comment) {
+//                              console.log(comment);
+//                             var p = $('#display_comment').html(resp);
+//                             $('#post_comment').append(p);
 
-    });
+//                         });
+//                     }
+
+//     });
+// }
+});
 </script>
 
