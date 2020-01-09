@@ -30,14 +30,12 @@
         <div id="postLoader"><h4 class="text-center" style="padding: 20px; color: #225DDB;"><i class="fa fa-spin fa-spinner"></i>
                 Loading ...</h4></div>
         <div id="post_comment"></div>
-       <?= $this->Form->create('', ['id' => 'comment_form']) ?>
+        <?= $this->Form->create('', ['id' => 'comment_form']) ?>
             <input type="text" name="comment" id="comment" />
                 <?= $this->Form->button(__('save <i class="fa fa-arrow-circle-right"></i>'), ['class' => 'pull-right btn post-button', 'type' => 'submit', 'id'=>'submit']) ?>
-       <?= $this->Form->end() ?>        
+        <?= $this->Form->end() ?>        
         <section class="content">
-           
-        <div id="latestPosts" class="row">
-        </div>
+            <div id="latestPosts" class="row"></div>
         </section>
         <!--        <div class="row">-->
         <!--            <div class="col-md-12"><button class="btn btn-primary w-100" style="width: 100%;"><i class="fa fa-refresh"></i> Load More</button> </div>-->
@@ -184,7 +182,10 @@
                     success: function (resp) {
                          //console.log(resp);
                         var comment = resp.comment;
-                        var p =  $('#display_comment').html(resp);
+                        var p =  `<div class="col-md-12">
+                                    <p>${post.comment.comment}</p>
+                                    </div>`;
+
                         $('#post_comment').prepend(p);
                     }
                 });
