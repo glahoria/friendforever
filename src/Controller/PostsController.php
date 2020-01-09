@@ -160,17 +160,18 @@ class PostsController extends AppController {
         echo json_encode(['current_status'=>$this->getRequest()->getData('action')."d"]);
         exit;
     }
+
     public function comment() {
         $status = "Not Saved";
+        $this->loadModel('Comments');
         $comment = $this->Comments->newEntity();
         if ($this->request->is('post')) {
             $comment = $this->Comments->patchEntity($comment, $this->request->getData());
-            pr($comment); die;
+            //pr($comment); die;
+            $comment->post_id = $this->getRequest()->getData('post_id');
             $comment->user_id = $this->Auth->user('id');
+
             $this->Comments->save($comment);
-             // if ($this->Comments->save($comment)) {
-             //     $comment = $this->Comments->find()->contain(['Users'])->where(['Comments.id' => $comment->id])->first();
-             // }
         }
          echo json_encode(['comment' => $comment, 'status' => $status]);
          exit;
