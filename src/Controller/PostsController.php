@@ -177,13 +177,14 @@ class PostsController extends AppController {
          exit;
     }
 
-     public function getComments(){
+     public function getComments($postId){
         $this->loadModel('Comments');
 
        $comments = $this->Comments->find()
             ->contain([
-                'Users','Posts'
+                'Users'
             ])
+           ->where(['Comments.post_id'=>$postId])
             ->order(['Comments.created'=>'ASC'])
             ->all();
         echo json_encode(['comments' => $comments]);
