@@ -67,13 +67,27 @@
                                         <p class"message" style="text-align:justify;font-family:'Montserrat', sans-serif;color:#686868;">${post.content}</p>
                                         <br/>
                                         <p>
-                                            <span title="No. of Likes" class="like-me" id="like_${post.id}" style="color:#2C6FAE; font-size: 30px; cursor: pointer;" ><i class="fa fa-thumbs-o-up"></i> <span id="like_count_${post.id}" style="font-size: 16px;color:black;">${post.no_of_likes} </span></span>
-                                            <span title="No. of Comments" style="color:red;font-size: 30px; cursor: pointer;"><i class="fa fa-comment-o"></i> <span style="font-size: 16px;color:black;"> ${post.no_of_comments} </span> </span>
+                                            <span title="No. of Likes" class="like-me" id="like_${post.id}" style="color:#2C6FAE; font-size: 30px; cursor: pointer;" ><i class="fa fa-thumbs${post.likes.length > 0 ? '' : '-o'}-up"></i> <span id="like_count_${post.id}" style="font-size: 16px;color:black;">${post.no_of_likes} </span></span>
+                                            <span title="No. of Comments" id="comment_${post.id}" style="color:red;font-size: 30px; cursor: pointer;"><i class="fa fa-comment-o " id="comment"></i> <span style="font-size: 16px;color:black;" id="comment_count_${post.comment}"> ${post.no_of_comments} </span> </span>
                                             <small class=" pull-right" style="color: #999999"><i class="fa fa-clock-o"></i>
                                                     ${post.created}
                                             </small>
-                                        </p>
-                                    </div>
+                                        </p><hr>
+                                        <div class="comment_wrapper" style="display: none;">
+                                            <?= $this->Form->create('', ['id' => 'save_comment']) ?>
+                                              <div class="col-md-11">
+                                              <input name="post_id" value="${post.id}" type="hidden" id="post_id" class="form-control" style="border-radius:0px;"/>
+                                             <input name="comment" type="text" id="comment_input" class="form-control" placeholder="comment..." style="border-radius:0px;"/>
+                                             </div>
+                                             <div class="col-md-1">
+                                             <button class="btn btn-primary pull-right form-control post-button" id="send"><i class="fa fa-arrow-circle-right"></i></botton>
+                                             </div>
+                                             <?= $this->Form->end() ?>
+                                             <div class="post_comment">
+                                             
+                                             </div>
+                                        </div>
+                                        </div>
                                     <div class="post-margin"></div>`;
 
                         $('#latestPosts').prepend(p);
@@ -123,13 +137,15 @@
                                             <?= $this->Form->create('', ['id' => 'save_comment']) ?>
                                               <div class="col-md-11">
                                               <input name="post_id" value="${post.id}" type="hidden" id="post_id" class="form-control" style="border-radius:0px;"/>
-                                             <input name="comment" value="comment" type="text" id="comment_input" class="form-control" style="border-radius:0px;"/>
+                                             <input name="comment" type="text" id="comment_input" class="form-control" placeholder="comment..." style="border-radius:0px;"/>
                                              </div>
                                              <div class="col-md-1">
                                              <button class="btn btn-primary pull-right form-control post-button" id="send"><i class="fa fa-arrow-circle-right"></i></botton>
                                              </div>
                                              <?= $this->Form->end() ?>
-                                             <div class="post_comment"></div>
+                                             <div class="post_comment">
+
+                                             </div>
                                         </div>
                                         </div>
                                     <div class="post-margin"></div>`;
@@ -194,8 +210,21 @@
                     }
                 });
             }
-
+            this.reset();
+            return false;
         });
+
+        getComments();
+
+        function getComments() {
+            $.ajax({
+                 type:'GET',
+                url:'<?= SITE_URL; ?>posts/get-comments',
+                success:function(resp) {
+                     
+                }
+            })
+        }
 });
 </script>
 

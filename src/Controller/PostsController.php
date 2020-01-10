@@ -176,4 +176,17 @@ class PostsController extends AppController {
          echo json_encode(['comment' => $comment, 'status' => $status]);
          exit;
     }
+
+     public function getComments(){
+        $this->loadModel('Comments');
+
+       $comments = $this->Comments->find()
+            ->contain([
+                'Users','Posts'
+            ])
+            ->order(['Comments.created'=>'ASC'])
+            ->all();
+        echo json_encode(['comments' => $comments]);
+        exit;
+    }
 }
