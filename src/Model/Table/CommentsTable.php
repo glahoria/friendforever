@@ -43,6 +43,12 @@ class CommentsTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->addBehavior('CounterCache', [
+            'Posts' => [
+                'no_of_comments'
+            ]
+        ]);
+
         $this->belongsTo('ParentComments', [
             'className' => 'Comments',
             'foreignKey' => 'parent_id'

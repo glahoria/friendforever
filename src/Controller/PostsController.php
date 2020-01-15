@@ -88,7 +88,11 @@ class PostsController extends AppController {
             //pr($post); die;
             $post->user_id = $this->Auth->user('id');
             if ($this->Posts->save($post)) {
-                $post = $this->Posts->find()->contain(['Users'])->where(['Posts.id' => $post->id])->first();
+                $post = $this->Posts->find()->contain([
+                    'Users',
+                    'Likes'=>function($q){ return $q->where(['Likes.user_id'=>$this->Auth->user('id')]); }
+                ])
+                    ->where(['Posts.id' => $post->id])->first();
             }
         }
         echo json_encode(['post' => $post, 'status' => $status]);

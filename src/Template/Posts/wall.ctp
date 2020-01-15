@@ -213,8 +213,11 @@
                     url: '<?= SITE_URL; ?>posts/comment',
                     data: commentData,
                     dataType: "JSON",
+
                     success: function (resp) {
                         var comment = resp.comment;
+                        var currentCount = parseInt($('#comment_count_'+postId).html());
+                        console.log(currentCount);
                         var c = `
                                     <div class="row" style="padding:5px;">
                                         <div class="col-md-11">
@@ -231,6 +234,8 @@
                                         </div>
                                     </div>`;
                             $('#commentSection_' + postId).append(c);
+                        currentCount = currentCount + 1;
+                        $('#comment_count_' +postId).html(currentCount);
                            
                     }
                 });
@@ -246,6 +251,7 @@
                 type: 'GET',
                 url: '<?= SITE_URL; ?>posts/get-comments/' + postId,
                 dataType: 'JSON',
+                beforeSend:function(){ $('#commentSection_' + postId).html("");},
                 success: function (resp) {
                     if (resp.comments.length > 0) {
                         $.each(resp.comments, function (ind, comment) {
