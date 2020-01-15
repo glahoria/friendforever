@@ -1,10 +1,14 @@
-<style>
-    .post-button {
+                                  <style>
+    .button-style {
         border-radius: 1px;
         background: #004ea6;
         color: white;
     }
-
+    .comment-button{
+        border-radius: 1px;
+        background: #004ea6;
+        color: white;
+    }
     .post-margin {
         width: 100%;
         height: 20px;
@@ -23,7 +27,7 @@
             </div>
 
             <div class="box-footer clearfix">
-                <?= $this->Form->button(__('post <i class="fa fa-arrow-circle-right"></i>'), ['class' => 'pull-right btn post-button', 'type' => 'submit']) ?>
+                <?= $this->Form->button(__('post <i class="fa fa-arrow-circle-right"></i>'), ['class' => 'pull-right btn button-style', 'type' => 'submit']) ?>
             </div>
             <?= $this->Form->end() ?>
         </div>
@@ -59,35 +63,34 @@
                     dataType: "JSON",
                     success: function (resp) {
                         var post = resp.post;
-                        var p = `
-                                    <div class="box-footer" style="padding: 50px;">
-                                        <h4 class="text-primary" style="text-transform:uppercase; font-weight:bold; ">
+                        var p = `<div style="padding: 50px;background:white;">
+                                        <h4 style="text-transform:uppercase; font-weight:bold;color:#4D3F3F; ">
                                                 <span class="pull-left">
                                                     ${post.user.first_name} ${post.user.last_name}
                                                 </span>
-                                        </h4><br /><br />
+                                        </h4>
+                                        <small class=" pull-right" style="color: #999999"><i class="fa fa-clock-o"></i>
+                                                    ${post.created}
+                                            </small>
+                                        <br /><br />
                                         <p class"message" style="text-align:justify;font-family:'Montserrat', sans-serif;color:#686868;">${post.content}</p>
                                         <br/>
                                         <p>
                                             <span title="No. of Likes" class="like-me" id="like_${post.id}" style="color:#2C6FAE; font-size: 30px; cursor: pointer;" ><i class="fa fa-thumbs${post.likes.length > 0 ? '' : '-o'}-up"></i> <span id="like_count_${post.id}" style="font-size: 16px;color:black;">${post.no_of_likes} </span></span>
-                                            <span title="No. of Comments" id="comment_${post.id}" style="color:red;font-size: 30px; cursor: pointer;"><i class="fa fa-comment-o " id="comment"></i> <span style="font-size: 16px;color:black;" id="comment_count_${post.comment}"> ${post.no_of_comments} </span> </span>
-                                            <small class=" pull-right" style="color: #999999"><i class="fa fa-clock-o"></i>
-                                                    ${post.created}
-                                            </small>
+                                            <span class="open-comments" id="comment_${post.id}" style="color:red;font-size: 30px; cursor: pointer;"><i class="fa fa-comment-o " id="comment"></i> <span style="font-size: 16px;color:black;" title="No. of Comments" id="comment_count_${post.comment}"> ${post.no_of_comments} </span> </span>
                                         </p><hr>
-                                        <div class="comment_wrapper" style="display: none;">
-                                            <?= $this->Form->create('', ['id' => 'save_comment']) ?>
-                                              <div class="col-md-11">
+                                        <div class="commentWrapper_${post.id}" style="display: none;">
+                                            <div id="commentSection_${post.id}">
+                                             </div>
+                                        <form method="post" accept-charset="utf-8" id="saveComment_${post.id}" class="comment-form">
+                                            <div class="input-group" style="width:100%;">
                                               <input name="post_id" value="${post.id}" type="hidden" class="form-control" style="border-radius:0px;"/>
-                                             <input name="comment" type="text" id="comment_input" class="form-control" placeholder="comment..." style="border-radius:0px;"/>
-                                             </div>
-                                             <div class="col-md-1">
-                                             <button class="btn btn-primary pull-right form-control post-button" id="send"><i class="fa fa-arrow-circle-right"></i></botton>
-                                             </div>
-                                             <?= $this->Form->end() ?>
-                                             <div class="post_comment">
-                                             
-                                             </div>
+                                             <input name="comment" type="text" id="commentInput_${post.id}" class="form-control" placeholder="comment..." style="border-radius:0px;"/>
+                                             <span class="input-group-btn">
+                                             <button class="btn  pull-right form-control comment-button" id="commentBtn_${post.id}"><i class="fa fa-arrow-circle-right"></i></botton>
+                                             </span>
+                                            </div> 
+                                             </form>
                                         </div>
                                         </div>
                                     <div class="post-margin"></div>`;
@@ -97,7 +100,7 @@
 
                 });
             }
-            this.reset();
+            $('#content').val(" ");
             return false;
 
         });
@@ -105,7 +108,6 @@
         setTimeout(function () {
             getPosts();
         }, 1000);
-
         function getPosts() {
             $.ajax({
                 type: 'GET',
@@ -120,35 +122,34 @@
                         $.each(resp.posts, function (ind, post) {
                             // console.log(post);
                             var p = `
-                                        <div class="box-footer" style="padding: 50px;">
-                                        <h4 class="text-primary" style="text-transform:uppercase; font-weight:bold; ">
+                                    <div style="padding: 50px;background:white;">
+                                        <h4 style="text-transform:uppercase; font-weight:bold;color:#4D3F3F; ">
                                                 <span class="pull-left">
                                                     ${post.user.first_name} ${post.user.last_name}
                                                 </span>
-                                        </h4><br /><br />
+                                        </h4>
+                                        <small class=" pull-right" style="color: #999999"><i class="fa fa-clock-o"></i>
+                                                    ${post.created}
+                                            </small>
+                                        <br /><br />
                                         <p class"message" style="text-align:justify;font-family:'Montserrat', sans-serif;color:#686868;">${post.content}</p>
                                         <br/>
                                         <p>
                                             <span title="No. of Likes" class="like-me" id="like_${post.id}" style="color:#2C6FAE; font-size: 30px; cursor: pointer;" ><i class="fa fa-thumbs${post.likes.length > 0 ? '' : '-o'}-up"></i> <span id="like_count_${post.id}" style="font-size: 16px;color:black;">${post.no_of_likes} </span></span>
-                                            <span title="No. of Comments" class="open-comments" id="comment_${post.id}" style="color:red;font-size: 30px; cursor: pointer;"><i class="fa fa-comment-o " id="comment"></i> <span style="font-size: 16px;color:black;" id="comment_count_${post.comment}"> ${post.no_of_comments} </span> </span>
-                                            <small class=" pull-right" style="color: #999999"><i class="fa fa-clock-o"></i>
-                                                    ${post.created}
-                                            </small>
+                                            <span class="open-comments" id="comment_${post.id}" style="color:red;font-size: 30px; cursor: pointer;"><i class="fa fa-comment-o " id="comment"></i> <span style="font-size: 16px;color:black;" title="No. of Comments" id="comment_count_${post.comment}"> ${post.no_of_comments} </span> </span>
                                         </p><hr>
-                                        <div class="comment_wrapper" style="display: none;">
+                                        <div class="commentWrapper_${post.id}" style="display: none;">
+                                            <div id="commentSection_${post.id}">
+                                             </div>
                                         <form method="post" accept-charset="utf-8" id="saveComment_${post.id}" class="comment-form">
-                                        <div style="display:none;">
-                                        <input type="hidden" name="_method" value="POST"/></div>
-                                              <div class="col-md-11">
+                                            <div class="input-group" style="width:100%;">
                                               <input name="post_id" value="${post.id}" type="hidden" class="form-control" style="border-radius:0px;"/>
                                              <input name="comment" type="text" id="commentInput_${post.id}" class="form-control" placeholder="comment..." style="border-radius:0px;"/>
-                                             </div>
-                                             <div class="col-md-1">
-                                             <button class="btn btn-primary pull-right form-control comment-button" id="commentBtn_${post.id}"><i class="fa fa-arrow-circle-right"></i></botton>
-                                             </div>
+                                             <span class="input-group-btn">
+                                             <button class="btn  pull-right form-control comment-button" id="commentBtn_${post.id}"><i class="fa fa-arrow-circle-right"></i></botton>
+                                             </span>
+                                            </div> 
                                              </form>
-                                             <div class="post_comments" id="comment_${post.id}">
-                                             </div>
                                         </div>
                                         </div>
                                     <div class="post-margin"></div>`;
@@ -187,22 +188,24 @@
                     }
 
                     $('#like_count_' + id).html(currentCount);
+
                 }
             });
 
 
         });
         $("#latestPosts").on('click', '.open-comments', function () {
-            $(".comment_wrapper").show();
+            var postId  = $(this).attr('id').split('_')[1];
+            $(".commentWrapper_" + postId).show();
             getComments($(this).attr('id').split('_')[1]);
         });
         $('#latestPosts').on('click', '.comment-button', function (e) {
             e.preventDefault();
             var postId  = $(this).attr('id').split('_')[1];
             var commentData = $('#saveComment_'+postId).serialize();
-            var comment = $('#commentInput_'+postId).val();
+            var commentType = $('#commentInput_'+postId).val();
             //console.log(comment);
-            if (comment == '') {
+            if (commentType == '') {
 
             } else {
                 $.ajax({
@@ -211,7 +214,24 @@
                     data: commentData,
                     dataType: "JSON",
                     success: function (resp) {
-
+                        var comment = resp.comment;
+                        var c = `
+                                    <div class="row" style="padding:5px;">
+                                        <div class="col-md-11">
+                                            <span>
+                                                <span class="pull-left" style="color:#4D3F3F;font-size:15px;font-weight:bold;text-transform:uppercase;">
+                                                    ${comment.user.first_name} ${comment.user.last_name}
+                                                </span>
+                                                <p class="pull-left" style="font-family:'Montserrat', sans-serif;color:black; font-size:13px; margin-left:1%;font-weight:bold; padding:2px;">${comment.comment}
+                                                </p>
+                                            </span>
+                                            <p class="pull-left" style="color:#999999;font-size:12px;width:100%; "><i class="fa fa-clock-o"></i>
+                                                    ${comment.created}
+                                            </p>
+                                        </div>
+                                    </div>`;
+                            $('#commentSection_' + postId).append(c);
+                           
                     }
                 });
             }
@@ -227,32 +247,26 @@
                 url: '<?= SITE_URL; ?>posts/get-comments/' + postId,
                 dataType: 'JSON',
                 success: function (resp) {
-
                     if (resp.comments.length > 0) {
                         $.each(resp.comments, function (ind, comment) {
-
-
                             var c = `
-                                        <div class="box-footer" style="padding: 50px;">
-                                        <h5 class="text-primary pull-left" style="text-transform:uppercase; font-weight:bold; ">
-                                                <span class="pull-left">
+                                    <div class="row" style="padding:5px;">
+                                        <div class="col-md-11">
+                                            <span>
+                                                <span class="pull-left" style="color:#4D3F3F;font-size:15px;font-weight:bold;text-transform:uppercase;">
                                                     ${comment.user.first_name} ${comment.user.last_name}
                                                 </span>
-                                        </h5>
-                                        <p class"pull-right" style="text-align:center;font-family:'Montserrat', sans-serif;color:#686868; font-size:15px;">${comment.comment}</p>
-                                        <br/>
-
-                                            <small class=" pull-right" style="color: #999999 "><i class="fa fa-clock-o"></i>
+                                                <p class="pull-left" style="font-family:'Montserrat', sans-serif;color:black; font-size:13px; margin-left:1%;font-weight:bold; padding:2px;">${comment.comment}
+                                                </p>
+                                            </span>
+                                            <p class="pull-left" style="color:#999999;font-size:12px;width:100%; "><i class="fa fa-clock-o"></i>
                                                     ${comment.created}
-                                            </small>
-
-                                        </div>`;
-
-                            $('#comment_' + postId).append(c);
-
+                                            </p>
+                                        </div>
+                                    </div>`;
+                            $('#commentSection_' + postId).append(c);
                         });
                     }
-
                 }
             })
         }

@@ -170,8 +170,10 @@ class PostsController extends AppController {
             //pr($comment); die;
             $comment->post_id = $this->getRequest()->getData('post_id');
             $comment->user_id = $this->Auth->user('id');
+            if ($this->Comments->save($comment)) {
+                $comment = $this->Comments->find()->contain(['Users'])->where(['Comments.id' => $comment->id])->first();
+            }
 
-            $this->Comments->save($comment);
         }
          echo json_encode(['comment' => $comment, 'status' => $status]);
          exit;
