@@ -1,7 +1,7 @@
 <?php
 use Migrations\AbstractMigration;
 
-class Createimages extends AbstractMigration
+class CreatePostImages extends AbstractMigration
 {
     /**
      * Change Method.
@@ -12,24 +12,15 @@ class Createimages extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('images');
-        $table->addColumn('user_id', 'integer', [
+        $table = $this->table('post_images');
+        $table->addColumn('post_id', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('catagorie', 'string', [
+        $table->addColumn('image_id', 'integer', [
             'default' => null,
-            'limit' => 255,
-            'null' => false,
-        ]);
-        $table->addColumn('status', 'boolean', [
-            'default' => null,
-            'null' => false,
-        ]);
-        $table->addColumn('image', 'string', [
-            'default' => null,
-            'limit' => 255,
+            'limit' => 11,
             'null' => false,
         ]);
         $table->addColumn('created', 'datetime', [

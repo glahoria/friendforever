@@ -1,16 +1,16 @@
 <?php
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\ImagesController;
+use App\Controller\PostImagesController;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Controller\ImagesController Test Case
+ * App\Controller\PostImagesController Test Case
  *
- * @uses \App\Controller\ImagesController
+ * @uses \App\Controller\PostImagesController
  */
-class ImagesControllerTest extends TestCase
+class PostImagesControllerTest extends TestCase
 {
     use IntegrationTestTrait;
 
@@ -20,8 +20,9 @@ class ImagesControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
+        'app.PostImages',
+        'app.Posts',
         'app.Images',
-        'app.Users',
     ];
 
     /**

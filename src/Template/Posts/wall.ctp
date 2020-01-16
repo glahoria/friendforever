@@ -4,22 +4,25 @@
         background: #004ea6;
         color: white;
     }
-    .comment-button{
+
+    .comment-button {
         border-radius: 1px;
         background: #004ea6;
         color: white;
     }
+
     .post-margin {
         width: 100%;
         height: 20px;
         background: rgb(192, 208, 214);
     }
-   #choiceImage {
-            display: block;
-            width: 50px;
-            height: 50px;
-            float:left;
-        }
+
+    #imagePreview {
+        display: block;
+        width: auto;
+        height: 200px;
+        float: left;
+    }
 </style>
 <section class="content">
 
@@ -30,17 +33,21 @@
             <h3 class="box-title">Create Post</h3>
         </div> -->
         <div class="box-body">
-            <?= $this->Form->create('', ['id' => 'savePost']) ?>
+            <?= $this->Form->create('', ['id' => 'savePost', 'enctype' => 'multipart/form-data']) ?>
             <div>
                 <?= $this->Form->textarea('content', ['type' => 'textarea', 'label' => false, 'placeholder' => 'what is in your mind...', 'escape' => false, 'style' => 'width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;', 'id' => 'content']) ?>
             </div>
 
             <div class="box-footer clearfix">
                 <?= $this->Form->button(__('post <i class="fa fa-arrow-circle-right"></i>'), ['class' => 'pull-right btn button-style', 'type' => 'submit']) ?>
-                <img src="<?= SITE_URL; ?>img/user2-160x160.jpg" id="choiceImage" style="display:none"/>
+                <img src="<?= SITE_URL; ?>img/user2-160x160.jpg" id="imagePreview" style="display:none"/>
                 <input type="file" name="image" class="form-control" id="choiceFile" style="display: none;">
-                <button class="btn  pull-right" style="margin-right:2%;border-radius:15px;" id="photoButton"><i class="fa fa-camera"></i> Photo</button>
-                
+                <input type="hidden" name="image_data" class="form-control" id="imageData" style="display: none;">
+                <input type="hidden" name="image_type" class="form-control" id="imageType" style="display: none;">
+                <button class="btn  pull-right" style="margin-right:2%;border-radius:15px;" id="photoButton"><i
+                            class="fa fa-camera"></i> Photo
+                </button>
+
             </div>
             <?= $this->Form->end() ?>
         </div>
@@ -66,16 +73,16 @@
 
 <script type="text/javascript">
 
-//---------------------upload post function ----------------------------
+    //---------------------upload post function ----------------------------
 
     $(document).ready(function () {
         $('#savePost').submit(function () {
             var postData = $(this).serialize();
             var post = $('#content').val();
-            console.log(post);
-            if (post == '') {
 
-            } else {
+            // if (post == '') {
+            //
+            // } else {
                 $.ajax({
                     type: 'POST',
                     url: '<?= SITE_URL; ?>posts/save',
@@ -119,7 +126,7 @@
                     }
 
                 });
-            }
+            //}
             $('#content').val(" ");
             return false;
 
@@ -221,7 +228,7 @@
 //-------------------show comment-wrapper function-----------------------------------
 
         $("#latestPosts").on('click', '.open-comments', function () {
-            var postId  = $(this).attr('id').split('_')[1];
+            var postId = $(this).attr('id').split('_')[1];
             $(".commentWrapper_" + postId).show();
             getComments($(this).attr('id').split('_')[1]);
         });
@@ -230,9 +237,9 @@
 
         $('#latestPosts').on('click', '.comment-button', function (e) {
             e.preventDefault();
-            var postId  = $(this).attr('id').split('_')[1];
-            var commentData = $('#saveComment_'+postId).serialize();
-            var commentType = $('#commentInput_'+postId).val();
+            var postId = $(this).attr('id').split('_')[1];
+            var commentData = $('#saveComment_' + postId).serialize();
+            var commentType = $('#commentInput_' + postId).val();
             //console.log(comment);
             if (commentType == '') {
 
@@ -259,12 +266,12 @@
                                             </p>
                                         </div>
                                     </div>`;
-                            $('#commentSection_' + postId).append(c);
-                           
+                        $('#commentSection_' + postId).append(c);
+
                     }
                 });
             }
-            $('#commentInput_'+postId).val("");
+            $('#commentInput_' + postId).val("");
             return false;
         });
 
@@ -302,20 +309,25 @@
 
 //----------------------image upload function on wall------------------------------------
 
-        $("#photoButton").click(function(){
-        $("#choiceFile").click();
+        $("#photoButton").click(function () {
+            $("#choiceFile").click();
         });
-        function readURL(input){
+
+        function readURL(input) {
             var ext = input.files[0]['name'].substring(input.files[0]['name'].lastIndexOf('.') + 1).toLowerCase();
-            if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) 
-            var reader = new FileReader();
-                reader.onload = function (input) {
-            $('#choiceImage').attr('src', input.target.result);
-            $('#choiceImage').show();
+            if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg"))
+                var reader = new FileReader();
+            reader.onload = function (input) {
+                $('#imagePreview').attr('src', input.target.result);
+                $('#imageData').val(input.target.result);
+                $('#imagePreview').show();
+            }
+            reader.readAsDataURL(input.files[0]);
+            $('#imageType').val(input.files[0].type);
+            console.log(input.files[0]);
         }
-        reader.readAsDataURL(input.files[0]);
-        }
-        $("#choiceFile").change(function() {
+
+        $("#choiceFile").change(function () {
             readURL(this);
         });
     });

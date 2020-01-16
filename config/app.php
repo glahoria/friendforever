@@ -11,6 +11,12 @@ define('SITE_URL', 'http://localhost/gurjeet/friendsforever/');
 define('SITE_TITLE', 'Friends Forever');
 define('FROM_EMAIL', 'slahoria34@gmail.com');
 
+
+//Image Thumb Sizes - Height is dynamic as propertion to width
+define('SMALL_THUMB_WIDTH', 200);
+define('MEDIUM_THUMB_WIDTH', 500);
+define('LARGE_THUMB_WIDTH', 900);
+
 return [
     /**
      * Debug Level:

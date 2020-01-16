@@ -42,8 +42,9 @@ class ImagesTable extends Table
 
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
-            'joinType' => 'INNER',
+            'joinType' => 'LEFT',
         ]);
+        $this->hasMany('PostImages', ['foreignKey' => 'image_id']);
     }
 
     /**

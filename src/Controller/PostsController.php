@@ -12,6 +12,12 @@ use App\Controller\AppController;
  * @method \App\Model\Entity\Post[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class PostsController extends AppController {
+
+    public $thumb = null;
+    public $fileName = null;
+    public $actualWidth = null;
+    public $actualHeight = null;
+    public $fileExt = null;
     /**
      * Index method
      *
@@ -31,10 +37,10 @@ class PostsController extends AppController {
         $posts = $this->Posts->find()
             ->contain([
                 'Users',
-                'Likes'=>function($q){ return $q->where(['Likes.user_id'=>$this->Auth->user('id')]); }
+                'Likes' => function ($q) { return $q->where(['Likes.user_id' => $this->Auth->user('id')]); },
+                'PostImages'=>['Images']
             ])
-            ->order(['Posts.created'=>'DESC'])
-            ->all();
+            ->order(['Posts.created' => 'DESC'])->all();
         echo json_encode(['posts' => $posts]);
         exit;
     }
@@ -77,27 +83,91 @@ class PostsController extends AppController {
 
     public function wall() {
         $post = $this->Posts->newEntity();
-        $this->set('post',$post);
+        $this->set('post', $post);
     }
 
     public function save() {
         $status = "Not Saved";
         $post = $this->Posts->newEntity();
         if ($this->request->is('post')) {
+
             $post = $this->Posts->patchEntity($post, $this->request->getData());
             //pr($post); die;
             $post->user_id = $this->Auth->user('id');
             if ($this->Posts->save($post)) {
-                $post = $this->Posts->find()->contain([
-                    'Users',
-                    'Likes'=>function($q){ return $q->where(['Likes.user_id'=>$this->Auth->user('id')]); }
-                ])
+
+                if (!empty($this->getRequest()->getData('image_data'))) {
+
+
+                    $this->loadModel('Images');
+
+                    $image = $this->Images->newEntity();
+                    $this->fileExt = explode("/", $this->getRequest()->getData('image_type'))[1];
+                    $this->fileName = uniqid() . "." . $this->fileExt;
+                    $filePath = WWW_ROOT . 'files/images/' . $this->fileName;
+                    $imageUrl = SITE_URL . 'files/images/' . $this->fileName;
+
+                    $ifp = fopen($filePath, 'wb');
+
+                    // we could add validation here with ensuring count( $this->getRequest()->getData('image_data') ) > 1
+                    $data = explode( ',', $this->getRequest()->getData('image_data') );
+                    fwrite($ifp, base64_decode($data[ 1 ]));
+
+                    // clean up the file resource
+                    fclose($ifp);
+
+                    $image->image = 'files/images/' . $this->fileName;
+                    $image->user_id = ($this->Auth->user()) ? $this->Auth->user('id') : 0;
+
+                    $image->category = "Post";
+                    $image->status = true;
+
+                    $this->loadComponent('Thumb');
+                    $this->thumb = $this->Thumb;
+
+                    list($this->actualWidth, $this->actualHeight) = getimagesize($imageUrl);
+
+
+                    $this->createThumb('small', SMALL_THUMB_WIDTH);
+                    $this->createThumb('medium', MEDIUM_THUMB_WIDTH);
+                    $this->createThumb('large', LARGE_THUMB_WIDTH);
+
+                    if($this->Images->save($image)) {
+                        $this->loadModel('PostImages');
+
+                        $postImages = $this->PostImages->newEntity();
+
+                        $postImages->post_id = $post->id;
+                        $postImages->image_id = $image->id;
+
+                        $this->PostImages->save($postImages);
+                    }
+                }
+
+                $post = $this->Posts->find()
+                    ->contain([
+                        'Users',
+                        'Likes' => function ($q) { return $q->where(['Likes.user_id' => $this->Auth->user('id')]); },
+                        'PostImages'=>['Images']
+                        ])
                     ->where(['Posts.id' => $post->id])->first();
             }
         }
         echo json_encode(['post' => $post, 'status' => $status]);
         exit;
     }
+
+    public function createThumb($thumbName = "small", $newWidth) {
+        $imageUrl = SITE_URL . 'files/images/' . $this->fileName;
+        $thumbPath = WWW_ROOT . 'files/images/thumbs/';
+
+        $newHeight = $newWidth * ($this->actualHeight / $this->actualWidth);
+        $options = ['destinationPath' => $thumbPath, 'image' => ['type' => "image/" . ((in_array(strtolower($this->fileExt), ['jpg', 'jpeg'])) ? "jpeg" : "png")], 'tmpname' => $imageUrl, 'name' => $thumbName . "_" . $this->fileName, 'width' => $newWidth, 'argHeight' => $newHeight];
+        $this->thumb->create($options);
+
+        return 'files/images/thumbs/' . $thumbName . "_" . $this->fileName;
+    }
+
 
     /**
      * Edit method
@@ -140,28 +210,23 @@ class PostsController extends AppController {
         return $this->redirect(['action' => 'index']);
     }
 
-    public function like(){
+    public function like() {
         $this->loadModel('Likes');
 
-        $postLike = $this->Likes->find()
-            ->where([
-                'Likes.post_id'=>$this->getRequest()->getData('post_id'),
-                'Likes.user_id'=>$this->Auth->user('id')
-            ])
-            ->first();
-        if(empty($postLike)){
+        $postLike = $this->Likes->find()->where(['Likes.post_id' => $this->getRequest()->getData('post_id'), 'Likes.user_id' => $this->Auth->user('id')])->first();
+        if (empty($postLike)) {
             $postLike = $this->Likes->newEntity();
         }
 
         $postLike->post_id = $this->getRequest()->getData('post_id');
         $postLike->user_id = $this->Auth->user('id');
-        $postLike->like_type = $this->getRequest()->getData('action') == 'like' ? true :false;
+        $postLike->like_type = $this->getRequest()->getData('action') == 'like' ? true : false;
 
 
         $this->Likes->save($postLike);
 
 
-        echo json_encode(['current_status'=>$this->getRequest()->getData('action')."d"]);
+        echo json_encode(['current_status' => $this->getRequest()->getData('action') . "d"]);
         exit;
     }
 
@@ -177,22 +242,15 @@ class PostsController extends AppController {
             if ($this->Comments->save($comment)) {
                 $comment = $this->Comments->find()->contain(['Users'])->where(['Comments.id' => $comment->id])->first();
             }
-
         }
-         echo json_encode(['comment' => $comment, 'status' => $status]);
-         exit;
+        echo json_encode(['comment' => $comment, 'status' => $status]);
+        exit;
     }
 
-     public function getComments($postId){
+    public function getComments($postId) {
         $this->loadModel('Comments');
 
-       $comments = $this->Comments->find()
-            ->contain([
-                'Users'
-            ])
-           ->where(['Comments.post_id'=>$postId])
-            ->order(['Comments.created'=>'ASC'])
-            ->all();
+        $comments = $this->Comments->find()->contain(['Users'])->where(['Comments.post_id' => $postId])->order(['Comments.created' => 'ASC'])->all();
         echo json_encode(['comments' => $comments]);
         exit;
     }
