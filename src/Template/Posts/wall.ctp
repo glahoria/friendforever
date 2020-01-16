@@ -1,4 +1,4 @@
-                                  <style>
+<style>
     .button-style {
         border-radius: 1px;
         background: #004ea6;
@@ -14,8 +14,17 @@
         height: 20px;
         background: rgb(192, 208, 214);
     }
+   #choiceImage {
+            display: block;
+            width: 50px;
+            height: 50px;
+            float:left;
+        }
 </style>
 <section class="content">
+
+    <!-------------post upload div ----------------------->
+
     <div class="box box-success">
         <!-- <div class="box-header" style="background: #B8BFC5;color: black">
             <h3 class="box-title">Create Post</h3>
@@ -28,13 +37,23 @@
 
             <div class="box-footer clearfix">
                 <?= $this->Form->button(__('post <i class="fa fa-arrow-circle-right"></i>'), ['class' => 'pull-right btn button-style', 'type' => 'submit']) ?>
+                <img src="<?= SITE_URL; ?>img/user2-160x160.jpg" id="choiceImage" style="display:none"/>
+                <input type="file" name="image" class="form-control" id="choiceFile" style="display: none;">
+                <button class="btn  pull-right" style="margin-right:2%;border-radius:15px;" id="photoButton"><i class="fa fa-camera"></i> Photo</button>
+                
             </div>
             <?= $this->Form->end() ?>
         </div>
     </div>
+
+    <!-------------post loader div ----------------------->
+
     <div id="postLoader"><h4 class="text-center" style="padding: 20px; color: #225DDB;"><i
                     class="fa fa-spin fa-spinner"></i>
             Loading ...</h4></div>
+
+    <!-------------latest post div ----------------------->
+
     <section class="content">
         <div id="latestPosts" class="row"></div>
     </section>
@@ -47,6 +66,7 @@
 
 <script type="text/javascript">
 
+//---------------------upload post function ----------------------------
 
     $(document).ready(function () {
         $('#savePost').submit(function () {
@@ -108,6 +128,9 @@
         setTimeout(function () {
             getPosts();
         }, 1000);
+
+//------------------- get post function script -----------------------
+
         function getPosts() {
             $.ajax({
                 type: 'GET',
@@ -163,6 +186,8 @@
             });
         }
 
+//--------------- likes function script-------------------------------
+
         $('#latestPosts').on('click', '.like-me', function (e) {
             e.preventDefault();
             var id = $(this).attr('id').split('_')[1];
@@ -191,14 +216,18 @@
 
                 }
             });
-
-
         });
+
+//-------------------show comment-wrapper function-----------------------------------
+
         $("#latestPosts").on('click', '.open-comments', function () {
             var postId  = $(this).attr('id').split('_')[1];
             $(".commentWrapper_" + postId).show();
             getComments($(this).attr('id').split('_')[1]);
         });
+
+//------------------- post comments function -----------------------------------------
+
         $('#latestPosts').on('click', '.comment-button', function (e) {
             e.preventDefault();
             var postId  = $(this).attr('id').split('_')[1];
@@ -213,11 +242,8 @@
                     url: '<?= SITE_URL; ?>posts/comment',
                     data: commentData,
                     dataType: "JSON",
-
                     success: function (resp) {
                         var comment = resp.comment;
-                        var currentCount = parseInt($('#comment_count_'+postId).html());
-                        console.log(currentCount);
                         var c = `
                                     <div class="row" style="padding:5px;">
                                         <div class="col-md-11">
@@ -228,14 +254,12 @@
                                                 <p class="pull-left" style="font-family:'Montserrat', sans-serif;color:black; font-size:13px; margin-left:1%;font-weight:bold; padding:2px;">${comment.comment}
                                                 </p>
                                             </span>
-                                            <p class="pull-left" style="color:#999999;font-size:12px;width:100%; "><i class="fa fa-clock-o"></i>
+                                            <p class="pull-left" style="color:#999999;font-size:12px;width:100% ;"><i class="fa fa-clock-o"></i>
                                                     ${comment.created}
                                             </p>
                                         </div>
                                     </div>`;
                             $('#commentSection_' + postId).append(c);
-                        currentCount = currentCount + 1;
-                        $('#comment_count_' +postId).html(currentCount);
                            
                     }
                 });
@@ -244,14 +268,13 @@
             return false;
         });
 
-        //getComments();
+//-----------------------get Comment function script-----------------------------
 
         function getComments(postId) {
             $.ajax({
                 type: 'GET',
                 url: '<?= SITE_URL; ?>posts/get-comments/' + postId,
                 dataType: 'JSON',
-                beforeSend:function(){ $('#commentSection_' + postId).html("");},
                 success: function (resp) {
                     if (resp.comments.length > 0) {
                         $.each(resp.comments, function (ind, comment) {
@@ -276,6 +299,25 @@
                 }
             })
         }
+
+//----------------------image upload function on wall------------------------------------
+
+        $("#photoButton").click(function(){
+        $("#choiceFile").click();
+        });
+        function readURL(input){
+            var ext = input.files[0]['name'].substring(input.files[0]['name'].lastIndexOf('.') + 1).toLowerCase();
+            if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) 
+            var reader = new FileReader();
+                reader.onload = function (input) {
+            $('#choiceImage').attr('src', input.target.result);
+            $('#choiceImage').show();
+        }
+        reader.readAsDataURL(input.files[0]);
+        }
+        $("#choiceFile").change(function() {
+            readURL(this);
+        });
     });
 </script>
 
