@@ -129,6 +129,12 @@
                                                     </ul>
                                         </div>
                                         <br /><br />
+                                        <div class="post-image1" style="display: ${post.post_images.length > 0 ? 'block': 'none'}">
+                                        ${post.post_images.map(function (postImage) {
+                            return "<img src='<?= SITE_URL; ?>" + postImage.image.image + "' style='height:300px;' />"
+                        }).join("")}
+</div>
+<br />
                                         <p class"message" style="text-align:justify;font-family:'Montserrat', sans-serif;color:#686868;">${post.content}</p>
                                         <br/>
                                         <p>
@@ -201,6 +207,12 @@
                                                     </ul>
                                         </div>
                                         <br /><br />
+                                        <div class="post-image1" style="display: ${post.post_images.length > 0 ? 'block': 'none'}">
+                                        ${post.post_images.map(function (postImage) {
+                                            return "<img src='<?= SITE_URL; ?>" + postImage.image.image + "' style='height:300px;' />"
+                                        }).join("")}
+</div>
+<br />
                                         <p class"message" style="text-align:justify;font-family:'Montserrat', sans-serif;color:#686868;">${post.content}</p>
                                         <br/>
                                         <p>
