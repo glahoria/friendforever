@@ -92,8 +92,9 @@ class PostsController extends AppController {
         if ($this->request->is('post')) {
 
             $post = $this->Posts->patchEntity($post, $this->request->getData());
-            //pr($post); die;
+            //pr($this->request->getData()); die;
             $post->user_id = $this->Auth->user('id');
+                 //pr($post); die;
             if ($this->Posts->save($post)) {
 
                 if (!empty($this->getRequest()->getData('image_data'))) {

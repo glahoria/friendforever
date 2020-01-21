@@ -23,6 +23,11 @@
         height: 200px;
         float: left;
     }
+    .post-image{
+        width: 50%;
+        height: 50%;
+        float: left;
+    }
 </style>
 <section class="content">
 
@@ -35,7 +40,7 @@
         <div class="box-body">
             <?= $this->Form->create('', ['id' => 'savePost', 'enctype' => 'multipart/form-data']) ?>
             <div>
-                <?= $this->Form->textarea('content', ['type' => 'textarea', 'label' => false, 'placeholder' => 'what is in your mind...', 'escape' => false, 'style' => 'width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;', 'id' => 'content']) ?>
+                <?= $this->Form->textarea('content', ['type' => 'textarea', 'label' => false, 'placeholder' => 'what is in your mind...', 'escape' => false, 'style' => 'width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;', 'id' => 'content','name'=>'content']) ?>
             </div>
 
             <div class="box-footer clearfix">
@@ -44,23 +49,42 @@
                 <input type="file" name="image" class="form-control" id="choiceFile" style="display: none;">
                 <input type="hidden" name="image_data" class="form-control" id="imageData" style="display: none;">
                 <input type="hidden" name="image_type" class="form-control" id="imageType" style="display: none;">
-                <button class="btn  pull-right" style="margin-right:2%;border-radius:15px;" id="photoButton"><i
+                <span class="btn  pull-right" style="margin-right:2%;border-radius:15px;background: #D5D3D3;" id="photoButton"><i
                             class="fa fa-camera"></i> Photo
-                </button>
+                </span>
 
             </div>
             <?= $this->Form->end() ?>
         </div>
     </div>
 
-    <!-------------post loader div ----------------------->
+<!-------------post loader div ----------------------->
 
     <div id="postLoader"><h4 class="text-center" style="padding: 20px; color: #225DDB;"><i
                     class="fa fa-spin fa-spinner"></i>
-            Loading ...</h4></div>
+            Loading ...</h4>
+    </div>
 
-    <!-------------latest post div ----------------------->
+<!-------------- Modal content--------------------------->
 
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Some text in the modal.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn button-style">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+<!-------------latest post div ----------------------->
     <section class="content">
         <div id="latestPosts" class="row"></div>
     </section>
@@ -96,16 +120,25 @@
                                                     ${post.user.first_name} ${post.user.last_name}
                                                 </span>
                                         </h4>
-                                        <small class=" pull-right" style="color: #999999"><i class="fa fa-clock-o"></i>
-                                                    ${post.created}
-                                            </small>
+                                        <div class="dropdown pull-right">
+                                            <i class="fa fa-ellipsis-v dropdown-toggle pull-right" data-toggle="dropdown">
+                                                </i>
+                                                    <ul class="dropdown-menu">
+                                                        <li data-toggle="modal" data-target="#myModal"><a href="#"><i class="fa fa-pencil"></i> Edit</a></li>
+                                                        <li><a href="#"><i class="fa fa-trash"></i> Delete</a></li>
+                                                    </ul>
+                                        </div>
                                         <br /><br />
                                         <p class"message" style="text-align:justify;font-family:'Montserrat', sans-serif;color:#686868;">${post.content}</p>
                                         <br/>
                                         <p>
                                             <span title="No. of Likes" class="like-me" id="like_${post.id}" style="color:#2C6FAE; font-size: 30px; cursor: pointer;" ><i class="fa fa-thumbs${post.likes.length > 0 ? '' : '-o'}-up"></i> <span id="like_count_${post.id}" style="font-size: 16px;color:black;">${post.no_of_likes} </span></span>
                                             <span class="open-comments" id="comment_${post.id}" style="color:red;font-size: 30px; cursor: pointer;"><i class="fa fa-comment-o " id="comment"></i> <span style="font-size: 16px;color:black;" title="No. of Comments" id="comment_count_${post.comment}"> ${post.no_of_comments} </span> </span>
-                                        </p><hr>
+                                        </p>
+                                        <small class=" pull-right" style="color: #999999"><i class="fa fa-clock-o"></i>
+                                                    ${post.created}
+                                        </small>
+                                        <hr>
                                         <div class="commentWrapper_${post.id}" style="display: none;">
                                             <div id="commentSection_${post.id}">
                                              </div>
@@ -128,6 +161,7 @@
                 });
             //}
             $('#content').val(" ");
+             $('#imagePreview').hide();
             return false;
 
         });
@@ -158,16 +192,25 @@
                                                     ${post.user.first_name} ${post.user.last_name}
                                                 </span>
                                         </h4>
-                                        <small class=" pull-right" style="color: #999999"><i class="fa fa-clock-o"></i>
-                                                    ${post.created}
-                                            </small>
+                                        <div class="dropdown pull-right mr-5">
+                                            <i class="fa fa-ellipsis-v dropdown-toggle pull-right" data-toggle="dropdown">
+                                                </i>
+                                                    <ul class="dropdown-menu">
+                                                        <li data-toggle="modal" data-target="#myModal"><a href="#"><i class="fa fa-pencil"></i> Edit</a></li>
+                                                        <li><a href="#"><i class="fa fa-trash"></i> Delete</a></li>
+                                                    </ul>
+                                        </div>
                                         <br /><br />
                                         <p class"message" style="text-align:justify;font-family:'Montserrat', sans-serif;color:#686868;">${post.content}</p>
                                         <br/>
                                         <p>
                                             <span title="No. of Likes" class="like-me" id="like_${post.id}" style="color:#2C6FAE; font-size: 30px; cursor: pointer;" ><i class="fa fa-thumbs${post.likes.length > 0 ? '' : '-o'}-up"></i> <span id="like_count_${post.id}" style="font-size: 16px;color:black;">${post.no_of_likes} </span></span>
                                             <span class="open-comments" id="comment_${post.id}" style="color:red;font-size: 30px; cursor: pointer;"><i class="fa fa-comment-o " id="comment"></i> <span style="font-size: 16px;color:black;" title="No. of Comments" id="comment_count_${post.comment}"> ${post.no_of_comments} </span> </span>
-                                        </p><hr>
+                                        </p>
+                                        <small class=" pull-right" style="color: #999999"><i class="fa fa-clock-o"></i>
+                                                    ${post.created}
+                                        </small><br/>
+                                        <hr>
                                         <div class="commentWrapper_${post.id}" style="display: none;">
                                             <div id="commentSection_${post.id}">
                                              </div>
@@ -330,6 +373,7 @@
         $("#choiceFile").change(function () {
             readURL(this);
         });
+
     });
 </script>
 

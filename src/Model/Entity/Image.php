@@ -29,7 +29,7 @@ class Image extends Entity
      */
     protected $_accessible = [
         'user_id' => true,
-        'catagorie' => true,
+        'category' => true,
         'status' => true,
         'image' => true,
         'created' => true,

@@ -60,10 +60,10 @@ class ImagesTable extends Table
             ->allowEmptyString('id', null, 'create');
 
         $validator
-            ->scalar('catagorie')
-            ->maxLength('catagorie', 255)
-            ->requirePresence('catagorie', 'create')
-            ->notEmptyString('catagorie');
+            ->scalar('category')
+            ->maxLength('category', 255)
+            ->requirePresence('category', 'create')
+            ->notEmptyString('category');
 
         $validator
             ->boolean('status')
