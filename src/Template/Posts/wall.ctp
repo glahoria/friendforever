@@ -45,7 +45,7 @@
 
             <div class="box-footer clearfix">
                 <?= $this->Form->button(__('post <i class="fa fa-arrow-circle-right"></i>'), ['class' => 'pull-right btn button-style', 'type' => 'submit']) ?>
-                <img src="<?= SITE_URL; ?>img/user2-160x160.jpg" id="imagePreview" style="display:none"/>
+                <img src="" id="imagePreview" style="display:none"/>
                 <input type="file" name="image" class="form-control" id="choiceFile" style="display: none;">
                 <input type="hidden" name="image_data" class="form-control" id="imageData" style="display: none;">
                 <input type="hidden" name="image_type" class="form-control" id="imageType" style="display: none;">
@@ -67,7 +67,7 @@
 
 <!-------------- Modal content--------------------------->
 
-    <div class="modal fade" id="myModal" role="dialog">
+    <!-- <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -82,7 +82,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
  
 <!-------------latest post div ----------------------->
     <section class="content">
@@ -124,8 +124,10 @@
                                             <i class="fa fa-ellipsis-v dropdown-toggle pull-right" data-toggle="dropdown">
                                                 </i>
                                                     <ul class="dropdown-menu">
-                                                        <li data-toggle="modal" data-target="#myModal"><a href="#"><i class="fa fa-pencil"></i> Edit</a></li>
-                                                        <li><a href="#"><i class="fa fa-trash"></i> Delete</a></li>
+                                                    ${post.user_id == <?= $authUser['id'] ?> ?
+                                                      '<li><a href="#"><i class="fa fa-pencil"></i> Edit</a></li><li><a href="#"><i class="fa fa-trash"></i> Delete</a></li><li><a href="#"><i class="fa fa-share"></i> Share</a></li>' 
+                                                     : '<li><a href="#"><i class="fa fa-share"></i> Share</a></li>'
+                                                      }
                                                     </ul>
                                         </div>
                                         <br /><br />
@@ -202,17 +204,19 @@
                                             <i class="fa fa-ellipsis-v dropdown-toggle pull-right" data-toggle="dropdown">
                                                 </i>
                                                     <ul class="dropdown-menu">
-                                                        <li data-toggle="modal" data-target="#myModal"><a href="#"><i class="fa fa-pencil"></i> Edit</a></li>
-                                                        <li><a href="#"><i class="fa fa-trash"></i> Delete</a></li>
+                                                    ${post.user_id == <?= $authUser['id'] ?> ?
+                                                      '<li><a href="#"><i class="fa fa-pencil"></i> Edit</a></li><li><a href="#"><i class="fa fa-trash"></i> Delete</a></li><li><a href="#"><i class="fa fa-share"></i> Share</a></li>' 
+                                                     : '<li><a href="#"><i class="fa fa-share"></i> Share</a></li>'
+                                                      }
                                                     </ul>
                                         </div>
                                         <br /><br />
-                                        <div class="post-image1" style="display: ${post.post_images.length > 0 ? 'block': 'none'}">
+                                        <div class="col-md-12" style="display: ${post.post_images.length > 0 ? 'block': 'none'}">
                                         ${post.post_images.map(function (postImage) {
                                             return "<img src='<?= SITE_URL; ?>" + postImage.image.image + "' style='height:300px;' />"
                                         }).join("")}
-</div>
-<br />
+                                        </div>
+                                        <br />
                                         <p class"message" style="text-align:justify;font-family:'Montserrat', sans-serif;color:#686868;">${post.content}</p>
                                         <br/>
                                         <p>
