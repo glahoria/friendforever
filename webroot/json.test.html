@@ -1,35 +1,63 @@
+<html>
+<head>
+   <title>tutorial</title>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="post-data"></div>
 <script>
-	var posts = {"posts":[{"id":39,"user_id":2,"content":"jgkhk kjhkjhkh kjhjkh jk hkjh","post_type":"","no_of_comments":0,"no_of_likes":0,"status":false,"created":"2020-01-21T10:04:42+00:00","modified":"2020-01-21T10:04:42+00:00","post_images":[{"id":5,"post_id":39,"image_id":5,"created":"2020-01-21T10:04:43+00:00","modified":"2020-01-21T10:04:43+00:00","image":{"id":5,"user_id":2,"catagory":"","status":true,"image":"files\/images\/5e26ccbac85ca.png","created":"2020-01-21T10:04:43+00:00","modified":"2020-01-21T10:04:43+00:00"}}],"likes":[],"user":{"id":2,"first_name":"gurjeet","last_name":"singh","email":"test@gmail.com","phone":"7589232599","active":true,"created":"2019-12-30T10:39:49+00:00","modified":"2020-01-03T09:33:25+00:00","forgot_password_token":null}},
+	var resp = {"posts":[{"id":39,"user_id":2,"content":"jgkhk kjhkjhkh kjhjkh jk hkjh","post_type":"","no_of_comments":0,"no_of_likes":0,"status":false,"created":"2020-01-21T10:04:42+00:00","modified":"2020-01-21T10:04:42+00:00","post_images":[{"id":5,"post_id":39,"image_id":5,"created":"2020-01-21T10:04:43+00:00","modified":"2020-01-21T10:04:43+00:00","image":{"id":5,"user_id":2,"catagory":"","status":true,"image":"files\/images\/5e26ccbac85ca.png","created":"2020-01-21T10:04:43+00:00","modified":"2020-01-21T10:04:43+00:00"}}],"likes":[],"user":{"id":2,"first_name":"gurjeet","last_name":"singh","email":"test@gmail.com","phone":"7589232599","active":true,"created":"2019-12-30T10:39:49+00:00","modified":"2020-01-03T09:33:25+00:00","forgot_password_token":null}},{"id":38,"user_id":2,"content":"  x zxxzvxcxcvxz","post_type":"","no_of_comments":0,"no_of_likes":1,"status":false,"created":"2020-01-16T10:52:29+00:00","modified":"2020-01-16T10:52:29+00:00","post_images":[{"id":4,"post_id":38,"image_id":4,"created":"2020-01-16T10:52:29+00:00","modified":"2020-01-16T10:52:29+00:00","image":{"id":4,"user_id":2,"catagory":"","status":true,"image":"files\/images\/5e20406d662d0.jpeg","created":"2020-01-16T10:52:29+00:00","modified":"2020-01-16T10:52:29+00:00"}},{"id":6,"post_id":38,"image_id":4,"created":"2020-01-16T10:52:29+00:00","modified":"2020-01-16T10:52:29+00:00","image":{"id":4,"user_id":2,"catagory":"","status":true,"image":"files\/images\/5e20406d662d0.jpeg","created":"2020-01-16T10:52:29+00:00","modified":"2020-01-16T10:52:29+00:00"}}],"likes":[{"id":19,"post_id":38,"user_id":2,"like_type":true,"created":"2020-01-21T09:49:08+00:00","modified":"2020-01-21T09:49:08+00:00"}],"user":{"id":2,"first_name":"gurjeet","last_name":"singh","email":"test@gmail.com","phone":"7589232599","active":true,"created":"2019-12-30T10:39:49+00:00","modified":"2020-01-03T09:33:25+00:00","forgot_password_token":null}},{"id":16,"user_id":2,"content":"In CSS, margin properties can utilize negative values (padding cannot). As of 4.2, we\u2019ve added negative margin utilities for every non-zero integer size listed above (e.g., 1, 2, 3, 4, 5). These utilities are ideal for customizing grid column gutters across breakpoints.\n\nThe syntax is nearly the same as the default, positive margin utilities, but with the addition of n before the requested size. Here\u2019s an example class that\u2019s the opposite of .mt-1:","post_type":"","no_of_comments":0,"no_of_likes":1,"status":false,"created":"2020-01-02T09:28:52+00:00","modified":"2020-01-02T09:28:52+00:00","post_images":[],"likes":[],"user":{"id":2,"first_name":"gurjeet","last_name":"singh","email":"test@gmail.com","phone":"7589232599","active":true,"created":"2019-12-30T10:39:49+00:00","modified":"2020-01-03T09:33:25+00:00","forgot_password_token":null}},{"id":15,"user_id":2,"content":"In CSS, margin properties can utilize negative values (padding cannot). As of 4.2, we\u2019ve added negative margin utilities for every non-zero integer size listed above (e.g., 1, 2, 3, 4, 5). These utilities are ideal for customizing grid column gutters across breakpoints.\n\nThe syntax is nearly the same as the default, positive margin utilities, but with the addition of n before the requested size. Here\u2019s an example class that\u2019s the opposite of .mt-1:","post_type":"","no_of_comments":0,"no_of_likes":1,"status":false,"created":"2020-01-02T09:28:28+00:00","modified":"2020-01-02T09:28:28+00:00","post_images":[],"likes":[],"user":{"id":2,"first_name":"gurjeet","last_name":"singh","email":"test@gmail.com","phone":"7589232599","active":true,"created":"2019-12-30T10:39:49+00:00","modified":"2020-01-03T09:33:25+00:00","forgot_password_token":null}},{"id":6,"user_id":1,"content":"In CSS, margin properties can utilize negative values (padding cannot). As of 4.2, we\u2019ve added negative margin utilities for every non-zero integer size listed above (e.g., 1, 2, 3, 4, 5). These utilities are ideal for customizing grid column gutters across breakpoints.\n\nThe syntax is nearly the same as the default, positive margin utilities, but with the addition of n before the requested size. Here\u2019s an example class that\u2019s the opposite of .mt-1:","post_type":"","no_of_comments":13,"no_of_likes":1,"status":false,"created":"2019-12-30T11:18:23+00:00","modified":"2019-12-30T11:18:23+00:00","post_images":[],"likes":[],"user":{"id":1,"first_name":"gurjeet","last_name":"singh","email":"lahoria6522@gmail.com","phone":"9465319374","active":true,"created":"2019-12-23T11:06:05+00:00","modified":"2019-12-24T11:22:54+00:00","forgot_password_token":""}},{"id":3,"user_id":2,"content":"jfhjhjkdsfh","post_type":"","no_of_comments":0,"no_of_likes":1,"status":false,"created":"2019-12-30T11:06:06+00:00","modified":"2019-12-30T11:06:06+00:00","post_images":[],"likes":[],"user":{"id":2,"first_name":"gurjeet","last_name":"singh","email":"test@gmail.com","phone":"7589232599","active":true,"created":"2019-12-30T10:39:49+00:00","modified":"2020-01-03T09:33:25+00:00","forgot_password_token":null}}]};
+	
+	console.log('Post Count: '+resp.posts.length);
+	
+	console.log('First Post User Name: '+resp.posts[0].user.first_name);
+	
+	console.log('First Post User id: '+resp.posts[0].user.id);
+	
+	console.log('first post date:'+resp.posts[0].created);
+	
+	console.log('First Post Title:'+resp.posts[0].content);
+	
+	console.log('Image  Exists in last post:'+resp.posts[3].post_images.length);
+	
+	console.log('Image Count of second post: '+resp.posts[1].post_images.length);
+	
+	console.log('second Image id of second post: '+resp.posts[1].post_images[1].image.image);
+	
+	console.log('last post user contact: '+resp.posts[3].user.phone);
+	
+	console.log('Like Exists in first post:'+resp.posts[0].likes.length);
+	
+	console.log('Like count in first post:'+resp.posts[0].no_of_likes);
+	$(document).ready(function () {
+	    $.each(resp.posts, function(ind, post){
+		  var p = `<div id="postData" style="">
+		              post id = 
+		              ${post.id}
+		              <br /> <br />
+		              user id =
+		              ${post.user_id}
+		              <br /> <br />
+		              post images length =
+		              ${post.post_images.length}
+		              <br /> <br />
+		              create post user name =
+		              ${post.user.first_name}  ${post.user.last_name}
+		              <br /> <br />
+		              No of likes =
+		              ${post.no_of_likes}
+		               <br /> <br />
+		              No of likes =
+		              ${post.likes.like_type}
+		              <hr>
+		           </div>`;
+		           $('.post-data').append(p);
 		
-	{"id":38,"user_id":2,"content":"  x zxxzvxcxcvxz","post_type":"","no_of_comments":0,"no_of_likes":1,"status":false,"created":"2020-01-16T10:52:29+00:00","modified":"2020-01-16T10:52:29+00:00","post_images":[{"id":4,"post_id":38,"image_id":4,"created":"2020-01-16T10:52:29+00:00","modified":"2020-01-16T10:52:29+00:00","image":{"id":4,"user_id":2,"catagory":"","status":true,"image":"files\/images\/5e20406d662d0.jpeg","created":"2020-01-16T10:52:29+00:00","modified":"2020-01-16T10:52:29+00:00"}},{"id":6,"post_id":38,"image_id":4,"created":"2020-01-16T10:52:29+00:00","modified":"2020-01-16T10:52:29+00:00","image":{"id":4,"user_id":2,"catagory":"","status":true,"image":"files\/images\/5e20406d662d0.jpeg","created":"2020-01-16T10:52:29+00:00","modified":"2020-01-16T10:52:29+00:00"}}],"likes":[{"id":19,"post_id":38,"user_id":2,"like_type":true,"created":"2020-01-21T09:49:08+00:00","modified":"2020-01-21T09:49:08+00:00"}],"user":{"id":2,"first_name":"gurjeet","last_name":"singh","email":"test@gmail.com","phone":"7589232599","active":true,"created":"2019-12-30T10:39:49+00:00","modified":"2020-01-03T09:33:25+00:00","forgot_password_token":null}},
-	
-	{"id":16,"user_id":2,"content":"In CSS, margin properties can utilize negative values (padding cannot). As of 4.2, we\u2019ve added negative margin utilities for every non-zero integer size listed above (e.g., 1, 2, 3, 4, 5). These utilities are ideal for customizing grid column gutters across breakpoints.\n\nThe syntax is nearly the same as the default, positive margin utilities, but with the addition of n before the requested size. Here\u2019s an example class that\u2019s the opposite of .mt-1:","post_type":"","no_of_comments":0,"no_of_likes":1,"status":false,"created":"2020-01-02T09:28:52+00:00","modified":"2020-01-02T09:28:52+00:00","post_images":[],"likes":[],"user":{"id":2,"first_name":"gurjeet","last_name":"singh","email":"test@gmail.com","phone":"7589232599","active":true,"created":"2019-12-30T10:39:49+00:00","modified":"2020-01-03T09:33:25+00:00","forgot_password_token":null}},
-	
-	{"id":15,"user_id":2,"content":"In CSS, margin properties can utilize negative values (padding cannot). As of 4.2, we\u2019ve added negative margin utilities for every non-zero integer size listed above (e.g., 1, 2, 3, 4, 5). These utilities are ideal for customizing grid column gutters across breakpoints.\n\nThe syntax is nearly the same as the default, positive margin utilities, but with the addition of n before the requested size. Here\u2019s an example class that\u2019s the opposite of .mt-1:","post_type":"","no_of_comments":0,"no_of_likes":1,"status":false,"created":"2020-01-02T09:28:28+00:00","modified":"2020-01-02T09:28:28+00:00","post_images":[],"likes":[],"user":{"id":2,"first_name":"gurjeet","last_name":"singh","email":"test@gmail.com","phone":"7589232599","active":true,"created":"2019-12-30T10:39:49+00:00","modified":"2020-01-03T09:33:25+00:00","forgot_password_token":null}},
-	
-	{"id":6,"user_id":1,"content":"In CSS, margin properties can utilize negative values (padding cannot). As of 4.2, we\u2019ve added negative margin utilities for every non-zero integer size listed above (e.g., 1, 2, 3, 4, 5). These utilities are ideal for customizing grid column gutters across breakpoints.\n\nThe syntax is nearly the same as the default, positive margin utilities, but with the addition of n before the requested size. Here\u2019s an example class that\u2019s the opposite of .mt-1:","post_type":"","no_of_comments":13,"no_of_likes":1,"status":false,"created":"2019-12-30T11:18:23+00:00","modified":"2019-12-30T11:18:23+00:00","post_images":[],"likes":[],"user":{"id":1,"first_name":"gurjeet","last_name":"singh","email":"lahoria6522@gmail.com","phone":"9465319374","active":true,"created":"2019-12-23T11:06:05+00:00","modified":"2019-12-24T11:22:54+00:00","forgot_password_token":""}},
-	
-	{"id":3,"user_id":2,"content":"jfhjhjkdsfh","post_type":"","no_of_comments":0,"no_of_likes":1,"status":false,"created":"2019-12-30T11:06:06+00:00","modified":"2019-12-30T11:06:06+00:00","post_images":[],"likes":[],"user":{"id":2,"first_name":"gurjeet","last_name":"singh","email":"test@gmail.com","phone":"7589232599","active":true,"created":"2019-12-30T10:39:49+00:00","modified":"2020-01-03T09:33:25+00:00","forgot_password_token":null}}]};
-	
-	console.log('Post Count: '+posts.posts.length);
-	
-	console.log('First Post User Name: '+posts.posts[0].user.first_name);
-	
-	console.log('First Post User id: '+posts.posts[0].user.id);
-	
-	console.log('first post date:'+posts.posts[0].created);
-	
-	console.log('First Post Title:'+posts.posts[0].content);
-	
-	console.log('Image  Exists in last post:'+posts.posts[3].post_images.length);
-	
-	console.log('Image Count of second post: '+posts.posts[1].post_images.length);
-	
-	console.log('second Image id of second post: '+posts.posts[1].post_images[1].id);
-	
-	console.log('last post user contact: '+posts.posts[3].user.phone);
-	
-	console.log('Like Exists in first post:'+posts.posts[0].likes.length);
-	
-	console.log('Like count in first post:'+posts.posts[0].no_of_likes);
+		
+		
+		});
+	});
 </script>
+</body>
+</html>

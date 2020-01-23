@@ -120,16 +120,12 @@
                                                     ${post.user.first_name} ${post.user.last_name}
                                                 </span>
                                         </h4>
-                                        <div class="dropdown pull-right">
-                                            <i class="fa fa-ellipsis-v dropdown-toggle pull-right" data-toggle="dropdown">
-                                                </i>
-                                                    <ul class="dropdown-menu">
-                                                    ${post.user_id == <?= $authUser['id'] ?> ?
-                                                      '<li><a href="#"><i class="fa fa-pencil"></i> Edit</a></li><li><a href="#"><i class="fa fa-trash"></i> Delete</a></li><li><a href="#"><i class="fa fa-share"></i> Share</a></li>' 
-                                                     : '<li><a href="#"><i class="fa fa-share"></i> Share</a></li>'
-                                                      }
-                                                    </ul>
-                                        </div>
+                                        <span class="pull-right">
+                                            ${post.user_id == <?= $authUser['id'] ?> ?
+                                                '<a href="#" style="padding:7px;color:#F6BC64;"><i class="fa fa-pencil"></i></a><a href="#" style="padding:7px;color:#D45C4A;"><i class="fa fa-trash"></i></a><a href="#" style="padding:7px;color:#3289F5;"><i class="fa fa-share"></i> </a>' 
+                                                : '<a href="#" style="color:#3289F5;"><i class="fa fa-share"></i></a>'
+                                            }
+                                        </span>
                                         <br /><br />
                                         <div class="post-image1" style="display: ${post.post_images.length > 0 ? 'block': 'none'}">
                                         ${post.post_images.map(function (postImage) {
@@ -193,30 +189,25 @@
                     if (resp.posts.length > 0) {
                         $.each(resp.posts, function (ind, post) {
                             // console.log(post);
-                            var p = `
-                                    <div style="padding: 50px;background:white;">
+                            var p = `<div id="postWrapper_${post.id}" style="padding: 50px;background:white;">
                                         <h4 style="text-transform:uppercase; font-weight:bold;color:#4D3F3F; ">
                                                 <span class="pull-left">
                                                     ${post.user.first_name} ${post.user.last_name}
                                                 </span>
                                         </h4>
-                                        <div class="dropdown pull-right mr-5">
-                                            <i class="fa fa-ellipsis-v dropdown-toggle pull-right" data-toggle="dropdown">
-                                                </i>
-                                                    <ul class="dropdown-menu">
-                                                    ${post.user_id == <?= $authUser['id'] ?> ?
-                                                      '<li><a href="#"><i class="fa fa-pencil"></i> Edit</a></li><li><a href="#"><i class="fa fa-trash"></i> Delete</a></li><li><a href="#"><i class="fa fa-share"></i> Share</a></li>' 
-                                                     : '<li><a href="#"><i class="fa fa-share"></i> Share</a></li>'
-                                                      }
-                                                    </ul>
-                                        </div>
+                                        <span class="pull-right">
+                                            ${post.user_id == <?= $authUser['id'] ?> ?
+                                                `<a href="#" style="padding:7px;color:#F6BC64;"><i class="fa fa-pencil"></i></a><a href="#" style="padding:7px;color:#D45C4A;"><i class="fa fa-trash delete" id="delete_${post.id}"></i></a><a href="#" style="padding:7px;color:#3289F5;"><i class="fa fa-share"></i> </a>` 
+                                                : `<a href="#" style="color:#3289F5;"><i class="fa fa-share"></i></a>`
+                                            }
+                                        </span>
                                         <br /><br />
-                                        <div class="col-md-12" style="display: ${post.post_images.length > 0 ? 'block': 'none'}">
+                                        <div class="post-image1" style="display: ${post.post_images.length > 0 ? 'block': 'none'}">
                                         ${post.post_images.map(function (postImage) {
-                                            return "<img src='<?= SITE_URL; ?>" + postImage.image.image + "' style='height:300px;' />"
-                                        }).join("")}
-                                        </div>
-                                        <br />
+                            return "<img src='<?= SITE_URL; ?>" + postImage.image.image + "' style='height:300px;' />"
+                        }).join("")}
+</div>
+<br />
                                         <p class"message" style="text-align:justify;font-family:'Montserrat', sans-serif;color:#686868;">${post.content}</p>
                                         <br/>
                                         <p>
@@ -225,7 +216,7 @@
                                         </p>
                                         <small class=" pull-right" style="color: #999999"><i class="fa fa-clock-o"></i>
                                                     ${post.created}
-                                        </small><br/>
+                                        </small>
                                         <hr>
                                         <div class="commentWrapper_${post.id}" style="display: none;">
                                             <div id="commentSection_${post.id}">
@@ -388,6 +379,25 @@
 
         $("#choiceFile").change(function () {
             readURL(this);
+        });
+
+        $('#latestPosts').on('click', '.delete', function (e) {
+            e.preventDefault();
+            var id = $(this).attr('id').split('_')[1];
+            var deleteId = 'id=' +id;
+            if(confirm("Are you sure you want to delete this Record?")){
+                $.ajax({
+                    type: 'POST',
+                    url: '<?= SITE_URL; ?>posts/delete',
+                    data: deleteId,
+                    success: function(resp){   
+
+                    }
+                });
+                $(this).parents('#postWrapper_'+id).animate({ backgroundColor: "#fbc7c7" }, "fast")
+                .animate({ opacity: "hide" }, "slow");
+            }
+            return false;
         });
 
     });
