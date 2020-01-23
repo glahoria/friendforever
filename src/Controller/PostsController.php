@@ -178,7 +178,7 @@ class PostsController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null) {
-        $post = $this->Posts->get($id, ['contain' => []]);
+        $post = $this->Posts->get($id, ['contain' => ['PostImages'=>'Images']]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $post = $this->Posts->patchEntity($post, $this->request->getData());
             if ($this->Posts->save($post)) {
@@ -205,14 +205,17 @@ class PostsController extends AppController {
         $this->Posts->delete($post);
 
         $this->loadModel('Comments');
-
-        $comment = $this->Comments->get($id);
-        $this->Comments->delete($comment);
+        $this->Comments->deleteAll(['post_id'=>$id]);
 
         $this->loadModel('PostImages');
+        $this->PostImages->deleteAll(['post_id'=>$id]);
 
-        $postImages = $this->PostImages->get($id);
-        $this->PostImages->delete($postImages);
+        $this->loadModel('Likes');
+        $this->Likes->deleteAll(['post_id'=>$id]);
+
+        echo json_encode(['status'=>'deleted']);
+        exit;
+
     }
 
     public function like() {

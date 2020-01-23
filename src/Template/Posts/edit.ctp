@@ -3,38 +3,38 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Post $post
  */
+
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $post->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $post->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Posts'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Comments'), ['controller' => 'Comments', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Comment'), ['controller' => 'Comments', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Likes'), ['controller' => 'Likes', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Like'), ['controller' => 'Likes', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="posts form large-9 medium-8 columns content">
-    <?= $this->Form->create($post) ?>
-    <fieldset>
-        <legend><?= __('Edit Post') ?></legend>
-        <?php
-            echo $this->Form->control('user_id', ['options' => $users]);
-            echo $this->Form->control('content');
-            echo $this->Form->control('post_type');
-            echo $this->Form->control('no_of_comments');
-            echo $this->Form->control('no_of_likes');
-            echo $this->Form->control('status');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<style>
+    .button-style {
+        border-radius: 1px;
+        background: #004ea6;
+        color: white;
+    }
+</style>
+<section class="content">
+    <div class="box box-success">
+        <div class="box-body">
+            <div class="row">
+                  <?= $this->Form->create($post) ?>
+                      <div class="col-md-12">
+                          <img src='<?= SITE_URL.$post->post_images[0]->image->image; ?>'  id="image" style="height:200px; "/>
+                      <br />
+                          <?= $this->Form->textarea('content', ['type' => 'textarea', 'label' => false, 'escape' => false, 'style' => 'width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;', 'id' => 'content','name'=>'content']) ?>
+            <div class="box-footer clearfix">
+                <?= $this->Form->button(__('save <i class="fa fa-arrow-circle-right"></i>'), ['class' => 'pull-right btn button-style', 'type' => 'submit']) ?>
+                           <img src="" id="imagePreview" style="display:none"/>
+                <input type="file" name="image" class="form-control" id="choiceFile" style="display: none;">
+                <input type="hidden" name="image_data" class="form-control" id="imageData" style="display: none;">
+                <input type="hidden" name="image_type" class="form-control" id="imageType" style="display: none;">
+                <span class="btn  pull-right" style="margin-right:2%;border-radius:15px;background: #D5D3D3;" id="photoButton"><i
+                            class="fa fa-camera"></i> Photo
+                </span>
+
+            </div>
+                          <?= $this->Form->end() ?>
+                      </div>
 </div>
+    </div>
+    </div>
+</section>

@@ -122,9 +122,9 @@
                                         </h4>
                                         <span class="pull-right">
                                             ${post.user_id == <?= $authUser['id'] ?> ?
-                                                '<a href="#" style="padding:7px;color:#F6BC64;"><i class="fa fa-pencil"></i></a><a href="#" style="padding:7px;color:#D45C4A;"><i class="fa fa-trash"></i></a><a href="#" style="padding:7px;color:#3289F5;"><i class="fa fa-share"></i> </a>' 
-                                                : '<a href="#" style="color:#3289F5;"><i class="fa fa-share"></i></a>'
-                                            }
+                            `<a href="#" style="padding:7px;color:#F6BC64;"><i class="fa fa-pencil"></i></a><a href="#" style="padding:7px;color:#D45C4A;"><i class="fa fa-trash delete" id="delete_${post.id}"></i></a><a href="#" style="padding:7px;color:#3289F5;"><i class="fa fa-share"></i> </a>`
+                            : `<a href="#" style="color:#3289F5;"><i class="fa fa-share"></i></a>`
+                            }
                                         </span>
                                         <br /><br />
                                         <div class="post-image1" style="display: ${post.post_images.length > 0 ? 'block': 'none'}">
@@ -197,7 +197,7 @@
                                         </h4>
                                         <span class="pull-right">
                                             ${post.user_id == <?= $authUser['id'] ?> ?
-                                                `<a href="#" style="padding:7px;color:#F6BC64;"><i class="fa fa-pencil"></i></a><a href="#" style="padding:7px;color:#D45C4A;"><i class="fa fa-trash delete" id="delete_${post.id}"></i></a><a href="#" style="padding:7px;color:#3289F5;"><i class="fa fa-share"></i> </a>` 
+                                                `<a href="<?= SITE_URL; ?>posts/edit/${post.id}" style="padding:7px;color:#F6BC64;"><i class="fa fa-pencil" id="edit_${post.id}"></i></a><a href="#" style="padding:7px;color:#D45C4A;"><i class="fa fa-trash delete" id="delete_${post.id}"></i></a><a href="#" style="padding:7px;color:#3289F5;"><i class="fa fa-share"></i> </a>`
                                                 : `<a href="#" style="color:#3289F5;"><i class="fa fa-share"></i></a>`
                                             }
                                         </span>
@@ -352,6 +352,7 @@
                                     </div>`;
                             $('#commentSection_' + postId).append(c);
                         });
+
                     }
                 }
             })
@@ -381,20 +382,20 @@
             readURL(this);
         });
 
+//----------------------image upload function on wall------------------------------------
+
         $('#latestPosts').on('click', '.delete', function (e) {
             e.preventDefault();
             var id = $(this).attr('id').split('_')[1];
-            var deleteId = 'id=' +id;
             if(confirm("Are you sure you want to delete this Record?")){
                 $.ajax({
                     type: 'POST',
-                    url: '<?= SITE_URL; ?>posts/delete',
-                    data: deleteId,
+                    url: '<?= SITE_URL; ?>posts/delete/'+id,
                     success: function(resp){   
 
                     }
                 });
-                $(this).parents('#postWrapper_'+id).animate({ backgroundColor: "#fbc7c7" }, "fast")
+                $(this).parents('#postWrapper_'+id).animate({ backgroundColor: "#F0B78F" }, "fast")
                 .animate({ opacity: "hide" }, "slow");
             }
             return false;
