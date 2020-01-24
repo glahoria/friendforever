@@ -184,7 +184,7 @@ class PostsController extends AppController {
             if ($this->Posts->save($post)) {
                 $this->Flash->success(__('The post has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'wall']);
             }
             $this->Flash->error(__('The post could not be saved. Please, try again.'));
         }
@@ -212,6 +212,16 @@ class PostsController extends AppController {
 
         $this->loadModel('Likes');
         $this->Likes->deleteAll(['post_id'=>$id]);
+
+        echo json_encode(['status'=>'deleted']);
+        exit;
+
+    }
+    public function imageDelete($id) {
+        $this->request->allowMethod(['post', 'delete']);
+        $this->loadModel('PostImages');
+        $postImage = $this->PostImages->get($id);
+        $this->PostImages->delete($postImage);
 
         echo json_encode(['status'=>'deleted']);
         exit;
