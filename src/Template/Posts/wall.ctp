@@ -23,7 +23,8 @@
         height: 200px;
         float: left;
     }
-    .post-image{
+
+    .post-image {
         width: 50%;
         height: 50%;
         float: left;
@@ -40,7 +41,7 @@
         <div class="box-body">
             <?= $this->Form->create('', ['id' => 'savePost', 'enctype' => 'multipart/form-data']) ?>
             <div>
-                <?= $this->Form->textarea('content', ['type' => 'textarea', 'label' => false, 'placeholder' => 'what is in your mind...', 'escape' => false, 'style' => 'width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;', 'id' => 'content','name'=>'content']) ?>
+                <?= $this->Form->textarea('content', ['type' => 'textarea', 'label' => false, 'placeholder' => 'what is in your mind...', 'escape' => false, 'style' => 'width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;', 'id' => 'content', 'name' => 'content']) ?>
             </div>
 
             <div class="box-footer clearfix">
@@ -49,7 +50,8 @@
                 <input type="file" name="image" class="form-control" id="choiceFile" style="display: none;">
                 <input type="hidden" name="image_data" class="form-control" id="imageData" style="display: none;">
                 <input type="hidden" name="image_type" class="form-control" id="imageType" style="display: none;">
-                <span class="btn  pull-right" style="margin-right:2%;border-radius:15px;background: #D5D3D3;" id="photoButton"><i
+                <span class="btn  pull-right" style="margin-right:2%;border-radius:15px;background: #D5D3D3;"
+                      id="photoButton"><i
                             class="fa fa-camera"></i> Photo
                 </span>
 
@@ -58,14 +60,14 @@
         </div>
     </div>
 
-<!-------------post loader div ----------------------->
+    <!-------------post loader div ----------------------->
 
     <div id="postLoader"><h4 class="text-center" style="padding: 20px; color: #225DDB;"><i
                     class="fa fa-spin fa-spinner"></i>
             Loading ...</h4>
     </div>
 
-<!-------------- Modal content--------------------------->
+    <!-------------- Modal content--------------------------->
 
     <!-- <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
@@ -83,8 +85,8 @@
             </div>
         </div>
     </div> -->
- 
-<!-------------latest post div ----------------------->
+
+    <!-------------latest post div ----------------------->
     <section class="content">
         <div id="latestPosts" class="row"></div>
     </section>
@@ -107,14 +109,14 @@
             // if (post == '') {
             //
             // } else {
-                $.ajax({
-                    type: 'POST',
-                    url: '<?= SITE_URL; ?>posts/save',
-                    data: postData,
-                    dataType: "JSON",
-                    success: function (resp) {
-                        var post = resp.post;
-                        var p = `<div style="padding: 50px;background:white;">
+            $.ajax({
+                type: 'POST',
+                url: '<?= SITE_URL; ?>posts/save',
+                data: postData,
+                dataType: "JSON",
+                success: function (resp) {
+                    var post = resp.post;
+                    var p = `<div style="padding: 50px;background:white;">
                                         <h4 style="text-transform:uppercase; font-weight:bold;color:#4D3F3F; ">
                                                 <span class="pull-left">
                                                     ${post.user.first_name} ${post.user.last_name}
@@ -122,15 +124,15 @@
                                         </h4>
                                         <span class="pull-right">
                                             ${post.user_id == <?= $authUser['id'] ?> ?
-                                                `<a href="<?= SITE_URL; ?>posts/edit/${post.id}" style="padding:7px;color:#F6BC64;"><i class="fa fa-pencil" id="edit_${post.id}"></i></a><a href="#" style="padding:7px;color:#D45C4A;"><i class="fa fa-trash delete" id="delete_${post.id}"></i></a><a href="#" style="padding:7px;color:#3289F5;"><i class="fa fa-share"></i> </a>`
-                                                : `<a href="#" style="color:#3289F5;"><i class="fa fa-share"></i></a>`
-                                            }
+                        `<a href="<?= SITE_URL; ?>posts/edit/${post.id}" style="padding:7px;color:#F6BC64;"><i class="fa fa-pencil" id="edit_${post.id}"></i></a><a href="#" style="padding:7px;color:#D45C4A;"><i class="fa fa-trash delete" id="delete_${post.id}"></i></a><a href="#" style="padding:7px;color:#3289F5;"><i class="fa fa-share"></i> </a>`
+                        : `<a href="#" style="color:#3289F5;"><i class="fa fa-share"></i></a>`
+                        }
                                         </span>
                                         <br /><br />
-                                        <div class="post-image1" style="display: ${post.post_images.length > 0 ? 'block': 'none'}">
+                                        <div class="post-image1" style="display: ${post.post_images.length > 0 ? 'block' : 'none'}">
                                         ${post.post_images.map(function (postImage) {
-                            return "<img src='<?= SITE_URL; ?>" + postImage.image.image + "' style='height:300px;' />"
-                        }).join("")}
+                        return "<img src='<?= SITE_URL; ?>" + postImage.image.image + "' style='height:300px;' />"
+                    }).join("")}
 </div>
 <br />
                                         <p class"message" style="text-align:justify;font-family:'Montserrat', sans-serif;color:#686868;">${post.content}</p>
@@ -159,13 +161,13 @@
                                         </div>
                                     <div class="post-margin"></div>`;
 
-                        $('#latestPosts').prepend(p);
-                    }
+                    $('#latestPosts').prepend(p);
+                }
 
-                });
+            });
             //}
             $('#content').val(" ");
-             $('#imagePreview').hide();
+            $('#imagePreview').hide();
             return false;
 
         });
@@ -197,15 +199,15 @@
                                         </h4>
                                         <span class="pull-right">
                                             ${post.user_id == <?= $authUser['id'] ?> ?
-                                                `<a href="<?= SITE_URL; ?>posts/edit/${post.id}" style="padding:7px;color:#F6BC64;"><i class="fa fa-pencil" id="edit_${post.id}"></i></a><a href="#" style="padding:7px;color:#D45C4A;"><i class="fa fa-trash delete" id="delete_${post.id}"></i></a><a href="#" style="padding:7px;color:#3289F5;"><i class="fa fa-share"></i> </a>`
-                                                : `<a href="#" style="color:#3289F5;"><i class="fa fa-share"></i></a>`
-                                            }
+                                `<a href="<?= SITE_URL; ?>posts/edit/${post.id}" style="padding:7px;color:#F6BC64;"><i class="fa fa-pencil" id="edit_${post.id}"></i></a><a href="#" style="padding:7px;color:#D45C4A;"><i class="fa fa-trash delete" id="delete_${post.id}"></i></a><a href="#" style="padding:7px;color:#3289F5;"><i class="fa fa-share"></i> </a>`
+                                : `<a href="#" style="color:#3289F5;"><i class="fa fa-share"></i></a>`
+                                }
                                         </span>
                                         <br /><br />
-                                        <div class="post-image1" style="display: ${post.post_images.length > 0 ? 'block': 'none'}">
+                                        <div class="post-image1" style="display: ${post.post_images.length > 0 ? 'block' : 'none'}">
                                         ${post.post_images.map(function (postImage) {
-                            return "<img src='<?= SITE_URL; ?>" + postImage.image.image + "' style='height:300px;' />"
-                        }).join("")}
+                                return "<img src='<?= SITE_URL; ?>" + postImage.image.image + "' style='height:300px;' />"
+                            }).join("")}
 </div>
 <br />
                                         <p class"message" style="text-align:justify;font-family:'Montserrat', sans-serif;color:#686868;">${post.content}</p>
@@ -299,6 +301,7 @@
                     url: '<?= SITE_URL; ?>posts/comment',
                     data: commentData,
                     dataType: "JSON",
+
                     success: function (resp) {
                         var comment = resp.comment;
                         var c = `
@@ -332,6 +335,7 @@
                 type: 'GET',
                 url: '<?= SITE_URL; ?>posts/get-comments/' + postId,
                 dataType: 'JSON',
+                beforeSend:function(){ $('#commentSection_' + postId).html(""); },
                 success: function (resp) {
                     if (resp.comments.length > 0) {
                         $.each(resp.comments, function (ind, comment) {
@@ -387,16 +391,16 @@
         $('#latestPosts').on('click', '.delete', function (e) {
             e.preventDefault();
             var id = $(this).attr('id').split('_')[1];
-            if(confirm("Are you sure you want to delete post?")){
+            if (confirm("Are you sure you want to delete post?")) {
                 $.ajax({
                     type: 'POST',
-                    url: '<?= SITE_URL; ?>posts/delete/'+id,
-                    success: function(resp){   
+                    url: '<?= SITE_URL; ?>posts/delete/' + id,
+                    success: function (resp) {
 
                     }
                 });
-                $(this).parents('#postWrapper_'+id).animate({ backgroundColor: "#F0B78F" }, "fast")
-                .animate({ opacity: "hide" }, "slow");
+                $(this).parents('#postWrapper_' + id).animate({backgroundColor: "#F0B78F"}, "fast")
+                    .animate({opacity: "hide"}, "slow");
             }
             return false;
         });

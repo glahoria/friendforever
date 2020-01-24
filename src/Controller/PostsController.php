@@ -182,11 +182,57 @@ class PostsController extends AppController {
         if ($this->request->is(['patch', 'post', 'put'])) {
             $post = $this->Posts->patchEntity($post, $this->request->getData());
             if ($this->Posts->save($post)) {
-                $this->Flash->success(__('The post has been saved.'));
+                if (!empty($this->getRequest()->getData('image_data'))) {
+
+
+                    $this->loadModel('Images');
+
+                    $image = $this->Images->newEntity();
+                    $this->fileExt = explode("/", $this->getRequest()->getData('image_type'))[1];
+                    $this->fileName = uniqid() . "." . $this->fileExt;
+                    $filePath = WWW_ROOT . 'files/images/' . $this->fileName;
+                    $imageUrl = SITE_URL . 'files/images/' . $this->fileName;
+
+                    $ifp = fopen($filePath, 'wb');
+
+                    // we could add validation here with ensuring count( $this->getRequest()->getData('image_data') ) > 1
+                    $data = explode( ',', $this->getRequest()->getData('image_data') );
+                    fwrite($ifp, base64_decode($data[ 1 ]));
+
+                    // clean up the file resource
+                    fclose($ifp);
+
+                    $image->image = 'files/images/' . $this->fileName;
+                    $image->user_id = ($this->Auth->user()) ? $this->Auth->user('id') : 0;
+
+                    $image->category = "Post";
+                    $image->status = true;
+
+                    $this->loadComponent('Thumb');
+                    $this->thumb = $this->Thumb;
+
+                    list($this->actualWidth, $this->actualHeight) = getimagesize($imageUrl);
+
+
+                    $this->createThumb('small', SMALL_THUMB_WIDTH);
+                    $this->createThumb('medium', MEDIUM_THUMB_WIDTH);
+                    $this->createThumb('large', LARGE_THUMB_WIDTH);
+
+                    if($this->Images->save($image)) {
+                        $this->loadModel('PostImages');
+
+                        $postImages = $this->PostImages->newEntity();
+
+                        $postImages->post_id = $post->id;
+                        $postImages->image_id = $image->id;
+
+                        $this->PostImages->save($postImages);
+                    }
+                }
 
                 return $this->redirect(['action' => 'wall']);
             }
-            $this->Flash->error(__('The post could not be saved. Please, try again.'));
+
         }
         $users = $this->Posts->Users->find('list', ['limit' => 200]);
         $this->set(compact('post', 'users'));
