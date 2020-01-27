@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -10,21 +11,32 @@ use App\Controller\AppController;
  *
  * @method \App\Model\Entity\FriendRequest[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class FriendRequestsController extends AppController
-{
+class FriendRequestsController extends AppController {
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null
      */
-    public function index()
-    {
-        $this->paginate = [
-            'contain' => ['Users', 'Users'],
-        ];
+    public function index() {
+        $this->paginate = ['contain' => ['Users', 'Users'],];
         $friendRequests = $this->paginate($this->FriendRequests);
 
         $this->set(compact('friendRequests'));
+    }
+
+    public function friends() {
+
+    }
+
+    public function getFriends() {
+        $key = $this->request->getQuery('friend_search');
+        $this->loadModel('Users');
+
+
+        $users = $this->Users->find()->where(['OR' => ['first_name LIKE' => '%' . $key . '%', 'last_name LIKE' => '%' . $key . '%']])->all();
+
+        echo json_encode(['users' => $users]);
+        exit;
     }
 
     /**
@@ -34,11 +46,8 @@ class FriendRequestsController extends AppController
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
-        $friendRequest = $this->FriendRequests->get($id, [
-            'contain' => ['Users', 'Users'],
-        ]);
+    public function view($id = null) {
+        $friendRequest = $this->FriendRequests->get($id, ['contain' => ['Users', 'Users'],]);
 
         $this->set('friendRequest', $friendRequest);
     }
@@ -48,8 +57,7 @@ class FriendRequestsController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $friendRequest = $this->FriendRequests->newEntity();
         if ($this->request->is('post')) {
             $friendRequest = $this->FriendRequests->patchEntity($friendRequest, $this->request->getData());
@@ -65,28 +73,28 @@ class FriendRequestsController extends AppController
         $this->set(compact('friendRequest', 'Users', 'Users'));
     }
 
-    public function friends()
-    {
-        $friendRequest = $this->FriendRequests->newEntity();
-        $this->set('post', $friendRequest);
-        
+    //    public function friends()
+    //    {
+    //        $friendRequest = $this->FriendRequests->newEntity();
+    //        $this->set('post', $friendRequest);
+    //
+    //
+    //    }
 
-    }
-
-    public function sendRequest()  {
+    public function sendRequest() {
         $friendRequest = $this->FriendRequests->newEntity();
         if ($this->request->is('post')) {
             $friendRequest = $this->FriendRequests->patchEntity($friendRequest, $this->request->getData());
-          $friendRequest->request_to_id   = $this->getRequest()->getData('request_to_id');
-            $friendRequest->request_from_id = $this->Auth->user('id');
-             $friendRequest->status = "Pending";
+            $friendRequest->request_to_id = $friendRequest->request_from_id = $this->Auth->user('id');
+            $friendRequest->status = "Pending";
             if ($this->FriendRequests->save($friendRequest)) {
-                
+                if ($this->FriendRequests->save($friendRequest)) {
+                    $friendRequest = $this->FriendRequests->find()->contain(['Users'])->where()->first();
+                }
             }
         }
-        $requestFroms = $this->FriendRequests->RequestFroms->find('list', ['limit' => 200]);
-        $requestTos = $this->FriendRequests->RequestTos->find('list', ['limit' => 200]);
-        $this->set(compact('friendRequest', 'Users', 'Users'));
+        echo json_encode(['friendRequest' => $friendRequest]);
+        exit;
     }
 
     /**
@@ -96,11 +104,8 @@ class FriendRequestsController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
-        $friendRequest = $this->FriendRequests->get($id, [
-            'contain' => [],
-        ]);
+    public function edit($id = null) {
+        $friendRequest = $this->FriendRequests->get($id, ['contain' => [],]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $friendRequest = $this->FriendRequests->patchEntity($friendRequest, $this->request->getData());
             if ($this->FriendRequests->save($friendRequest)) {
@@ -122,8 +127,7 @@ class FriendRequestsController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $friendRequest = $this->FriendRequests->get($id);
         if ($this->FriendRequests->delete($friendRequest)) {

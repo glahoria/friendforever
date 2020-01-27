@@ -162,7 +162,7 @@
 <div class="commentWrapper_${post.id}" style="display: none;">
                                             <div id="commentSection_${post.id}">
                                              </div>
-                                        <form method="post" accept-charset="utf-8" id="saveComment_${post.id}" class="comment-form">
+                                        <form method="post"accept-charset="utf-8" id="saveComment_${post.id}" class="comment-form">
                                             <div class="input-group" style="width:100%;">
                                               <input name="post_id" value="${post.id}" type="hidden" class="form-control" style="border-radius:0px;"/>
                                              <input name="comment" type="text" id="commentInput_${post.id}" class="form-control" placeholder="comment..." style="border-radius:0px;"/>
