@@ -12,9 +12,21 @@ sudo bin/cake bake migration Createcomments parent_id:integer post_id:integer us
 likes table
 
 sudo bin/cake bake migration Createlikes  post_id:integer user_id:integer like:boolean created modified
+
 images table
-sudo bin/cake bake migration Createimages user_id:integer catagorie:string status:boolean image:string created modified
+
+sudo bin/cake bake migration Createimages user_id:integer catagory:string status:boolean image:string created modified
+
 post_images table
+
 sudo bin/cake bake migration CreatePostImages post_id:integer  image_id:integer created modified
+
+friend_requests table
+
+sudo bin/cake bake migration CreateFriendRequests request_from_id:integer  request_to_id:integer status:string created modified
+
+friends table
+
+sudo bin/cake bake migration CreateFriends user_id:integer  friend_id:integer created modified
 
 

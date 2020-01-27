@@ -1,3 +1,19 @@
+<?php 
+// pr($authUser);
+ ?>
+<style>
+  .cancel-button{
+    border-radius: 1px;
+    background: #736363;
+    color: white;
+  }
+  .confirm-button{
+    border-radius: 1px;
+    background: #004ea6;
+    color: white;
+    margin-left: 5px;
+  }
+</style>
 <header class="main-header">
     <!-- Logo -->
     <a href="<?= SITE_URL; ?>" class="logo">
@@ -14,6 +30,32 @@
       </a>
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
+          <li class="dropdown messages-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa  fa-user-plus"></i>
+              <span class="label label-success">1</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="header">Friend Requests</li>
+              <li>
+                <ul class="menu">
+                  <li>
+                    <a href="#">
+                      <div class="pull-left">
+                        <img src="<?= SITE_URL; ?>img/user_icon.png" class="img-circle" alt="User Image">
+                      </div>
+                      <h4 style="margin-bottom:5px;font-weight: bold; ">
+                        MANPREET SINGH
+                      </h4>
+                      <button class="pull-left btn btn-sm cancel-button">Cancel</button>
+                     <button class="pull-left btn btn-sm confirm-button">Confirm</button>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="footer"><a href="<?= $this->Url->build(['controller'=>'friend_requests', 'action'=>'friends']); ?>">See All Requests</a></li>
+            </ul>
+          </li>
           <li class="dropdown notifications-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>

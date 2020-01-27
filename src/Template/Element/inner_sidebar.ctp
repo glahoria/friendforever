@@ -26,7 +26,7 @@
           </a>
         </li>
         <li class="active">
-          <a href="#">
+          <a href="<?= $this->Url->build(['controller'=>'friend_requests', 'action'=>'friends']); ?>">
             <i class="fa fa-users"></i> <span>Friends</span>
           </a>
         </li>

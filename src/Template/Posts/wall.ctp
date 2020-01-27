@@ -1,3 +1,6 @@
+<?php
+  // pr($post);
+ ?>
 <style>
     .button-style {
         border-radius: 1px;
@@ -116,36 +119,47 @@
                 dataType: "JSON",
                 success: function (resp) {
                     var post = resp.post;
-                    var p = `<div style="padding: 50px;background:white;">
-                                        <h4 style="text-transform:uppercase; font-weight:bold;color:#4D3F3F; ">
-                                                <span class="pull-left">
-                                                    ${post.user.first_name} ${post.user.last_name}
-                                                </span>
-                                        </h4>
-                                        <span class="pull-right">
+                    var p = `<div id="postWrapper_${post.id}" style="padding: 50px;background:white;">
+                                        <div class="tab-content">
+              <div class="active tab-pane" id="activity">
+                <!-- Post -->
+                <div class="post">
+                  <div class="user-block">
+                     <img class="img-circle img-bordered-sm" src="<?= SITE_URL; ?>img/user_icon.png" alt="User Image"> 
+                        <span class="username">
+                          <a href="#" style="text-transform:uppercase; font-weight:bold;color:#4D3F3F; ">${post.user.first_name} ${post.user.last_name}</a>
+                          <span class="pull-right">
                                             ${post.user_id == <?= $authUser['id'] ?> ?
                         `<a href="<?= SITE_URL; ?>posts/edit/${post.id}" style="padding:7px;color:#F6BC64;"><i class="fa fa-pencil" id="edit_${post.id}"></i></a><a href="#" style="padding:7px;color:#D45C4A;"><i class="fa fa-trash delete" id="delete_${post.id}"></i></a><a href="#" style="padding:7px;color:#3289F5;"><i class="fa fa-share"></i> </a>`
                         : `<a href="#" style="color:#3289F5;"><i class="fa fa-share"></i></a>`
                         }
-                                        </span>
-                                        <br /><br />
-                                        <div class="post-image1" style="display: ${post.post_images.length > 0 ? 'block' : 'none'}">
-                                        ${post.post_images.map(function (postImage) {
+                        </span>
+                        </span>
+                    <span class="description">${post.created}</span>
+                  </div>
+                  <!-- /.user-block -->
+                <div class="row margin-bottom" style="display: ${post.post_images.length > 0 ? 'block' : 'none'}">
+                    <div class="col-sm-12">
+                      ${post.post_images.map(function (postImage) {
                         return "<img src='<?= SITE_URL; ?>" + postImage.image.image + "' style='height:300px;' />"
                     }).join("")}
+                    </div>
+                    <!-- /.col -->
+                </div>
+                 <p style="text-align:justify;font-family:'Montserrat', sans-serif;color:#686868;">
+                    ${post.content}
+                  </p>
+
+                  <ul class="list-inline">
+                    <li title="No. of Likes" class="like-me" id="like_${post.id}" style="color:#2C6FAE; font-size: 30px; cursor: pointer;" ><i class="fa fa-thumbs${post.likes.length > 0 ? '' : '-o'}-up"></i> <span id="like_count_${post.id}" style="font-size: 16px;color:black;">${post.no_of_likes} </span></li>
+                    <li class="open-comments" id="comment_${post.id}" style="color:red;font-size: 30px; cursor: pointer;"><i class="fa fa-comment-o " id="comment"></i> <span style="font-size: 16px;color:black;" title="No. of Comments" id="comment_count_${post.comment}"> ${post.no_of_comments} </span> </li>
+                  </ul>
+                </div>
+                <!-- /.post -->
+              </div>
+              
 </div>
-<br />
-                                        <p class"message" style="text-align:justify;font-family:'Montserrat', sans-serif;color:#686868;">${post.content}</p>
-                                        <br/>
-                                        <p>
-                                            <span title="No. of Likes" class="like-me" id="like_${post.id}" style="color:#2C6FAE; font-size: 30px; cursor: pointer;" ><i class="fa fa-thumbs${post.likes.length > 0 ? '' : '-o'}-up"></i> <span id="like_count_${post.id}" style="font-size: 16px;color:black;">${post.no_of_likes} </span></span>
-                                            <span class="open-comments" id="comment_${post.id}" style="color:red;font-size: 30px; cursor: pointer;"><i class="fa fa-comment-o " id="comment"></i> <span style="font-size: 16px;color:black;" title="No. of Comments" id="comment_count_${post.comment}"> ${post.no_of_comments} </span> </span>
-                                        </p>
-                                        <small class=" pull-right" style="color: #999999"><i class="fa fa-clock-o"></i>
-                                                    ${post.created}
-                                        </small>
-                                        <hr>
-                                        <div class="commentWrapper_${post.id}" style="display: none;">
+<div class="commentWrapper_${post.id}" style="display: none;">
                                             <div id="commentSection_${post.id}">
                                              </div>
                                         <form method="post" accept-charset="utf-8" id="saveComment_${post.id}" class="comment-form">
@@ -153,7 +167,7 @@
                                               <input name="post_id" value="${post.id}" type="hidden" class="form-control" style="border-radius:0px;"/>
                                              <input name="comment" type="text" id="commentInput_${post.id}" class="form-control" placeholder="comment..." style="border-radius:0px;"/>
                                              <span class="input-group-btn">
-                                             <button class="btn  pull-right form-control comment-button" id="commentBtn_${post.id}"><i class="fa fa-arrow-circle-right"></i></botton>
+                                             <button class="btn  pull-right form-control comment-button" id="commentBtn_${post.id}"><i class="fa fa-arrow-circle-right"></i></button>
                                              </span>
                                             </div> 
                                              </form>
@@ -192,35 +206,46 @@
                         $.each(resp.posts, function (ind, post) {
                             // console.log(post);
                             var p = `<div id="postWrapper_${post.id}" style="padding: 50px;background:white;">
-                                        <h4 style="text-transform:uppercase; font-weight:bold;color:#4D3F3F; ">
-                                                <span class="pull-left">
-                                                    ${post.user.first_name} ${post.user.last_name}
-                                                </span>
-                                        </h4>
-                                        <span class="pull-right">
+                                        <div class="tab-content">
+              <div class="active tab-pane" id="activity">
+                <!-- Post -->
+                <div class="post">
+                  <div class="user-block">
+                     <img class="img-circle img-bordered-sm" src="<?= SITE_URL; ?>img/user_icon.png" alt="User Image"> 
+                        <span class="username">
+                          <a href="#" style="text-transform:uppercase; font-weight:bold;color:#4D3F3F; ">${post.user.first_name} ${post.user.last_name}</a>
+                          <span class="pull-right">
                                             ${post.user_id == <?= $authUser['id'] ?> ?
-                                `<a href="<?= SITE_URL; ?>posts/edit/${post.id}" style="padding:7px;color:#F6BC64;"><i class="fa fa-pencil" id="edit_${post.id}"></i></a><a href="#" style="padding:7px;color:#D45C4A;"><i class="fa fa-trash delete" id="delete_${post.id}"></i></a><a href="#" style="padding:7px;color:#3289F5;"><i class="fa fa-share"></i> </a>`
-                                : `<a href="#" style="color:#3289F5;"><i class="fa fa-share"></i></a>`
-                                }
-                                        </span>
-                                        <br /><br />
-                                        <div class="post-image1" style="display: ${post.post_images.length > 0 ? 'block' : 'none'}">
-                                        ${post.post_images.map(function (postImage) {
-                                return "<img src='<?= SITE_URL; ?>" + postImage.image.image + "' style='height:300px;' />"
-                            }).join("")}
+                        `<a href="<?= SITE_URL; ?>posts/edit/${post.id}" style="padding:7px;color:#F6BC64;"><i class="fa fa-pencil" id="edit_${post.id}"></i></a><a href="#" style="padding:7px;color:#D45C4A;"><i class="fa fa-trash delete" id="delete_${post.id}"></i></a><a href="#" style="padding:7px;color:#3289F5;"><i class="fa fa-share"></i> </a>`
+                        : `<a href="#" style="color:#3289F5;"><i class="fa fa-share"></i></a>`
+                        }
+                        </span>
+                        </span>
+                    <span class="description">${post.created}</span>
+                  </div>
+                  <!-- /.user-block -->
+                <div class="row margin-bottom" style="display: ${post.post_images.length > 0 ? 'block' : 'none'}">
+                    <div class="col-sm-12">
+                      ${post.post_images.map(function (postImage) {
+                        return "<img src='<?= SITE_URL; ?>" + postImage.image.image + "' style='height:300px;' />"
+                    }).join("")}
+                    </div>
+                    <!-- /.col -->
+                </div>
+                 <p style="text-align:justify;font-family:'Montserrat', sans-serif;color:#686868;">
+                    ${post.content}
+                  </p>
+
+                  <ul class="list-inline">
+                    <li title="No. of Likes" class="like-me" id="like_${post.id}" style="color:#2C6FAE; font-size: 30px; cursor: pointer;" ><i class="fa fa-thumbs${post.likes.length > 0 ? '' : '-o'}-up"></i> <span id="like_count_${post.id}" style="font-size: 16px;color:black;">${post.no_of_likes} </span></li>
+                    <li class="open-comments" id="comment_${post.id}" style="color:red;font-size: 30px; cursor: pointer;"><i class="fa fa-comment-o " id="comment"></i> <span style="font-size: 16px;color:black;" title="No. of Comments" id="comment_count_${post.comment}"> ${post.no_of_comments} </span> </li>
+                  </ul>
+                </div>
+                <!-- /.post -->
+              </div>
+              
 </div>
-<br />
-                                        <p class"message" style="text-align:justify;font-family:'Montserrat', sans-serif;color:#686868;">${post.content}</p>
-                                        <br/>
-                                        <p>
-                                            <span title="No. of Likes" class="like-me" id="like_${post.id}" style="color:#2C6FAE; font-size: 30px; cursor: pointer;" ><i class="fa fa-thumbs${post.likes.length > 0 ? '' : '-o'}-up"></i> <span id="like_count_${post.id}" style="font-size: 16px;color:black;">${post.no_of_likes} </span></span>
-                                            <span class="open-comments" id="comment_${post.id}" style="color:red;font-size: 30px; cursor: pointer;"><i class="fa fa-comment-o " id="comment"></i> <span style="font-size: 16px;color:black;" title="No. of Comments" id="comment_count_${post.comment}"> ${post.no_of_comments} </span> </span>
-                                        </p>
-                                        <small class=" pull-right" style="color: #999999"><i class="fa fa-clock-o"></i>
-                                                    ${post.created}
-                                        </small>
-                                        <hr>
-                                        <div class="commentWrapper_${post.id}" style="display: none;">
+<div class="commentWrapper_${post.id}" style="display: none;">
                                             <div id="commentSection_${post.id}">
                                              </div>
                                         <form method="post" accept-charset="utf-8" id="saveComment_${post.id}" class="comment-form">
@@ -228,7 +253,7 @@
                                               <input name="post_id" value="${post.id}" type="hidden" class="form-control" style="border-radius:0px;"/>
                                              <input name="comment" type="text" id="commentInput_${post.id}" class="form-control" placeholder="comment..." style="border-radius:0px;"/>
                                              <span class="input-group-btn">
-                                             <button class="btn  pull-right form-control comment-button" id="commentBtn_${post.id}"><i class="fa fa-arrow-circle-right"></i></botton>
+                                             <button class="btn  pull-right form-control comment-button" id="commentBtn_${post.id}"><i class="fa fa-arrow-circle-right"></i></button>
                                              </span>
                                             </div> 
                                              </form>
@@ -407,4 +432,3 @@
 
     });
 </script>
-
