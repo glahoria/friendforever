@@ -39,7 +39,7 @@ class FriendRequestsController extends AppController {
             }
         }
 
-        $friendRequests = $this->FriendRequests->find()->where(['OR'=>['FriendRequests.request_to_id' => $currentUserId, 'FriendRequests.request_from_id' => $currentUserId]])->count();
+        $friendRequests = $this->FriendRequests->find()->where(['OR' => ['FriendRequests.request_to_id' => $currentUserId, 'FriendRequests.request_from_id' => $currentUserId]])->count();
 
         $friendRequests = $this->FriendRequests->find()->where(['FriendRequests.request_to_id' => $currentUserId])->first();
         if (!empty($friendRequests)) {

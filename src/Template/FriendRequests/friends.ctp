@@ -183,8 +183,8 @@
                 success: function (resp) {
                     if (resp.friendRequests.length > 0) {
                         $.each(resp.friendRequests, function (ind, friendRequest) {
-                                 console.log(friendRequest);
-                                var f = `<div class="box-header" style="background: white;">
+                            console.log(friendRequest);
+                            var f = `<div class="box-header" style="background: white;">
                     <h3 class="box-title" style="background: white;color: #9B9696;font-weight: bold; width: 100%">Friend
                         Requests
                         <hr>
@@ -199,15 +199,15 @@
                     </span>
                     </div>`;
 
-                    $('#friendRequests').append(f);
+                            $('#friendRequests').append(f);
 
-                });
+                        });
+                    }
+                }
+
+            })
+            ;
         }
-    }
-
-    })
-    ;
-    }
     })
     ;
 </script>
