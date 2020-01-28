@@ -117,6 +117,9 @@
                 url: '<?= SITE_URL; ?>friend-requests/get-friends',
                 data: friendsData,
                 dataType: "JSON",
+                beforeSend: function () {
+                    $('#addFriends').html("");
+                },
                 success: function (resp) {
 
                     $.each(resp.users, function (ind, user) {
@@ -124,7 +127,7 @@
                         <span class="username">
                         <a href="#" style="text-transform:uppercase; font-weight:bold;color:#4D3F3F;">${user.first_name} ${user.last_name}</a>
                     <span class="pull-right">
-                        <button class="btn btn-sm  add-button" name="request_to_id" id="add_${user.id}">Add Friend</i></button>
+                        <button class="btn btn-sm  add-button"  id="add_${user.id}">Add Friend</i></button>
 
                     </span>
                     </div>`;
@@ -138,16 +141,16 @@
 
         $('#addFriends').on('click', '.add-button', function (e) {
             e.preventDefault();
-             var id = $(this).attr('id').split('_')[1];
-             var requestData = {to_id: id};
+            var id = $(this).attr('id').split('_')[1];
+            var requestData = {request_to_id: id};
             $.ajax({
                 type: 'POST',
                 url: '<?= SITE_URL; ?>friend-requests/send-request',
                 data: requestData,
                 dataType: "JSON",
-                    success: function (resp) {
-                        var user = resp.friendRequest;
-                        var r = `<div class="box-header" style="background: white;">
+                success: function (resp) {
+                    var user = resp.friendRequest;
+                    var r = `<div class="box-header" style="background: white;">
                     <h3 class="box-title" style="background: white;color: #9B9696;font-weight: bold; width: 100%">Friend
                         Requests
                         <hr>
@@ -157,16 +160,54 @@
                         <span class="username">
                         <a href="#" style="text-transform:uppercase; font-weight:bold;color:#4D3F3F;">${user.first_name} ${user.last_name}</a>
                     <span class="pull-right">
-                        <button class="btn btn-sm  add-button"   id="add_${user.id}">Confirm</i></button>
+                        <button class="btn btn-sm  add-button"   id="confirm_${user.id}">Confirm</i></button>
                         <button class="btn btn-sm remove-button">Cancel</button>
                     </span>
                     </div>`;
 
-        $('#friendRequests').append(r);
-    }
+                    $('#friendRequests').append(r);
+                }
+
+            });
+        });
+
+        setTimeout(function () {
+            getRequests();
+        }, 1000);
+
+        function getRequests() {
+            $.ajax({
+                type: 'GET',
+                url: '<?= SITE_URL; ?>friend-requests/get-requests',
+                dataType: "JSON",
+                success: function (resp) {
+                    if (resp.friendRequests.length > 0) {
+                        $.each(resp.friendRequests, function (ind, friendRequest) {
+                                 console.log(friendRequest);
+                                var f = `<div class="box-header" style="background: white;">
+                    <h3 class="box-title" style="background: white;color: #9B9696;font-weight: bold; width: 100%">Friend
+                        Requests
+                        <hr>
+                    </h3>
+                </div>
+<div class="user-block" style="padding:10px;">
+                        <span class="username">
+                        <a href="#" style="text-transform:uppercase; font-weight:bold;color:#4D3F3F;">${friendRequest.user.first_name} ${friendRequest.user.last_name}</a>
+                    <span class="pull-right">
+                        <button class="btn btn-sm  add-button"   id="confirm_${friendRequest.request_from_id}">Confirm</i></button>
+                        <button class="btn btn-sm remove-button">Cancel</button>
+                    </span>
+                    </div>`;
+
+                    $('#friendRequests').append(f);
 
                 });
-            });
+        }
+    }
 
-    });
+    })
+    ;
+    }
+    })
+    ;
 </script>

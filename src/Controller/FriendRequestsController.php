@@ -29,12 +29,40 @@ class FriendRequestsController extends AppController {
     }
 
     public function getFriends() {
+        $currentUserId = $this->Auth->user('id');
+        $execptUsers[] = $currentUserId;
+        $this->loadModel('Friends');
+        $friends = $this->Friends->find()->where(['Friends.user_id' => $currentUserId])->all();
+        if (!empty($friends)) {
+            foreach ($friends as $friend) {
+                $execptUsers[] = $friend->friend_id;
+            }
+        }
+
+        $friendRequests = $this->FriendRequests->find()->where(['OR'=>['FriendRequests.request_to_id' => $currentUserId, 'FriendRequests.request_from_id' => $currentUserId]])->count();
+
+        $friendRequests = $this->FriendRequests->find()->where(['FriendRequests.request_to_id' => $currentUserId])->first();
+        if (!empty($friendRequests)) {
+            foreach ($friendRequests as $friendRequest) {
+                $execptUsers[] = $friendRequest->request_from_id;
+            }
+        }
+
+        $friendRequests = $this->FriendRequests->find()->where(['FriendRequests.request_from_id' => $currentUserId])->first();
+        if (!empty($friendRequests)) {
+            foreach ($friendRequests as $friendRequest) {
+                $execptUsers[] = $friendRequest->request_to_id;
+            }
+        }
+
+
+        //        if (empty($friends)) {
         $key = $this->request->getQuery('friend_search');
         $this->loadModel('Users');
 
 
-        $users = $this->Users->find()->where(['OR' => ['first_name LIKE' => '%' . $key . '%', 'last_name LIKE' => '%' . $key . '%']])->all();
-
+        $users = $this->Users->find()->where(['Users.id NOT IN' => $execptUsers, 'OR' => ['first_name LIKE' => '%' . $key . '%', 'last_name LIKE' => '%' . $key . '%']])->all();
+        //        }
         echo json_encode(['users' => $users]);
         exit;
     }
@@ -85,11 +113,11 @@ class FriendRequestsController extends AppController {
         $friendRequest = $this->FriendRequests->newEntity();
         if ($this->request->is('post')) {
             $friendRequest = $this->FriendRequests->patchEntity($friendRequest, $this->request->getData());
-            $friendRequest->request_to_id = $friendRequest->request_from_id = $this->Auth->user('id');
+            $friendRequest->request_from_id = $this->Auth->user('id');
             $friendRequest->status = "Pending";
             if ($this->FriendRequests->save($friendRequest)) {
                 if ($this->FriendRequests->save($friendRequest)) {
-                    $friendRequest = $this->FriendRequests->find()->contain(['Users'])->where()->first();
+
                 }
             }
         }
@@ -97,6 +125,15 @@ class FriendRequestsController extends AppController {
         exit;
     }
 
+    public function getRequests() {
+        $friendRequests = $this->FriendRequests->find()
+            ->contain(
+                'Users'
+            )
+            ->order(['FriendRequests.created' => 'DESC'])->all();
+        echo json_encode(['friendRequests' => $friendRequests]);
+        exit;
+    }
     /**
      * Edit method
      *
