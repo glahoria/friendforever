@@ -117,7 +117,7 @@ class FriendRequestsController extends AppController {
             $friendRequest->status = "Pending";
             if ($this->FriendRequests->save($friendRequest)) {
                 if ($this->FriendRequests->save($friendRequest)) {
-
+                   $friendRequest = $this->FriendRequests->find()->contain(['Users'])->where(['FriendRequests.id' => $friendRequest->id])->first();
                 }
             }
         }

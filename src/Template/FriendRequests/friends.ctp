@@ -35,7 +35,7 @@
             <!------------------- Friend Requests ------------->
 
             <div id="friendRequests" style="background: white;">
-            </div>
+            </div><br />
 
 
         </section>
@@ -149,7 +149,7 @@
                 data: requestData,
                 dataType: "JSON",
                 success: function (resp) {
-                    var user = resp.friendRequest;
+                    var request = resp.friendRequest;
                     var r = `<div class="box-header" style="background: white;">
                     <h3 class="box-title" style="background: white;color: #9B9696;font-weight: bold; width: 100%">Friend
                         Requests
@@ -158,9 +158,9 @@
                 </div>
 <div class="user-block" style="padding:10px;">
                         <span class="username">
-                        <a href="#" style="text-transform:uppercase; font-weight:bold;color:#4D3F3F;">${user.first_name} ${user.last_name}</a>
+                        <a href="#" style="text-transform:uppercase; font-weight:bold;color:#4D3F3F;">${request.user.first_name} ${request.user.last_name}</a>
                     <span class="pull-right">
-                        <button class="btn btn-sm  add-button"   id="confirm_${user.id}">Confirm</i></button>
+                        <button class="btn btn-sm  add-button"   id="confirm_${request.id}">Confirm</i></button>
                         <button class="btn btn-sm remove-button">Cancel</button>
                     </span>
                     </div>`;
@@ -181,9 +181,9 @@
                 url: '<?= SITE_URL; ?>friend-requests/get-requests',
                 dataType: "JSON",
                 success: function (resp) {
+                    console.log(resp);
                     if (resp.friendRequests.length > 0) {
                         $.each(resp.friendRequests, function (ind, friendRequest) {
-                            console.log(friendRequest);
                             var f = `<div class="box-header" style="background: white;">
                     <h3 class="box-title" style="background: white;color: #9B9696;font-weight: bold; width: 100%">Friend
                         Requests

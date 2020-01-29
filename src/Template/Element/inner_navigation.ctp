@@ -32,7 +32,7 @@
         </a>
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-                <li class="dropdown messages-menu">
+                <li class="dropdown messages-menu" style="display: none;" id="navigationRequests">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa  fa-user-plus"></i>
                         <span class="label label-success">1</span>
@@ -51,6 +51,7 @@
                         <li class="footer"><a
                                     href="<?= $this->Url->build(['controller' => 'friend_requests', 'action' => 'friends']); ?>">See
                                 All Requests</a></li>
+                                
                     </ul>
                 </li>
                 <li class="dropdown notifications-menu">
@@ -161,17 +162,19 @@
                     if (resp.friendRequests.length > 0) {
                         $.each(resp.friendRequests, function (ind, friendRequest) {
                             console.log(friendRequest);
-                            var f = `<div class="pull-left">
+                            var f = `
+                            <div class="pull-left">
     <img src="<?= SITE_URL; ?>img/user_icon.png" class="img-circle" alt="User Image">
 </div>
 <h4 style="margin-bottom:5px;font-weight: bold; ">
     ${friendRequest.user.first_name} ${friendRequest.user.last_name}
 </h4>
 <button class="pull-left btn btn-sm confirm-button" id="confirm_${friendRequest.request_from_id}">Confirm</button>
-<button class="pull-left btn btn-sm cancel-button">Cancel</button>`;
+<button class="pull-left btn btn-sm cancel-button">Cancel</button>
+<br /> <br />`;
 
                             $('#requests').append(f);
-
+                            $('#navigationRequests').show();
                         });
                     }
                 }
